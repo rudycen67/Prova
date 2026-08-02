@@ -178,6 +178,22 @@ In manuale, lo stesso lo ottieni con:
 pm3 -p /dev/ttyACM0 -c 'hw version'
 ```
 
+### Client identico al firmware (evita i mismatch)
+
+Se vuoi che il client sia **identico al firmware già presente** sul device
+(senza riflashare), usa:
+
+```bash
+cd wsl && ./build-matching-client.sh
+```
+
+Legge la versione dal Proxmark3, ricava il commit git del firmware, fa il
+checkout di quel commit e ricompila il client su quella base: al termine client
+e firmware coincidono e non compare alcun warning di `mismatch`. È lo stesso
+passo che esegue in automatico `SETUP.cmd`. Nota: il client identico non è
+pre-costruibile perché dipende dalla versione del *tuo* firmware (leggibile solo
+a device collegato) e va comunque compilato sulla tua macchina.
+
 Interpretazione:
 - Se `os:` contiene **`Iceman`**/**`RRG`** → firmware Iceman/RRG: usa il client
   Iceman (quello compilato qui). È la configurazione consigliata.
