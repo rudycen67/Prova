@@ -117,7 +117,13 @@ fi
 echo "    Piattaforma: $PLATFORM"
 
 # Commit git dal 'git describe' incorporato nel firmware (suffisso -g<hash>)
+# Commit dal 'git describe' incorporato (suffisso -g<hash>)...
 commit=$(printf '%s' "$os_line" | grep -oiE 'g[0-9a-f]{7,}' | head -n1 | sed 's/^[gG]//')
+# ...oppure, per firmware in formato "-suspect ... <hash>" (senza -g), prendi
+# l'ultimo token che sembra un hash git (7-40 cifre esadecimali).
+if [ -z "$commit" ]; then
+  commit=$(printf '%s' "$os_line" | grep -oiE '\b[0-9a-f]{7,40}\b' | tail -n1)
+fi
 tag=$(printf '%s' "$os_line" | grep -oiE 'v[0-9][0-9.]*' | head -n1)
 
 # ---------------------------------------------------------------------------
