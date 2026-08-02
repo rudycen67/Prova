@@ -28,6 +28,8 @@ windows/   → script PowerShell (lato Windows host)
   3-setup-autostart.ps1    rende l'auto-attach automatico ad ogni login
   _auto-attach-daemon.ps1  demone in background avviato dal task pianificato
   status.ps1               verifica (facoltativa) che l'automazione sia attiva
+  usa-in-windows.ps1       sposta il device all'uso NATIVO di Windows
+  usa-in-wsl.ps1           riporta il device all'uso in WSL
 
 wsl/       → script Bash (dentro Ubuntu/WSL)
   setup.sh                 installa dipendenze e compila il client (ultima versione)
@@ -38,7 +40,13 @@ wsl/       → script Bash (dentro Ubuntu/WSL)
 
 docs/
   guida-completa.md   guida dettagliata passo-passo con note e troubleshooting
+  windows-nativo.md   client Iceman nativo su Windows (letture LF affidabili)
 ```
+
+> **Letture LF/dump inaffidabili in WSL?** Il tunnel usbipd fatica con i
+> trasferimenti pesanti. Per leggere/clonare tessere in modo affidabile usa il
+> client nativo di Windows: vedi [`docs/windows-nativo.md`](docs/windows-nativo.md)
+> e gli script `windows/usa-in-windows.ps1` / `windows/usa-in-wsl.ps1`.
 
 ---
 
