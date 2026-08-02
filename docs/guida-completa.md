@@ -279,3 +279,13 @@ cd ~/proxmark3
 **Dopo un riavvio del PC non funziona più**
 - L'attach va rifatto ad ogni collegamento. Con `3-setup-autostart.ps1` è
   automatico; altrimenti rilancia `2-attach-proxmark3.ps1`.
+
+**La build dice "Proxmark3 non trovato (/dev/ttyACM*)" durante SETUP.cmd**
+- Il device è agganciato a una sessione WSL diversa da quella che esegue la
+  build (tipico se la build parte dalla finestra con privilegi di admin, mentre
+  l'auto-attach aggancia il device alla tua Ubuntu normale). Soluzione:
+  1. apri **Ubuntu normalmente** e controlla `ls /dev/ttyACM*`;
+  2. se manca, in **PowerShell**: `usbipd attach --wsl --hardware-id 9ac4:4b8f`
+     e verifica che `usbipd list` mostri `Attached`;
+  3. se `lsusb` vede il device ma manca `/dev/ttyACM0`: `sudo modprobe cdc_acm`;
+  4. poi lancia la build a mano: `bash <percorso>/wsl/build-matching-client.sh`.
