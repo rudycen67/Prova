@@ -18,8 +18,11 @@ a WSL con lo strumento [`usbipd-win`](https://github.com/dorssel/usbipd-win).
 ## Struttura
 
 ```
+SETUP.cmd  → ⭐ doppio clic: configurazione completa (Windows + WSL) in un colpo
+
 windows/   → script PowerShell (lato Windows host)
-  install-all.ps1          ⭐ configurazione unica: fa tutto in un colpo solo
+  setup-completo.ps1       orchestratore: FASE 1 (Windows) + FASE 2 (WSL)
+  install-all.ps1          configurazione lato Windows in un solo comando
   1-install-usbipd.ps1     installa usbipd-win
   2-attach-proxmark3.ps1   bind + auto-attach del device verso WSL
   3-setup-autostart.ps1    rende l'auto-attach automatico ad ogni login
@@ -40,22 +43,30 @@ docs/
 
 ## Configurazione iniziale (una sola volta)
 
-### Su Windows — metodo consigliato: un solo comando
+### 🚀 Metodo più semplice: un doppio clic
 
-Collega il Proxmark3 alla USB, poi in **PowerShell** (accetta il prompt UAC):
+1. Collega il Proxmark3 alla USB.
+2. Fai **doppio clic su `SETUP.cmd`** (nella cartella principale del progetto).
+3. Accetta il prompt **UAC** e, se richiesta, digita la **password sudo di Ubuntu**.
+
+`SETUP.cmd` esegue tutto in sequenza: **FASE 1 (Windows)** installa `usbipd-win`,
+fa il `bind` e attiva l'auto-attach permanente; **FASE 2 (WSL)** compila e
+installa il client Proxmark3 dentro Ubuntu. **Da questo momento attacchi il
+Proxmark3 e viene riconosciuto in WSL in automatico, senza lanciare più nulla.**
+
+Prerequisiti: Windows 10/11 con **WSL2 + Ubuntu** già installati.
+
+### In alternativa: solo lato Windows, un comando
 
 ```powershell
 cd windows
 ./install-all.ps1
 ```
 
-Fa tutto da solo: installa `usbipd-win`, esegue il `bind` (l'unico passaggio che
-richiede admin, una volta sola), registra e avvia il demone di auto-attach.
-**Da questo momento attacchi il Proxmark3 e viene riconosciuto in WSL in
-automatico, senza lanciare più nulla** — anche se lo colleghi molto dopo
-l'accensione del PC.
+Fa il setup Windows (usbipd + bind + auto-attach permanente). Poi la
+compilazione del client va fatta a mano dentro Ubuntu (vedi sotto).
 
-> In alternativa, passo-passo (PowerShell come Amministratore):
+> Oppure passo-passo (PowerShell come Amministratore):
 > ```powershell
 > ./1-install-usbipd.ps1      # installa usbipd-win (poi riapri PowerShell)
 > ./2-attach-proxmark3.ps1    # bind (admin) + auto-attach immediato
@@ -67,7 +78,7 @@ riavvii) e copia il demone in `%LOCALAPPDATA%\Proxmark3-WSL`, quindi l'automazio
 resta valida anche se sposti o cancelli questa cartella. Non c'è più nulla da
 lanciare. Per verificarlo in qualsiasi momento: `./status.ps1`.
 
-### Dentro Ubuntu/WSL
+### Compilazione client dentro Ubuntu/WSL (se non hai usato SETUP.cmd)
 
 ```bash
 cd wsl
