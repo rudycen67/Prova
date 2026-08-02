@@ -20,9 +20,13 @@
 #>
 
 $ErrorActionPreference = 'Stop'
-$HardwareId = '9ac4:4b8f'          # VID:PID standard del Proxmark3
-$TaskName   = 'Proxmark3-WSL-AutoAttach'
-$DaemonPath = Join-Path $PSScriptRoot '_auto-attach-daemon.ps1'
+$HardwareId   = '9ac4:4b8f'        # VID:PID standard del Proxmark3
+$TaskName     = 'Proxmark3-WSL-AutoAttach'
+$DaemonSource = Join-Path $PSScriptRoot '_auto-attach-daemon.ps1'
+# Cartella stabile per-utente: il task punta qui, così resta valido anche se
+# sposti o cancelli la cartella del repo -> automazione davvero permanente.
+$StableDir    = Join-Path $env:LOCALAPPDATA 'Proxmark3-WSL'
+$DaemonPath   = Join-Path $StableDir '_auto-attach-daemon.ps1'
 
 # --- Elevazione automatica a amministratore (serve per il bind) --------------
 function Test-Admin {
@@ -79,9 +83,13 @@ if ($deviceLine -match 'Not shared') {
     Write-Host "Il Proxmark3 risulta gia' condiviso (bind gia' fatto)." -ForegroundColor Green
 }
 
-# --- 3) Attivita' pianificata: avvia il demone ad ogni login -----------------
-if (-not (Test-Path $DaemonPath)) { Write-Error "Non trovo $DaemonPath"; return }
+# --- 3) Copia il demone in una cartella stabile ------------------------------
+if (-not (Test-Path $DaemonSource)) { Write-Error "Non trovo $DaemonSource"; return }
+New-Item -ItemType Directory -Path $StableDir -Force | Out-Null
+Copy-Item -Path $DaemonSource -Destination $DaemonPath -Force
+Write-Host "==> Demone installato in: $DaemonPath" -ForegroundColor DarkGray
 
+# --- 4) Attivita' pianificata: avvia il demone ad ogni login -----------------
 $action = New-ScheduledTaskAction -Execute 'powershell.exe' `
     -Argument "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$DaemonPath`""
 $trigger = New-ScheduledTaskTrigger -AtLogOn
@@ -96,7 +104,7 @@ Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger `
     -Settings $settings -Principal $principal -Force | Out-Null
 Write-Host "==> Attivita' pianificata '$TaskName' registrata." -ForegroundColor Green
 
-# --- 4) Avvia subito il demone (senza aspettare il prossimo login) -----------
+# --- 5) Avvia subito il demone (senza aspettare il prossimo login) -----------
 Start-ScheduledTask -TaskName $TaskName
 Write-Host "==> Demone di auto-attach avviato." -ForegroundColor Green
 

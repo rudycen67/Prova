@@ -24,6 +24,7 @@ windows/   → script PowerShell (lato Windows host)
   2-attach-proxmark3.ps1   bind + auto-attach del device verso WSL
   3-setup-autostart.ps1    rende l'auto-attach automatico ad ogni login
   _auto-attach-daemon.ps1  demone in background avviato dal task pianificato
+  status.ps1               verifica (facoltativa) che l'automazione sia attiva
 
 wsl/       → script Bash (dentro Ubuntu/WSL)
   setup.sh            installa dipendenze e compila il client (Iceman/RRG)
@@ -60,6 +61,11 @@ l'accensione del PC.
 > ./2-attach-proxmark3.ps1    # bind (admin) + auto-attach immediato
 > ./3-setup-autostart.ps1     # rende l'auto-attach automatico ad ogni login
 > ```
+
+**È permanente:** l'installer registra un'attività pianificata (sopravvive ai
+riavvii) e copia il demone in `%LOCALAPPDATA%\Proxmark3-WSL`, quindi l'automazione
+resta valida anche se sposti o cancelli questa cartella. Non c'è più nulla da
+lanciare. Per verificarlo in qualsiasi momento: `./status.ps1`.
 
 ### Dentro Ubuntu/WSL
 
