@@ -26,6 +26,7 @@ windows/   → script PowerShell (lato Windows host)
 wsl/       → script Bash (dentro Ubuntu/WSL)
   setup.sh            installa dipendenze e compila il client (Iceman/RRG)
   check-firmware.sh   legge il firmware del device e indica il client giusto
+  flash-firmware.sh   flash "sicuro" del firmware, gestito per WSL
   pm3-connect.sh      wrapper comodo per connettersi
 
 docs/
@@ -80,9 +81,11 @@ gruppo `dialout`).
 - Il **bind** (condivisione USB) è persistente: si fa una volta. L'**attach** è
   gestito in automatico dallo script/attività pianificata.
 - **Flash del firmware da WSL**: durante il flash il device passa in modalità
-  bootloader e *cambia porta* (ttyACM0 ⇄ ttyACM1), staccandosi da WSL. Per
-  aggiornare il firmware conviene farlo da Windows nativo oppure ricollegare
-  rapidamente il device. Per leggere/testare tag WSL va benissimo.
+  bootloader e *cambia porta* (ttyACM0 ⇄ ttyACM1), staccandosi da WSL. Con
+  l'auto-attach attivo il device viene ri-agganciato da solo; usa lo script
+  dedicato `wsl/flash-firmware.sh` (verifica prerequisiti, attende il ritorno
+  del device e conferma l'esito). In alternativa il flash si può fare da
+  Windows nativo. Per leggere/testare tag WSL va benissimo.
 
 Dettagli, spiegazioni e troubleshooting completo in
 [`docs/guida-completa.md`](docs/guida-completa.md).

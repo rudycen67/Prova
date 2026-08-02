@@ -202,10 +202,21 @@ può interrompere il flash. Opzioni:
 
 - **Consigliata**: esegui il flash da **Windows nativo** (client Windows di
   Iceman), dove il device resta agganciato.
-- Da WSL: tieni pronta una finestra PowerShell per rifare al volo
-  `usbipd attach --wsl --hardware-id 9ac4:4b8f` quando la porta cambia.
+- Con l'**auto-attach attivo** (`windows/2-attach-proxmark3.ps1` o l'attività
+  pianificata) il device viene ri-agganciato da solo quando cambia porta: è la
+  via più comoda per flashare da WSL.
 
-Comando di flash (dalla cartella dei sorgenti, dopo aver compilato):
+Script dedicato (consigliato) — verifica i prerequisiti, attende il ritorno del
+device dopo il reboot in bootloader e conferma l'esito con `hw version`:
+
+```bash
+cd wsl
+./flash-firmware.sh            # flash completo (bootrom + firmware)
+./flash-firmware.sh --image    # solo firmware (fullimage)
+./flash-firmware.sh --yes      # senza conferma interattiva
+```
+
+In manuale (dalla cartella dei sorgenti, dopo aver compilato):
 
 ```bash
 cd ~/proxmark3
