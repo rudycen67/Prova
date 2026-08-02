@@ -30,10 +30,11 @@ windows/   → script PowerShell (lato Windows host)
   status.ps1               verifica (facoltativa) che l'automazione sia attiva
 
 wsl/       → script Bash (dentro Ubuntu/WSL)
-  setup.sh            installa dipendenze e compila il client (Iceman/RRG)
-  check-firmware.sh   legge il firmware del device e indica il client giusto
-  flash-firmware.sh   flash "sicuro" del firmware, gestito per WSL
-  pm3-connect.sh      wrapper comodo per connettersi
+  setup.sh                 installa dipendenze e compila il client (ultima versione)
+  build-matching-client.sh ⭐ compila un client IDENTICO al firmware installato
+  check-firmware.sh        legge il firmware del device e indica il client giusto
+  flash-firmware.sh        flash "sicuro" del firmware, gestito per WSL
+  pm3-connect.sh           wrapper comodo per connettersi
 
 docs/
   guida-completa.md   guida dettagliata passo-passo con note e troubleshooting
@@ -51,8 +52,14 @@ docs/
 
 `SETUP.cmd` esegue tutto in sequenza: **FASE 1 (Windows)** installa `usbipd-win`,
 fa il `bind` e attiva l'auto-attach permanente; **FASE 2 (WSL)** compila e
-installa il client Proxmark3 dentro Ubuntu. **Da questo momento attacchi il
-Proxmark3 e viene riconosciuto in WSL in automatico, senza lanciare più nulla.**
+installa un **client identico al firmware attualmente installato** sul device
+(`build-matching-client.sh`: legge la versione dal Proxmark3 e allinea il client
+allo stesso commit, per evitare qualsiasi mismatch). **Da questo momento attacchi
+il Proxmark3 e viene riconosciuto in WSL in automatico, senza lanciare più nulla.**
+
+> ℹ️ Il client identico non può essere pre-costruito: dipende dalla versione di
+> firmware presente sul *tuo* dispositivo, leggibile solo a device collegato, e va
+> comunque compilato sulla tua Ubuntu. Per questo il match avviene durante il setup.
 
 Prerequisiti: Windows 10/11 con **WSL2 + Ubuntu** già installati.
 

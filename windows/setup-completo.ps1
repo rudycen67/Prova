@@ -94,16 +94,19 @@ try {
         Write-Host   "Esegui a mano dentro Ubuntu: bash <percorso>/wsl/setup.sh" -ForegroundColor Yellow
         return
     }
-    $setupSh = "$wslRepo/wsl/setup.sh"
+    # Uso build-matching-client.sh: compila un client IDENTICO al firmware
+    # attualmente installato sul device (legge la versione e si allinea al commit).
+    $buildSh = "$wslRepo/wsl/build-matching-client.sh"
     $checkSh = "$wslRepo/wsl/check-firmware.sh"
 
-    Write-Host "==> Avvio la compilazione: $setupSh" -ForegroundColor DarkGray
-    & wsl -e bash -lc "bash '$setupSh'"
+    Write-Host "==> Compilo un client identico al firmware installato: $buildSh" -ForegroundColor DarkGray
+    Write-Host "    (legge la versione dal device e si allinea al suo commit)" -ForegroundColor DarkGray
+    & wsl -e bash -lc "bash '$buildSh'"
     $buildRc = $LASTEXITCODE
 
     if ($buildRc -ne 0) {
         Write-Warning "La compilazione in WSL e' terminata con codice $buildRc. Vedi i messaggi sopra."
-        Write-Host   "Puoi ritentarla dentro Ubuntu con: bash '$setupSh'" -ForegroundColor Yellow
+        Write-Host   "Puoi ritentarla dentro Ubuntu con: bash '$buildSh'" -ForegroundColor Yellow
         return
     }
 
