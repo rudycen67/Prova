@@ -19,9 +19,11 @@ a WSL con lo strumento [`usbipd-win`](https://github.com/dorssel/usbipd-win).
 
 ```
 windows/   → script PowerShell (lato Windows host)
+  install-all.ps1          ⭐ configurazione unica: fa tutto in un colpo solo
   1-install-usbipd.ps1     installa usbipd-win
   2-attach-proxmark3.ps1   bind + auto-attach del device verso WSL
   3-setup-autostart.ps1    rende l'auto-attach automatico ad ogni login
+  _auto-attach-daemon.ps1  demone in background avviato dal task pianificato
 
 wsl/       → script Bash (dentro Ubuntu/WSL)
   setup.sh            installa dipendenze e compila il client (Iceman/RRG)
@@ -37,14 +39,27 @@ docs/
 
 ## Configurazione iniziale (una sola volta)
 
-### Su Windows (PowerShell **come Amministratore**)
+### Su Windows — metodo consigliato: un solo comando
+
+Collega il Proxmark3 alla USB, poi in **PowerShell** (accetta il prompt UAC):
 
 ```powershell
 cd windows
-./1-install-usbipd.ps1      # installa usbipd-win (poi riapri PowerShell)
-./2-attach-proxmark3.ps1    # bind (admin) + avvia l'auto-attach
-./3-setup-autostart.ps1     # rende l'auto-attach automatico ad ogni login
+./install-all.ps1
 ```
+
+Fa tutto da solo: installa `usbipd-win`, esegue il `bind` (l'unico passaggio che
+richiede admin, una volta sola), registra e avvia il demone di auto-attach.
+**Da questo momento attacchi il Proxmark3 e viene riconosciuto in WSL in
+automatico, senza lanciare più nulla** — anche se lo colleghi molto dopo
+l'accensione del PC.
+
+> In alternativa, passo-passo (PowerShell come Amministratore):
+> ```powershell
+> ./1-install-usbipd.ps1      # installa usbipd-win (poi riapri PowerShell)
+> ./2-attach-proxmark3.ps1    # bind (admin) + auto-attach immediato
+> ./3-setup-autostart.ps1     # rende l'auto-attach automatico ad ogni login
+> ```
 
 ### Dentro Ubuntu/WSL
 

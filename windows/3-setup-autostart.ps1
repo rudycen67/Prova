@@ -3,16 +3,18 @@
     ---------------------
     Rende l'auto-attach del Proxmark3 completamente automatico: registra
     un'attivita' pianificata che, ad ogni accesso a Windows, avvia in background
-    2-attach-proxmark3.ps1 (auto-attach in ascolto).
+    il demone _auto-attach-daemon.ps1 (aggancio in ascolto, resiliente).
 
     Prerequisito: aver gia' eseguito una volta il "bind" (vedi 2-attach-proxmark3.ps1).
     Esegui questo script UNA SOLA VOLTA.
+
+    Suggerimento: per fare tutto in un colpo solo usa install-all.ps1.
 #>
 
 $ErrorActionPreference = 'Stop'
 
 $TaskName   = 'Proxmark3-WSL-AutoAttach'
-$scriptPath = Join-Path $PSScriptRoot '2-attach-proxmark3.ps1'
+$scriptPath = Join-Path $PSScriptRoot '_auto-attach-daemon.ps1'
 
 if (-not (Test-Path $scriptPath)) {
     Write-Error "Non trovo $scriptPath"

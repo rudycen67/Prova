@@ -88,12 +88,24 @@ ogni volta che lo colleghi.
 
 ## 4. Rendere l'aggancio automatico
 
-Per non dover lanciare nulla a mano ad ogni avvio, `windows/3-setup-autostart.ps1`
-registra un'**attività pianificata** che, ad ogni login di Windows, avvia in
-background l'auto-attach. Da quel momento:
+**Metodo consigliato — un solo comando:** `windows/install-all.ps1` esegue in
+un colpo solo installazione di usbipd, `bind` e registrazione+avvio del demone
+di auto-attach (si auto-eleva per il solo passaggio admin). Da eseguire una
+volta con il Proxmark3 collegato.
 
-- accendi il PC / fai login → l'auto-attach parte da solo;
-- colleghi il Proxmark3 → viene agganciato a WSL automaticamente.
+Sotto il cofano registra un'**attività pianificata** (`Proxmark3-WSL-AutoAttach`)
+che, ad ogni login di Windows, avvia in background il demone
+`windows/_auto-attach-daemon.ps1`. Il demone è **resiliente**: resta in ascolto
+e aggancia il device anche se lo colleghi molto **dopo** l'accensione del PC (un
+ciclo riprova in caso di device assente / WSL non ancora avviato). Da quel
+momento:
+
+- accendi il PC / fai login → il demone parte da solo;
+- colleghi il Proxmark3 in qualsiasi momento → viene agganciato a WSL
+  automaticamente, senza lanciare nulla.
+
+Se preferisci i passi separati usa `windows/3-setup-autostart.ps1` (richiede un
+`bind` già fatto, es. via `2-attach-proxmark3.ps1`).
 
 Per avviarla subito senza riavviare:
 
