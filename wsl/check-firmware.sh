@@ -73,7 +73,12 @@ echo "----------------------------------------------------------------"
 # 4) Estrai le informazioni chiave (il formato dei campi varia tra versioni,
 #    quindi la ricerca e' volutamente tollerante).
 # ---------------------------------------------------------------------------
+# Formato vecchio: riga "client: <versione>"; formato nuovo: la versione sta
+# sulla prima riga non vuota SOTTO l'header "[ Client ]".
 client_line=$(printf '%s\n' "$OUT" | grep -iw 'client' | grep -iE 'v[0-9]' | head -n1)
+if [ -z "$client_line" ]; then
+  client_line=$(printf '%s\n' "$OUT" | awk 'f && NF { sub(/^[[:space:]]+/,""); print; exit } /\[[[:space:]]*Client[[:space:]]*\]/ { f=1 }')
+fi
 os_line=$(printf '%s\n'     "$OUT" | grep -iw 'os'     | grep -iE 'v[0-9]' | head -n1)
 boot_line=$(printf '%s\n'   "$OUT" | grep -iw 'bootrom'| grep -iE 'v[0-9]' | head -n1)
 
