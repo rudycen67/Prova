@@ -99,6 +99,27 @@ try {
     $buildSh = "$wslRepo/wsl/build-matching-client.sh"
     $checkSh = "$wslRepo/wsl/check-firmware.sh"
 
+    # Assicura che il device sia agganciato ALLA STESSA istanza WSL che eseguira'
+    # la build (l'attach va fatto nello stesso contesto, non basta il 'bind').
+    Write-Host "==> Aggancio il Proxmark3 a WSL e attendo /dev/ttyACM*..." -ForegroundColor Cyan
+    $devReady = $false
+    for ($i = 0; $i -lt 15; $i++) {
+        & $usbipd attach --wsl --hardware-id $HardwareId 2>$null
+        $probe = & wsl -e bash -lc "ls /dev/ttyACM* 2>/dev/null | head -n1"
+        if ($probe) { $devReady = $true; break }
+        Start-Sleep -Seconds 2
+    }
+    if (-not $devReady) {
+        Write-Warning "Il Proxmark3 non compare in WSL (/dev/ttyACM*)."
+        Write-Host   "Sblocco manuale:" -ForegroundColor Yellow
+        Write-Host   "  1) Apri Ubuntu normalmente e prova:  lsusb ; ls /dev/ttyACM*" -ForegroundColor Yellow
+        Write-Host   "  2) Se serve, in PowerShell:  usbipd attach --wsl --hardware-id $HardwareId" -ForegroundColor Yellow
+        Write-Host   "  3) Se lsusb lo vede ma manca ttyACM:  sudo modprobe cdc_acm" -ForegroundColor Yellow
+        Write-Host   "  4) Poi builda:  bash '$buildSh'" -ForegroundColor Yellow
+        return
+    }
+    Write-Host "    Device visibile in WSL su: $probe" -ForegroundColor Green
+
     Write-Host "==> Compilo un client identico al firmware installato: $buildSh" -ForegroundColor DarkGray
     Write-Host "    (legge la versione dal device e si allinea al suo commit)" -ForegroundColor DarkGray
     & wsl -e bash -lc "bash '$buildSh'"
