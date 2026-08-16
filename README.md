@@ -33,6 +33,8 @@ windows/   → script PowerShell (lato Windows host)
 
 wsl/       → script Bash (dentro Ubuntu/WSL)
   setup.sh                 installa dipendenze e compila il client (ultima versione)
+  auto-seriale.sh          carica cdc_acm ad ogni avvio: /dev/ttyACM0 automatico
+  clona-tessera.sh         aiuto alla lettura/clonazione di tessere T5577
   build-matching-client.sh ⭐ compila un client IDENTICO al firmware installato
   check-firmware.sh        legge il firmware del device e indica il client giusto
   flash-firmware.sh        flash "sicuro" del firmware, gestito per WSL
