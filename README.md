@@ -28,6 +28,7 @@ windows/   → script PowerShell (lato Windows host)
   3-setup-autostart.ps1    rende l'auto-attach automatico ad ogni login
   _auto-attach-daemon.ps1  demone in background avviato dal task pianificato
   status.ps1               verifica (facoltativa) che l'automazione sia attiva
+  ripara-wsl-usb.ps1       diagnostica+ripara "Attached ma invisibile in Ubuntu"
   usa-in-windows.ps1       sposta il device all'uso NATIVO di Windows
   usa-in-wsl.ps1           riporta il device all'uso in WSL
 
