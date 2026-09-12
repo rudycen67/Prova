@@ -1,10 +1,12 @@
 @echo off
 title Compila client Proxmark3 (Windows)
 REM ============================================================
-REM  Compila il client Proxmark3 per Windows in un doppio clic.
+REM  Apre la shell di ProxSpace e ti mostra il comando (UNO) da
+REM  incollare per compilare il client Proxmark3.
+REM  (Le versioni di ProxSpace gestiscono i comandi automatici in
+REM   modo diverso, quindi qui apriamo la shell e incolli tu 1 riga:
+REM   e' il metodo affidabile su tutte le versioni.)
 REM  Requisiti: ProxSpace estratto in C:\ProxSpace.
-REM  (Se ProxSpace e' altrove, cambia la riga PSDIR qui sotto.)
-REM  Dura ~15-20 min. Una volta sola.
 REM ============================================================
 
 set "PSDIR=C:\ProxSpace"
@@ -19,13 +21,19 @@ if not exist "%PSDIR%\runme64.bat" (
   exit /b 1
 )
 
-echo Avvio la compilazione dentro ProxSpace...
-echo (se questa finestra si chiude subito senza compilare, usa il metodo manuale
-echo  indicato in docs\windows-nativo.md)
+echo ================================================================
+echo  Sto per aprire la shell di ProxSpace (prompt  [PS] ^> ).
 echo.
-
-call "%PSDIR%\runme64.bat" bash -lc "cd /pm3 && { [ -d proxmark3/.git ] && (cd proxmark3 && git fetch --all --tags) || git clone https://github.com/RfidResearchGroup/proxmark3.git; } ; cd /pm3/proxmark3 && (git checkout 72b1b17a3 || true) && make clean && make -j$(nproc) PLATFORM=PM3RDV4 client && echo COMPILAZIONE_OK"
-
+echo  Quando si apre, INCOLLA questa UNICA riga e premi Invio:
 echo.
-echo Se sopra vedi COMPILAZIONE_OK, il client e' pronto: usa APRI-PROXMARK3.cmd
+echo      bash /c/Proxmark3-WSL/windows/build-in-proxspace.sh
+echo.
+echo  (se hai estratto il progetto altrove, adatta il percorso; in
+echo   ProxSpace il disco C: si trova sotto /c/)
+echo.
+echo  In alternativa incolla i comandi manuali di docs\windows-nativo.md
+echo ================================================================
+echo.
 pause
+cd /d "%PSDIR%"
+call "%PSDIR%\runme64.bat"
