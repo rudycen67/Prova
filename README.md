@@ -20,6 +20,7 @@ a WSL con lo strumento [`usbipd-win`](https://github.com/dorssel/usbipd-win).
 ```
 SETUP.cmd  → ⭐ doppio clic: configurazione completa (Windows + WSL) in un colpo
 ATTIVA-AUTOMATICO.cmd → doppio clic: rende l'aggancio automatico/permanente (se la connessione gia' funziona)
+COMPILA-WINDOWS.cmd   → doppio clic: compila il client Windows (dopo aver estratto ProxSpace)
 APRI-PROXMARK3.cmd    → doppio clic: apre il client Proxmark3 in Windows gia' connesso (dopo ProxSpace)
 
 windows/   → script PowerShell (lato Windows host)
