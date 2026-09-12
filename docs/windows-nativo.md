@@ -105,6 +105,24 @@ lf t55xx trace            # dati di tracciabilita' (pagina 1)
 
 ---
 
+## Uso quotidiano senza comandi (doppio clic)
+
+Dopo aver compilato il client una volta, per l'uso di tutti i giorni non serve
+digitare nulla:
+
+1. **Porta fissa** — in *Gestione dispositivi → Porte (COM e LPT)* → doppio clic
+   sul *Dispositivo seriale USB* → *Impostazioni porta → Avanzate* → imposta un
+   **Numero porta COM** stabile (es. COM3). Windows la userà sempre per questo device.
+2. **Icona di avvio** — fai doppio clic su **`APRI-PROXMARK3.cmd`** (nella cartella
+   del progetto): apre l'ambiente ProxSpace ed esegue `pm3` che **rileva la porta
+   da solo** → ti ritrovi al prompt `[usb] pm3 -->` già connesso, senza comandi.
+
+Se il doppio clic non si connette da solo (alcune versioni di ProxSpace non
+accettano il comando passato), apri `C:\ProxSpace\runme64.bat` e scrivi una volta
+`cd /pm3/proxmark3 && ./pm3`. Dimmelo e adatto l'icona alla tua versione.
+
+---
+
 ## Tornare a WSL
 
 Quando hai finito con Windows e vuoi riusarlo in Ubuntu:
