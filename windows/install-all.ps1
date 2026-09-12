@@ -67,7 +67,7 @@ if (-not $usbipd) {
 Write-Host "usbipd: $usbipd" -ForegroundColor DarkGray
 
 # --- 2) Bind del Proxmark3 (device deve essere collegato) --------------------
-$list = & $usbipd list
+$list = & $usbipd list | Out-String
 if ($list -notmatch $HardwareId) {
     Write-Warning "Proxmark3 ($HardwareId) non rilevato tra i dispositivi USB."
     Write-Host   "Collega il Proxmark3 alla porta USB e rilancia questo script." -ForegroundColor Yellow
