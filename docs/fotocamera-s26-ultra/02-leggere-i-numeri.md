@@ -6,7 +6,7 @@
 
 La scheda tecnica di un telefono è scritta per il reparto marketing. Questo
 capitolo traduce i cinque numeri che contano davvero, così quando leggi
-"200 MP f/1.4 1/1.3\" con OIS" sai esattamente cosa aspettarti dalla foto.
+"200 MP f/1.4 1/1.3 pollici con OIS" sai esattamente cosa aspettarti dalla foto.
 
 Se hai fretta: **la dimensione del sensore batte i megapixel, l'apertura batte
 i megapixel, e i megapixel non battono quasi niente.**
