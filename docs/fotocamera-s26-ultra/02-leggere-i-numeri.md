@@ -33,6 +33,8 @@ In termini di superficie, molto approssimativamente:
 | Tele 3x 1/3.94" | ~11% |
 | Frontale 1/3.2" | ~17% |
 
+![Le superfici dei sensori in scala reale fra loro. È il motivo per cui il principale vince quasi sempre, e per cui un telefono non sostituisce una macchina fotografica al buio.](figure/sensori.svg)
+
 Ecco perché nel capitolo precedente ripeto che il principale vince: **ha quasi
 quattro volte** la luce degli altri a parità di condizioni.
 
@@ -60,6 +62,8 @@ da 200 MP.
 200 MP → binning 2×2 → 50 MP   con pixel da 1.2 µm
 200 MP →   nessuno   → 200 MP  con pixel da 0.6 µm   ← solo in piena luce
 ```
+
+![Perché 200 megapixel diventano 12. Sedici fotositi da 0.6 µm sommati producono un pixel virtuale da 2.4 µm: l'immagine ha meno pixel e molta meno luce sprecata.](figure/binning.svg)
 
 **La conseguenza pratica:** scattare a 200 MP *non* ti dà "più dettaglio", ti dà
 più pixel. In piena luce quei pixel contengono davvero informazione in più; in
@@ -89,6 +93,8 @@ Sull'S26 Ultra:
 | Ultra-grandangolo | f/1.9 | ~54% |
 | Tele 3x | f/2.4 | ~34% |
 | Tele 5x | f/2.9 | ~23% |
+
+![Quanta luce entra da ciascun obiettivo. Ogni passo pieno della scala dimezza la luce: fra l'f/1.4 del principale e l'f/2.9 del tele 5x c'è più di un fattore quattro.](figure/apertura.svg)
 
 Il principale raccoglie **più di quattro volte** la luce del tele 5x. Somma
 questo al fatto che ha anche quattro volte la superficie di sensore e capisci

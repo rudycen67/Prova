@@ -16,6 +16,8 @@ stabilizzazione che questo telefono ha.
 
 ## 13.1 I tre livelli, dal più leggero al più aggressivo
 
+![I tre livelli di stabilizzazione e quanto costano in campo inquadrato. Horizon Lock vive dentro Super Steady e usa l'area extra catturata per raddrizzare la rotazione, non solo le vibrazioni.](figure/stabilizzazione.svg)
+
 ### Livello 1 — OIS (ottico)
 
 Elementi dell'obiettivo si muovono fisicamente per compensare il tremolio.
@@ -53,6 +55,15 @@ senza accorgersene.
 ## 13.2 Horizon Lock: cosa fa davvero
 
 È un **interruttore dentro Super Steady**, non una modalità separata.
+
+**Dove si trova.** Nell'app la voce si chiama **Super steady con blocco
+orizzontale** e compare toccando **due volte** l'icona Super steady, in alto
+nel mirino. Esiste solo in modalità Video.
+
+![Horizontal lock non è una modalità a sé: è la seconda voce che compare toccando l'icona Super steady, e quindi esiste solo in modalità Video.](figure/percorso-horizon.svg)
+
+Il percorso segue la
+[guida ufficiale Samsung](https://www.samsung.com/us/support/answer/ANS10010423/).
 
 **Il problema che risolve.** Tutte le stabilizzazioni classiche correggono le
 vibrazioni, ma non la **rotazione**: se cammini e il polso ruota, l'inquadratura

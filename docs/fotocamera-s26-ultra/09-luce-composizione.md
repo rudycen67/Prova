@@ -36,15 +36,7 @@ di un albero, di un muro, è una luce morbida gratuita.
 
 Dove sta la luce rispetto al soggetto decide che tipo di immagine ottieni.
 
-```
-       ☀ dietro
-          ↓
-    ╔═════════════╗
-☀ → ║   soggetto  ║ ← ☀
-    ╚═════════════╝
-          ↑
-       ☀ davanti
-```
+![La stessa faccia con la luce nelle quattro posizioni. Non è una questione di quanta luce c'è, ma di da dove arriva: è la luce laterale a dare volume.](figure/luce-direzione.svg)
 
 - **Luce frontale** (sole dietro di te): tutto illuminato, colori pieni,
   **nessun volume**. Piatta. È la luce delle foto "da cartolina" e delle foto

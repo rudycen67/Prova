@@ -100,6 +100,17 @@ non appena spingi il contrasto in correzione.
 Ecco perché **Log e APV sono fatti l'uno per l'altro**: APV è near-lossless e a
 10/12 bit, quindi le gradazioni sopravvivono al viaggio.
 
+**Dove si attiva.** APV e Log stanno nella stessa voce di menu, e il percorso
+ha un passaggio che quasi tutti dimenticano: dopo aver configurato il formato
+bisogna tornare al mirino e **accendere APV dall'icona in alto**. Configurarlo
+e non accenderlo è il motivo più comune per cui "il Log non funziona".
+
+![Il percorso esatto per attivare APV e Log, secondo la guida ufficiale Samsung. Il passaggio che tutti saltano è l'ultimo: dopo aver configurato il formato bisogna ancora accendere APV dall'icona nel mirino.](figure/percorso-apv.svg)
+
+Il percorso segue le guide ufficiali Samsung su
+[APV](https://www.samsung.com/us/support/answer/ANS10010358/) e sul
+[video in Log](https://www.samsung.com/us/support/answer/ANS10010360/).
+
 La combinazione che l'S26 Ultra permette e che nessun altro telefono offre
 oggi:
 

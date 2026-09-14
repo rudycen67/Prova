@@ -37,6 +37,8 @@ Fuori da questi casi, torna in Foto: vincerà lui.
 
 La barra in basso in modalità Pro contiene, da sinistra:
 
+![La barra della modalità Pro. Il tempo di posa è il primo valore da decidere, l'ISO si adatta di conseguenza: invertire l'ordine è l'errore più comune.](figure/pro-panel.svg)
+
 ### ISO — la sensibilità
 
 `ISO 50` … `ISO 3200` (o oltre)
@@ -118,15 +120,14 @@ anche in situazioni semplici.
 
 ## 6.3 L'istogramma: l'unico strumento che non mente
 
-Attiva l'**istogramma** dalle impostazioni della modalità Pro. È un grafico
+Attiva l'**istogramma** dalle impostazioni della modalità Pro. Su questa
+generazione hai in realtà **tre** strumenti di verifica dell'esposizione:
+l'istogramma, le **zebre** (righe diagonali sulle zone sovraesposte) e il
+**falso colore**, che dipinge l'immagine per fasce di luminosità. L'istogramma
+è quello da imparare per primo; le zebre sono le più immediate sul campo. È un grafico
 della distribuzione della luce: a sinistra i neri, a destra i bianchi.
 
-```
- nero ▏▂▃▅▇█▇▅▃▂▏ bianco
-      └── se il grafico è schiacciato a destra
-          e "tocca" il bordo, stai bruciando le luci:
-          quel dettaglio è perso per sempre
-```
+![Come si legge un istogramma in tre secondi. Le ombre ammassate a sinistra si recuperano; le luci attaccate al bordo destro sono perse per sempre.](figure/istogramma.svg)
 
 **Come leggerlo in tre secondi:**
 

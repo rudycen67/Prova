@@ -26,6 +26,8 @@ dal sapere **quale delle quattro stai usando**.
 | **Tele 5x** (periscopio) | 50 MP, 1/2.52" | ~115 mm | f/2.9 | Sì | ~52 cm |
 | **Frontale** | 12 MP, 1/3.2" | ~23 mm | f/2.2 | No | — |
 
+![I quattro obiettivi posteriori a confronto. Il cerchio interno è proporzionale alla luce che ciascuno raccoglie a parità di scena: il principale ne prende oltre quattro volte quella del tele 5x.](figure/obiettivi.svg)
+
 Tre cose saltano all'occhio, e sono le tre che contano:
 
 1. **Il principale è enormemente più grande degli altri.** Un sensore da 1/1.3"

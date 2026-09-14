@@ -28,6 +28,8 @@ sfocato.
 | **~15–30x** | Tele 5x + interpolazione | **Digitale** | Accettabile con luce e treppiede |
 | **oltre 30x** | Ricostruzione | **Algoritmico** | Documentale, non fotografico |
 
+![La scala dello zoom non è continua. I gradini verdi sono ottici, i gialli sono ritagli puliti dal sensore (qualità piena), il grigio è ricostruzione algoritmica.](figure/zoom-scala.svg)
+
 I gradini che contano — quelli da memorizzare e usare — sono **cinque**:
 
 ```

@@ -25,6 +25,7 @@ che mancavano da anni.
 | Istogramma e strumenti di esposizione | No | **Sì** |
 | Touch AF/AE durante la registrazione | — | **Sì** (novità) |
 | Controller esterno TILTA | No | **Sì** (novità) |
+| Mirroring 8K su schermo esterno | No | **Sì** (solo Ultra) |
 
 Le ultime due righe sono le novità di questa generazione e meritano un
 paragrafo ciascuna.
@@ -131,8 +132,9 @@ schermo da telefono, soprattutto in esterni con luce forte.
 
 ### Istogramma e zebre
 
-Accendi l'**istogramma**. Se la tua versione offre le **zebre** (righe diagonali
-sulle zone sovraesposte), accendile pure: sono ancora più immediate.
+Accendi l'**istogramma**. Su questa generazione hai anche le **zebre** (righe
+diagonali sulle zone sovraesposte) e il **falso colore**, che colora l'immagine
+per fasce di luminosità: sul campo sono ancora più immediate dell'istogramma.
 
 **La regola per il video:** le luci bruciate in video sono **irrecuperabili** e
 si notano molto più che in foto, perché il movimento le mette in evidenza. Nel

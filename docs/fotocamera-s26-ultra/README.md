@@ -82,6 +82,20 @@ usando davvero e perché i tuoi video traballano.
 
 ---
 
+## Le figure
+
+Il libro contiene **quindici figure originali** (`figure/*.svg`): mappe
+dell'interfaccia con i comandi numerati, i percorsi dentro i menu, e i
+diagrammi che spiegano sensori, zoom, istogramma, luce, regola dei 180° e
+stabilizzazione.
+
+Non sono catture di schermo del telefono, e non vogliono esserlo: sono schemi
+che evidenziano solo ciò che serve al capitolo. Dove esiste la pagina ufficiale
+Samsung con la schermata vera, il libro la linka — l'elenco è
+nell'[Appendice A](A-specifiche.md#a6-guide-ufficiali-samsung).
+
+---
+
 ## Nota sulle fonti e sulle versioni
 
 Le **specifiche hardware** citate in questo libro (sensori, aperture, focali

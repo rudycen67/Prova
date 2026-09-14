@@ -8,19 +8,33 @@ Questo è il capitolo col miglior rapporto fatica/risultato di tutto il libro.
 Dieci minuti di configurazione una volta sola, e **ogni foto che scatterai da
 qui in avanti sarà migliore** senza che tu debba pensarci.
 
-Apri l'app Fotocamera e tocca l'**ingranaggio** in alto a sinistra.
+Prima di tutto, **dove si apre**. Non c'è un ingranaggio in bella vista: il
+punto d'ingresso sono i **quattro puntini** in alto a sinistra del mirino —
+i *Quick controls*. Toccandoli si apre un pannello di scorciatoie, e dentro
+quel pannello c'è l'icona **Impostazioni**, che porta alla configurazione
+completa.
+
+![La mappa del mirino. I quattro puntini in alto a sinistra sono la porta d'ingresso a tutto: da lì si arriva sia ai controlli rapidi sia alle impostazioni complete.](figure/mirino.svg)
+
+![Cosa si apre dai quattro puntini. Le voci in evidenza sono quelle che cambiano davvero la foto; l'icona dell'ingranaggio in fondo porta alle impostazioni complete.](figure/quick-controls.svg)
 
 > **Nota:** i nomi delle voci cambiano leggermente fra versioni di One UI e
 > fra mercati. Se non trovi una voce dove la cerco io, usa il campo di ricerca
 > nelle impostazioni della fotocamera: la funzione c'è, si è solo spostata.
+> Il percorso qui sopra segue la [guida ufficiale Samsung per l'S26](https://www.samsung.com/us/support/answer/ANS10010343/).
 
 ---
 
 ## 3.1 Le sei impostazioni che devi cambiare
 
+Le impostazioni sono divise in sette sezioni. Questa è la mappa, con le voci
+del capitolo già al loro posto:
+
+![Le sette sezioni delle impostazioni, e dove stanno le voci che il capitolo 3 ti chiede di cambiare. Se una voce non è dove dice lo schema, cercala: One UI le sposta fra una versione e l'altra.](figure/impostazioni.svg)
+
 ### 1. Griglia → **Attiva**
 
-`Impostazioni fotocamera → Griglia`
+`Quattro puntini → Impostazioni → Generali → Griglia`
 
 Divide l'inquadratura in nove riquadri. Serve per due cose: comporre con la
 regola dei terzi (cap. [9](09-luce-composizione.md)) e — molto più importante —
@@ -29,7 +43,7 @@ rumore digitale.
 
 ### 2. Scatto con volume giù → **Scatta foto** (o registra video)
 
-`Impostazioni fotocamera → Modi di scatto → Premi tasto volume per…`
+`Quattro puntini → Impostazioni → Generali → Premi tasto Volume per…`
 
 Premere sullo schermo fa tremare il telefono nel momento peggiore. Il tasto
 fisico del volume è più stabile e molto più veloce da trovare al buio.
@@ -43,21 +57,21 @@ di gruppo.
 
 ### 4. Correzione forma ultra-grandangolo → **Attiva**
 
-`Impostazioni fotocamera → Correzione forma` (o *Correzione distorsione*)
+`Quattro puntini → Impostazioni → Foto → Correzione forma` (o *Correzione distorsione*)
 
 Raddrizza le linee curve ai bordi dello 0.6x. Costa un pelo di campo visivo e
 ne vale sempre la pena, tranne quando l'effetto "fish-eye" lo vuoi apposta.
 
 ### 5. Traccia soggetto (AF tracking) → **Attiva**
 
-`Impostazioni fotocamera → Traccia soggetto AF`
+`Quattro puntini → Impostazioni → Funzioni intelligenti → Traccia soggetto AF`
 
 Una volta che tocchi un soggetto per metterlo a fuoco, il telefono lo insegue
 se si muove. Cambia completamente le foto di persone e animali.
 
 ### 6. Formati avanzati → **decidi con cognizione**
 
-`Impostazioni fotocamera → Formati e opzioni avanzate`
+`Quattro puntini → Impostazioni → Foto` (immagini) e `→ Video` (filmati)
 
 Qui trovi quattro interruttori importanti:
 

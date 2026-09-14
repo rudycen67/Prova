@@ -84,7 +84,21 @@ Pittura a olio · Anime · Pastello · Fumetto · Sci-Fi
 
 ---
 
-## A.6 Riferimenti
+## A.6 Guide ufficiali Samsung
+
+Le pagine di supporto Samsung dedicate all'S26, utili quando cerchi il percorso
+esatto dentro i menu (i nomi delle voci lì sono quelli veri):
+
+- [Usare le funzioni della fotocamera su Galaxy S26](https://www.samsung.com/us/support/answer/ANS10010343/)
+- [Modalità e impostazioni della fotocamera](https://www.samsung.com/us/support/answer/ANS10001353/)
+- [Usare Advanced Professional Video (APV) su S26 Ultra](https://www.samsung.com/us/support/answer/ANS10010358/)
+- [Registrare video in Log](https://www.samsung.com/us/support/answer/ANS10010360/)
+- [Usare il blocco orizzontale (Horizontal lock)](https://www.samsung.com/us/support/answer/ANS10010423/)
+- [Come usare la modalità Pro](https://www.samsung.com/ae/support/mobile-devices/how-to-use-the-cameras-pro-mode-on-samsung-galaxy-phones/)
+
+---
+
+## A.7 Riferimenti
 
 Specifiche verificate al settembre 2026 su:
 
@@ -100,7 +114,13 @@ Specifiche verificate al settembre 2026 su:
 > focale di riferimento della principale.
 >
 > I **nomi delle voci di menu** possono variare con la versione di One UI, con
-> il mercato e con gli aggiornamenti dell'app Fotocamera.
+> il mercato e con gli aggiornamenti dell'app Fotocamera. I percorsi indicati
+> nel libro seguono le guide ufficiali elencate in A.6.
+>
+> **Le figure del libro sono disegni originali**, non catture dell'interfaccia:
+> riproducono la struttura descritta dalle guide ufficiali, evidenziando solo
+> ciò che serve al capitolo. Per l'aspetto reale di una schermata, i link di
+> A.6 portano alle pagine Samsung.
 
 ---
 

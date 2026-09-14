@@ -94,6 +94,8 @@ fotogramma dovrebbe essere circa **il doppio del frame rate**:
 | 60 fps | 1/120 s |
 | 120 fps | 1/240 s |
 
+![La regola dei 180°: il tempo di posa è circa il doppio del frame rate. Tenerla produce il mosso di movimento che il cervello legge come «cinema»; allontanarsene produce scatto o impasto.](figure/regola-180.svg)
+
 **Perché:** con questo rapporto il movimento ha la quantità "giusta" di mosso.
 Con un tempo molto più breve (1/1000 s a 24 fps) il movimento diventa
 scattoso e artificiale — l'effetto "sbarco in Normandia" di *Salvate il
