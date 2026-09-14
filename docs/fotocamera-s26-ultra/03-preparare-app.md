@@ -9,10 +9,13 @@ Dieci minuti di configurazione una volta sola, e **ogni foto che scatterai da
 qui in avanti sarà migliore** senza che tu debba pensarci.
 
 Prima di tutto, **dove si apre**. Non c'è un ingranaggio in bella vista: il
-punto d'ingresso sono i **quattro puntini** in alto a sinistra del mirino —
-i *Quick controls*. Toccandoli si apre un pannello di scorciatoie, e dentro
-quel pannello c'è l'icona **Impostazioni**, che porta alla configurazione
-completa.
+punto d'ingresso sono i **quattro puntini in basso a destra**, in fondo alla
+riga delle pillole dello zoom — i *Quick controls*. Toccandoli si apre un
+pannello di scorciatoie, e dentro quel pannello c'è l'icona **Impostazioni**,
+che porta alla configurazione completa.
+
+È il comando meno evidente e più importante dell'app: sta in basso, defilato,
+e non assomiglia per niente a un menu.
 
 ![La mappa del mirino. I quattro puntini in alto a sinistra sono la porta d'ingresso a tutto: da lì si arriva sia ai controlli rapidi sia alle impostazioni complete.](figure/mirino.svg)
 
@@ -34,7 +37,7 @@ del capitolo già al loro posto:
 
 ### 1. Griglia → **Attiva**
 
-`Quattro puntini → Impostazioni → Generali → Griglia`
+`Quattro puntini (in basso a destra) → Impostazioni → Generali → Griglia`
 
 Divide l'inquadratura in nove riquadri. Serve per due cose: comporre con la
 regola dei terzi (cap. [9](09-luce-composizione.md)) e — molto più importante —

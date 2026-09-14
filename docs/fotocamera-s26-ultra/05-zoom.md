@@ -108,10 +108,16 @@ Per quella c'è il [capitolo 7](07-expert-raw.md).
 
 ## 5.5 Come si passa da un obiettivo all'altro (e come evitare che lo faccia lui)
 
-I numeri fissi sul mirino (0.6 / 1 / 3 / 5) selezionano l'obiettivo in modo
-diretto. Il **cursore continuo**, invece, lascia decidere al telefono: e il
-telefono, in poca luce, decide spesso di **non** usare il tele e di ritagliare
-dal principale, perché sa che il sensore piccolo renderebbe peggio.
+Le pillole fisse sul mirino sono **sei**: `.6` · `1×` · `2` · `3` · `5` · `10`.
+Nota che Samsung ci mette dentro anche il **2** e il **10**, che non sono
+obiettivi ma ritagli dal sensore: è la conferma, dentro l'interfaccia stessa,
+che quei due gradini sono di prima qualità.
+
+Toccare una pillola seleziona quel gradino in modo diretto. Il **cursore
+continuo** (si ottiene pizzicando o trascinando sulla riga) lascia invece
+decidere al telefono: e il telefono, in poca luce, decide spesso di **non**
+usare il tele e di ritagliare dal principale, perché sa che il sensore piccolo
+renderebbe peggio.
 
 Questo produce il comportamento che confonde tutti: *"ho messo 3x ma la foto
 sembra un ingrandimento digitale"*. Spesso lo è davvero — ed è stata la scelta
