@@ -2,14 +2,14 @@
 title Crea podcast
 REM ============================================================
 REM  CREA-PODCAST : trasforma un copione di testo in un episodio MP3
-REM  con voci neurali italiane.
+REM  con voci neurali.
 REM
 REM  Doppio clic su questo file, poi trascina dentro alla finestra
 REM  il copione (.md o .txt) e premi Invio.
 REM
 REM  Requisiti (una volta sola):
 REM   - Python 3 installato da python.org (spunta "Add to PATH")
-REM   - la libreria delle voci:  pip install edge-tts
+REM   - la libreria delle voci: la installa da solo al primo avvio
 REM ============================================================
 setlocal
 
@@ -35,6 +35,7 @@ if errorlevel 1 (
   )
 )
 
+REM --- Quale copione ---
 set "COPIONE=%~1"
 if "%COPIONE%"=="" (
   echo.
@@ -53,6 +54,49 @@ if not exist "%COPIONE%" (
   exit /b 1
 )
 
-python "%~dp0crea-podcast.py" "%COPIONE%"
+REM --- Quali voci ---
+echo.
+echo   [1] Voci gratuite ^(nessuna chiave, buona qualita'^)   ^<-- predefinito
+echo   [2] Voci ElevenLabs ^(massimo realismo, serve un account^)
+echo.
+set "SCELTA="
+set /p "SCELTA=Scegli e premi Invio [1]: "
+
+if not "%SCELTA%"=="2" (
+  python "%~dp0crea-podcast.py" "%COPIONE%"
+  echo.
+  pause
+  exit /b 0
+)
+
+REM --- ElevenLabs: la chiave si chiede una volta sola ---
+if exist "%~dp0chiave-elevenlabs.txt" goto :genera
+
+echo.
+echo Serve la tua chiave personale ElevenLabs. Si prende cosi':
+echo   1. vai su https://elevenlabs.io e accedi ^(il piano gratuito basta^)
+echo   2. clicca l'icona del profilo in alto a destra, poi "API keys"
+echo   3. copia la chiave e incollala qui sotto
+echo      ^(per incollare: tasto destro dentro questa finestra^)
+echo.
+set "CHIAVE="
+set /p "CHIAVE=Chiave: "
+if "%CHIAVE%"=="" goto :senzachiave
+
+> "%~dp0chiave-elevenlabs.txt" echo %CHIAVE%
+echo.
+echo [i] Chiave salvata in chiave-elevenlabs.txt
+echo     Resta sul tuo computer e non viene caricata su GitHub.
+echo     Non te la chiedo piu': per cambiarla, cancella quel file.
+
+:genera
+python "%~dp0crea-podcast.py" "%COPIONE%" -m elevenlabs
 echo.
 pause
+exit /b 0
+
+:senzachiave
+echo [X] Nessuna chiave inserita.
+echo.
+pause
+exit /b 1

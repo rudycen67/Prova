@@ -22,8 +22,11 @@ Il copione e' un semplice file di testo con le battute marcate dal nome di chi p
 
 Motori disponibili:
     edge        (predefinito) voci neurali Microsoft, gratuite, nessuna chiave
-    elevenlabs  massimo realismo, richiede ELEVENLABS_API_KEY
-    openai      buona qualita' e regia recitativa, richiede OPENAI_API_KEY
+    elevenlabs  massimo realismo, chiave in chiave-elevenlabs.txt
+    openai      buona qualita' e regia recitativa, chiave in chiave-openai.txt
+
+La chiave dei servizi a pagamento si incolla in un file di testo accanto a questo
+script; in alternativa vale la solita variabile d'ambiente.
 """
 
 import argparse
@@ -331,6 +334,85 @@ def _proxy():
     return os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
 
 
+# Servizi a pagamento: (variabile d'ambiente, file con la chiave, nome, dove si prende)
+CHIAVI = {
+    "elevenlabs": (
+        "ELEVENLABS_API_KEY", "chiave-elevenlabs.txt", "ElevenLabs",
+        "https://elevenlabs.io  ->  icona del profilo in alto a destra  ->  API keys",
+    ),
+    "openai": (
+        "OPENAI_API_KEY", "chiave-openai.txt", "OpenAI",
+        "https://platform.openai.com/api-keys",
+    ),
+}
+
+
+def _chiave(motore):
+    """Trova la chiave del servizio: prima l'ambiente, poi il file accanto allo script."""
+    variabile, nome_file, servizio, dove = CHIAVI[motore]
+
+    dall_ambiente = (os.environ.get(variabile) or "").strip()
+    if dall_ambiente:
+        return dall_ambiente
+
+    cartella_script = Path(__file__).resolve().parent
+    for cartella in (cartella_script, Path.cwd()):
+        percorso = cartella / nome_file
+        if not percorso.is_file():
+            continue
+        for riga in percorso.read_text(encoding="utf-8").splitlines():
+            riga = riga.strip()
+            if not riga or riga.startswith("#"):
+                continue
+            if "=" in riga:                    # tollera "ELEVENLABS_API_KEY=xxx"
+                riga = riga.split("=", 1)[1].strip()
+            return riga.strip("'\"")
+
+    raise SystemExit(
+        f"\nPer usare le voci {servizio} serve la tua chiave personale.\n\n"
+        f"  1. Apri {dove}\n"
+        f"  2. Copia la chiave.\n"
+        f"  3. Incollala dentro a questo file (creandolo):\n"
+        f"       {cartella_script / nome_file}\n\n"
+        f"Il file resta sul tuo computer: e' gia' escluso da Git.\n"
+        f"In Windows puoi anche fare doppio clic su CREA-PODCAST.cmd e scegliere\n"
+        f"{servizio}: la chiave te la chiede lui e la salva al posto tuo.\n"
+    )
+
+
+# Gli ID voce di ElevenLabs sono 20 caratteri alfanumerici: tutto il resto e' un nome.
+RE_ID_ELEVENLABS = re.compile(r"[A-Za-z0-9]{20}")
+
+
+def _elenco_voci_elevenlabs(chiave):
+    richiesta = urllib.request.Request(
+        "https://api.elevenlabs.io/v1/voices", headers={"xi-api-key": chiave}
+    )
+    with urllib.request.urlopen(richiesta, timeout=60) as risposta:
+        return json.load(risposta).get("voices", [])
+
+
+def risolvi_voci_elevenlabs(voci):
+    """Permette di scrivere in 'voci:' il nome della voce invece del suo ID."""
+    da_risolvere = {chi: v for chi, v in voci.items() if not RE_ID_ELEVENLABS.fullmatch(v)}
+    if not da_risolvere:
+        return voci
+
+    disponibili = _elenco_voci_elevenlabs(_chiave("elevenlabs"))
+    per_nome = {v["name"].strip().lower(): v["voice_id"] for v in disponibili}
+
+    for chi, nome in da_risolvere.items():
+        trovata = per_nome.get(nome.strip().lower())
+        if not trovata:
+            elenco = ", ".join(sorted(v["name"] for v in disponibili)) or "(nessuna)"
+            raise SystemExit(
+                f"\nVoce \"{nome}\" non trovata nel tuo account ElevenLabs.\n"
+                f"Voci disponibili: {elenco}\n"
+            )
+        voci[chi] = trovata
+    return voci
+
+
 def _normalizza_percentuale(valore, predefinito="+0%"):
     if not valore:
         return predefinito
@@ -368,9 +450,7 @@ def _richiesta_http(url, corpo, intestazioni):
 
 
 async def _sintesi_elevenlabs(battuta, voce, globali):
-    chiave = os.environ.get("ELEVENLABS_API_KEY")
-    if not chiave:
-        raise SystemExit("Manca ELEVENLABS_API_KEY nell'ambiente.")
+    chiave = _chiave("elevenlabs")
     corpo = json.dumps({
         "text": battuta.testo,
         "model_id": globali.get("modello") or "eleven_multilingual_v2",
@@ -390,9 +470,7 @@ async def _sintesi_elevenlabs(battuta, voce, globali):
 
 
 async def _sintesi_openai(battuta, voce, globali):
-    chiave = os.environ.get("OPENAI_API_KEY")
-    if not chiave:
-        raise SystemExit("Manca OPENAI_API_KEY nell'ambiente.")
+    chiave = _chiave("openai")
     payload = {
         "model": globali.get("modello") or "gpt-4o-mini-tts",
         "voice": voce,
@@ -466,17 +544,12 @@ async def elenca_voci(motore):
             print(f"  {voce['ShortName']:38} {genere}")
         print(f"\nTotale voci in tutte le lingue: {len(voci)}")
     elif motore == "elevenlabs":
-        chiave = os.environ.get("ELEVENLABS_API_KEY")
-        if not chiave:
-            raise SystemExit("Manca ELEVENLABS_API_KEY nell'ambiente.")
-        richiesta = urllib.request.Request(
-            "https://api.elevenlabs.io/v1/voices", headers={"xi-api-key": chiave}
-        )
-        with urllib.request.urlopen(richiesta, timeout=60) as risposta:
-            dati = json.load(risposta)
+        disponibili = _elenco_voci_elevenlabs(_chiave("elevenlabs"))
         print("Voci ElevenLabs del tuo account:\n")
-        for voce in dati.get("voices", []):
-            print(f"  {voce['voice_id']:26} {voce['name']}")
+        for voce in sorted(disponibili, key=lambda v: v["name"]):
+            print(f"  {voce['name']:24} {voce.get('labels', {}).get('description', '')}")
+        print("\nNel copione basta scrivere il nome, per esempio:  ANNA: "
+              f"{disponibili[0]['name'] if disponibili else 'Sarah'}")
     else:
         print("Voci OpenAI: alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer")
 
@@ -520,6 +593,8 @@ def main():
 
     meta, elementi = leggi_copione(percorso)
     voci = assegna_voci(meta, elementi, argomenti.motore)
+    if argomenti.motore == "elevenlabs":
+        voci = risolvi_voci_elevenlabs(voci)
     globali = {k: v for k, v in meta.items() if k != "voci"}
 
     uscita = Path(argomenti.out) if argomenti.out else percorso.with_suffix(".mp3")

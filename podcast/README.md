@@ -82,26 +82,58 @@ femminile e una maschile.
 
 ---
 
-## Se vuoi il massimo realismo
+## Se vuoi il massimo realismo (ElevenLabs)
 
 Le voci gratuite sono buone. Per la qualita' da podcast pubblicato si cambia
-motore, tenendo lo **stesso identico copione**:
+motore, tenendo lo **stesso identico copione**.
+
+ElevenLabs e' un servizio esterno: ti dai un account e lui ti da' una *chiave*,
+cioe' una lunga riga di caratteri che identifica te. Serve perche' le loro voci,
+a differenza di quelle gratuite, sono legate a un account.
+
+**Come si prende, una volta sola:**
+
+1. Vai su [elevenlabs.io](https://elevenlabs.io) e crea un account — il piano
+   gratuito basta per provare.
+2. Clicca l'icona del profilo in alto a destra, poi **API keys**.
+3. Copia la chiave e incollala dentro a un file di testo chiamato
+   **`chiave-elevenlabs.txt`**, in questa stessa cartella.
+
+Tutto qui. Il file resta sul tuo computer ed e' gia' escluso da Git, quindi non
+finisce su GitHub. Da quel momento:
 
 ```bash
-export ELEVENLABS_API_KEY="..."      # voci le piu' realistiche in circolazione
 python3 crea-podcast.py copione.md -m elevenlabs
-
-export OPENAI_API_KEY="..."          # buona resa e regia recitativa
-python3 crea-podcast.py copione.md -m openai
 ```
 
-Con ElevenLabs, in `voci:` metti gli ID delle voci (`--voci -m elevenlabs` te li
-elenca). Con OpenAI metti i nomi (`nova`, `onyx`, `shimmer`, `sage`...) e puoi
-aggiungere la direzione d'attore:
+In Windows non devi nemmeno creare il file a mano: fai doppio clic su
+`CREA-PODCAST.cmd`, scegli **[2] ElevenLabs**, incolla la chiave quando te la
+chiede e la salva lui.
+
+> Se preferisci la variabile d'ambiente classica (`ELEVENLABS_API_KEY`) funziona
+> ancora e ha la precedenza sul file.
+
+**Quali voci usare:** `python3 crea-podcast.py --voci -m elevenlabs` elenca quelle
+del tuo account. Nel copione scrivi direttamente il nome, non l'ID:
+
+```markdown
+voci:
+  ANNA: Sarah
+  MARCO: Daniel
+```
+
+Scegli dalla libreria ElevenLabs voci *italiane*: il modello parla italiano con
+qualunque voce, ma una voce nata in inglese si porta dietro un accento.
+
+### OpenAI
+
+Stessa logica, con `chiave-openai.txt` ([le chiavi si prendono
+qui](https://platform.openai.com/api-keys)). Le voci si chiamano per nome
+(`nova`, `onyx`, `shimmer`, `sage`...) e in piu' puoi dare la direzione d'attore:
 
 ```markdown
 ---
-regia: Tono confidenziale, come se stessi raccontando un segreto a un amico.
+regia: Tono confidenziale, come se raccontassi un segreto a un amico.
 voci:
   ANNA: nova
 ---

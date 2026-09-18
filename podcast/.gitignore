@@ -1,4 +1,5 @@
-# Gli episodi generati non finiscono nel repository.
+# Gli episodi generati e le chiavi personali non finiscono nel repository.
 *.mp3
 *.wav
+chiave-*.txt
 __pycache__/
