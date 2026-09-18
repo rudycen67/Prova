@@ -47,7 +47,14 @@ wsl/       → script Bash (dentro Ubuntu/WSL)
 docs/
   guida-completa.md   guida dettagliata passo-passo con note e troubleshooting
   windows-nativo.md   client Iceman nativo su Windows (letture LF affidabili)
+
+podcast/   → strumento a se' stante: da un copione di testo a un episodio MP3
+  crea-podcast.py     genera l'audio con voci neurali italiane
+  CREA-PODCAST.cmd    doppio clic in Windows
 ```
+
+> Il contenuto di `podcast/` non c'entra con il Proxmark3: e' un piccolo
+> generatore di podcast con voci AI. Istruzioni in [`podcast/README.md`](podcast/README.md).
 
 > **Letture LF/dump inaffidabili in WSL?** Il tunnel usbipd fatica con i
 > trasferimenti pesanti. Per leggere/clonare tessere in modo affidabile usa il

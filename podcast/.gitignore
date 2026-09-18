@@ -1,0 +1,4 @@
+# Gli episodi generati non finiscono nel repository.
+*.mp3
+*.wav
+__pycache__/
