@@ -8,8 +8,12 @@ argomento  ->  copione (.md)  ->  crea-podcast.py  ->  episodio.mp3
    tu            io                  le voci
 ```
 
-Ascolta `esempi/esempio-rfid.md` per capire il risultato: due voci, due minuti,
-un concetto spiegato.
+Nella cartella `esempi/` ci sono i due formati che funzionano meglio:
+
+| Esempio | Formato | Quando usarlo |
+|---|---|---|
+| `esempio-rfid.md` | **dialogo** a due voci | spiegare come funziona qualcosa: chi ascolta si appoggia al botta e risposta |
+| `esempio-monologo.md` | **monologo** a una voce | raccontare una storia o una vita: e' il formato di *Founders*, ritmo serrato e frasi corte |
 
 ---
 
@@ -145,16 +149,26 @@ voci:
 
 Qualche regola che uso quando scrivo i copioni:
 
-- **Apri con una cosa concreta**, non con una definizione. "Hai in tasca una
-  tessera" batte "L'RFID e' una tecnologia di identificazione".
-- **Due voci che si parlano addosso** stancano meno di una che spiega da sola:
-  chi ascolta si appoggia al dialogo.
+- **Apri con una cosa concreta**, non con una definizione. "Dieci posti, un
+  bancone, sotto una stazione della metropolitana" batte "Jiro Ono e' un noto
+  cuoco giapponese".
 - **Una sola idea per battuta.** Se una riga contiene due concetti, spezzala.
+  E' anche il motivo per cui le frasi corte suonano meglio: la voce prende fiato
+  dove finisce la riga.
 - **Le pause sono contenuto.** `[pausa 800]` prima di una rivelazione vale piu'
   di un aggettivo.
 - **Chiudi con la frase che resta**, non con un riassunto.
 
-Dieci minuti di episodio sono circa 1400 parole.
+Nel **monologo** in piu': rallenta le frasi che devono pesare
+(`VOCE(rate=-5%):`), ripeti la frase chiave da sola su una riga, e parla a
+*te*, non a "voi". Nel **dialogo**: chi fa le domande non deve essere finto,
+deve dire quello che penserebbe chi ascolta.
+
+I numeri scritti in cifre vengono letti male: nei copioni scrivo
+`millenovecentosessantacinque`, non `1965`.
+
+Dieci minuti di episodio sono circa 1400 parole. Il monologo d'esempio, 3400
+caratteri, dura quattro minuti.
 
 ---
 
