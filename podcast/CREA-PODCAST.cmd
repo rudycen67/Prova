@@ -1,8 +1,8 @@
 @echo off
 title Crea podcast
 REM ============================================================
-REM  CREA-PODCAST : trasforma un copione di testo in un episodio MP3
-REM  con voci neurali.
+REM  CREA-PODCAST : trasforma un copione di testo in un episodio
+REM  audio con voci neurali.
 REM
 REM  Doppio clic su questo file, poi trascina dentro alla finestra
 REM  il copione (.md o .txt) e premi Invio.
@@ -56,22 +56,42 @@ if not exist "%COPIONE%" (
 
 REM --- Quali voci ---
 echo.
-echo   [1] Voci gratuite ^(nessuna chiave, buona qualita'^)   ^<-- predefinito
-echo   [2] Voci ElevenLabs ^(massimo realismo, serve un account^)
+echo   [1] Voci gratuite          nessuna chiave, buona qualita'   ^<-- predefinito
+echo   [2] Voci Google            piu' espressive, si dirigono a parole
+echo   [3] Voci ElevenLabs        massimo realismo
 echo.
 set "SCELTA="
 set /p "SCELTA=Scegli e premi Invio [1]: "
 
-if not "%SCELTA%"=="2" (
-  python "%~dp0crea-podcast.py" "%COPIONE%"
-  echo.
-  pause
-  exit /b 0
-)
+if "%SCELTA%"=="2" goto :google
+if "%SCELTA%"=="3" goto :eleven
 
-REM --- ElevenLabs: la chiave si chiede una volta sola ---
-if exist "%~dp0chiave-elevenlabs.txt" goto :genera
+python "%~dp0crea-podcast.py" "%COPIONE%"
+goto :fine
 
+
+:google
+if exist "%~dp0chiave-google.txt" goto :google_vai
+echo.
+echo Serve una chiave Google, gratuita. Si prende cosi':
+echo   1. vai su https://aistudio.google.com/apikey e accedi col tuo account Google
+echo   2. clicca "Create API key"
+echo   3. copia la chiave e incollala qui sotto
+echo      ^(per incollare: tasto destro dentro questa finestra^)
+echo.
+set "CHIAVE="
+set /p "CHIAVE=Chiave: "
+if "%CHIAVE%"=="" goto :senzachiave
+> "%~dp0chiave-google.txt" echo %CHIAVE%
+echo.
+echo [i] Chiave salvata in chiave-google.txt ^(resta sul tuo computer^).
+:google_vai
+python "%~dp0crea-podcast.py" "%COPIONE%" -m google
+goto :fine
+
+
+:eleven
+if exist "%~dp0chiave-elevenlabs.txt" goto :eleven_vai
 echo.
 echo Serve la tua chiave personale ElevenLabs. Si prende cosi':
 echo   1. vai su https://elevenlabs.io e accedi ^(il piano gratuito basta^)
@@ -82,15 +102,15 @@ echo.
 set "CHIAVE="
 set /p "CHIAVE=Chiave: "
 if "%CHIAVE%"=="" goto :senzachiave
-
 > "%~dp0chiave-elevenlabs.txt" echo %CHIAVE%
 echo.
-echo [i] Chiave salvata in chiave-elevenlabs.txt
-echo     Resta sul tuo computer e non viene caricata su GitHub.
-echo     Non te la chiedo piu': per cambiarla, cancella quel file.
-
-:genera
+echo [i] Chiave salvata in chiave-elevenlabs.txt ^(resta sul tuo computer^).
+:eleven_vai
 python "%~dp0crea-podcast.py" "%COPIONE%" -m elevenlabs
+goto :fine
+
+
+:fine
 echo.
 pause
 exit /b 0

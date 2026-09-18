@@ -62,6 +62,8 @@ ANNA(rate=-5%): Pero' dentro non c'e' nessuna batteria.
 |---|---|
 | `titolo:` | nome dell'episodio (compare nel riepilogo) |
 | `voci:` | quale voce usa ogni personaggio |
+| `voci_google:` | le voci da usare **solo** con `-m google` (stessa cosa per `voci_elevenlabs:` e `voci_openai:`), cosi' lo stesso copione gira su tutti i motori |
+| `regia:` | come deve suonare, detto a parole — vale per `google` e `openai` |
 | `velocita:` | ritmo generale, es. `+4%` (piu' svelto) o `-5%` (piu' calmo) |
 | `tono:` | altezza della voce, es. `-2Hz` |
 | `pausa_battute:` | respiro fra una battuta e l'altra, in millisecondi (350) |
@@ -86,64 +88,80 @@ femminile e una maschile.
 
 ---
 
-## Se vuoi il massimo realismo (ElevenLabs)
+## Voci piu' espressive: Google, ElevenLabs, OpenAI
 
-Le voci gratuite sono buone. Per la qualita' da podcast pubblicato si cambia
-motore, tenendo lo **stesso identico copione**.
+Le voci gratuite sono buone ma **cordiali per costruzione**: qualunque cosa
+scrivi, te la leggono con la stessa gentilezza. Se ti serve intensita' — un
+monologo che incalza, un tono confidenziale — serve un motore che accetti la
+*regia*, cioe' la direzione d'attore.
 
-ElevenLabs e' un servizio esterno: ti dai un account e lui ti da' una *chiave*,
-cioe' una lunga riga di caratteri che identifica te. Serve perche' le loro voci,
-a differenza di quelle gratuite, sono legate a un account.
+Il copione resta identico: cambia solo il motore.
 
-**Come si prende, una volta sola:**
+| Motore | Costo | Cosa ti da' in piu' |
+|---|---|---|
+| **google** | chiave gratuita | il tono si dirige **a parole**; 30 voci |
+| **elevenlabs** | account, piano gratuito per provare | le voci piu' realistiche in assoluto |
+| **openai** | a consumo | regia recitativa, buona resa |
 
-1. Vai su [elevenlabs.io](https://elevenlabs.io) e crea un account — il piano
-   gratuito basta per provare.
-2. Clicca l'icona del profilo in alto a destra, poi **API keys**.
-3. Copia la chiave e incollala dentro a un file di testo chiamato
-   **`chiave-elevenlabs.txt`**, in questa stessa cartella.
+### Google (consigliato per iniziare)
 
-Tutto qui. Il file resta sul tuo computer ed e' gia' escluso da Git, quindi non
-finisce su GitHub. Da quel momento:
+1. Vai su [aistudio.google.com/apikey](https://aistudio.google.com/apikey) e
+   accedi col tuo account Google.
+2. Clicca **Create API key** e copia la chiave.
+3. Incollala in un file **`chiave-google.txt`** in questa cartella.
+
+```bash
+python3 crea-podcast.py copione.md -m google
+python3 crea-podcast.py --voci -m google        # le 30 voci e il loro carattere
+```
+
+La differenza vera e' la riga `regia:` nell'intestazione del copione: descrivi
+a parole come vuoi che suoni, e la voce ti segue.
+
+```markdown
+---
+regia: Leggi come un narratore appassionato che sta convincendo un amico a cambiare vita, ritmo incalzante, abbassando la voce sulle frasi che pesano
+voci:
+  VOCE: Algenib
+---
+```
+
+Puoi anche dare indicazioni dentro al testo, fra parentesi quadre:
+`[sussurrando]`, `[lentamente]`, `[con entusiasmo]`.
+
+Voci adatte a un monologo: **Algenib** (roca), **Sadaltager** (competente),
+**Gacrux** (matura), **Charon** (informativa). Per il dialogo: **Sulafat**
+(calda), **Achird** (amichevole), **Zubenelgenubi** (informale).
+
+> Con Google l'episodio esce in **WAV** invece che MP3: le loro voci
+> restituiscono audio grezzo, non compresso. Si ascolta ovunque, pesa di piu'.
+> Anche `velocita:` e `tono:` non valgono qui — il ritmo si chiede nella `regia:`.
+
+### ElevenLabs
+
+Account su [elevenlabs.io](https://elevenlabs.io), icona del profilo in alto a
+destra, **API keys**, e la chiave va in **`chiave-elevenlabs.txt`**.
 
 ```bash
 python3 crea-podcast.py copione.md -m elevenlabs
+python3 crea-podcast.py --voci -m elevenlabs     # le voci del tuo account
 ```
 
-In Windows non devi nemmeno creare il file a mano: fai doppio clic su
-`CREA-PODCAST.cmd`, scegli **[2] ElevenLabs**, incolla la chiave quando te la
-chiede e la salva lui.
-
-> Se preferisci la variabile d'ambiente classica (`ELEVENLABS_API_KEY`) funziona
-> ancora e ha la precedenza sul file.
-
-**Quali voci usare:** `python3 crea-podcast.py --voci -m elevenlabs` elenca quelle
-del tuo account. Nel copione scrivi direttamente il nome, non l'ID:
-
-```markdown
-voci:
-  ANNA: Sarah
-  MARCO: Daniel
-```
-
-Scegli dalla libreria ElevenLabs voci *italiane*: il modello parla italiano con
-qualunque voce, ma una voce nata in inglese si porta dietro un accento.
+Nel copione scrivi il nome della voce, non l'ID: `ANNA: Sarah`. Scegli dalla
+libreria voci *italiane* — il modello parla italiano con qualunque voce, ma una
+voce nata in inglese si porta dietro l'accento.
 
 ### OpenAI
 
-Stessa logica, con `chiave-openai.txt` ([le chiavi si prendono
-qui](https://platform.openai.com/api-keys)). Le voci si chiamano per nome
-(`nova`, `onyx`, `shimmer`, `sage`...) e in piu' puoi dare la direzione d'attore:
+Chiave da [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+in **`chiave-openai.txt`**. Le voci si chiamano per nome (`nova`, `onyx`,
+`shimmer`, `sage`...) e vale la stessa riga `regia:`.
 
-```markdown
----
-regia: Tono confidenziale, come se raccontassi un segreto a un amico.
-voci:
-  ANNA: nova
----
-```
-
----
+> In Windows non devi creare nessun file a mano: doppio clic su
+> `CREA-PODCAST.cmd`, scegli il motore, incolla la chiave quando te la chiede.
+> I file delle chiavi restano sul tuo computer e sono esclusi da Git.
+> Se preferisci le variabili d'ambiente classiche (`GEMINI_API_KEY`,
+> `ELEVENLABS_API_KEY`, `OPENAI_API_KEY`) funzionano e hanno la precedenza.
 
 ## Cosa fa funzionare un episodio
 

@@ -2,9 +2,12 @@
 titolo: Jiro Ono - la semplicita' e' il vantaggio supremo
 voci:
   VOCE: it-IT-GiuseppeMultilingualNeural
+voci_google:
+  VOCE: Algenib
 velocita: +6%
 tono: -2Hz
 pausa_battute: 280
+regia: Leggi come un narratore appassionato che sta convincendo un amico a cambiare vita, ritmo incalzante e frasi scandite, abbassando la voce sulle frasi che pesano
 ---
 
 # Formato monologo: una voce sola, ritmo serrato, frasi corte.

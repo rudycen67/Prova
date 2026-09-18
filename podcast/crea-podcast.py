@@ -22,6 +22,7 @@ Il copione e' un semplice file di testo con le battute marcate dal nome di chi p
 
 Motori disponibili:
     edge        (predefinito) voci neurali Microsoft, gratuite, nessuna chiave
+    google      voci Gemini, si dirigono a parole, chiave in chiave-google.txt
     elevenlabs  massimo realismo, chiave in chiave-elevenlabs.txt
     openai      buona qualita' e regia recitativa, chiave in chiave-openai.txt
 
@@ -31,6 +32,7 @@ script; in alternativa vale la solita variabile d'ambiente.
 
 import argparse
 import asyncio
+import base64
 import json
 import os
 import re
@@ -50,7 +52,31 @@ VOCI_PREDEFINITE = {
     },
     "elevenlabs": {"F": "EXAVITQu4vr4xnSDxMaL", "M": "onwK4e9ZLuTAKqWW03F9"},
     "openai": {"F": "shimmer", "M": "onyx"},
+    "google": {"F": "Sulafat", "M": "Charon"},
 }
+
+# Google restituisce PCM grezzo, non MP3: quegli episodi escono in WAV.
+FORMATO = {"edge": "mp3", "elevenlabs": "mp3", "openai": "mp3", "google": "wav"}
+
+# Quante battute insieme: Google ha limiti di frequenza piu' stretti.
+PARALLELE_PER_MOTORE = {"edge": 4, "elevenlabs": 3, "openai": 3, "google": 2}
+
+MODELLI_GOOGLE = ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
+
+# Le 30 voci Gemini, con il carattere dichiarato da Google.
+VOCI_GOOGLE = [
+    ("Zephyr", "brillante"), ("Puck", "vivace"), ("Charon", "informativa"),
+    ("Kore", "decisa"), ("Fenrir", "eccitabile"), ("Leda", "giovane"),
+    ("Orus", "decisa"), ("Aoede", "leggera"), ("Callirrhoe", "rilassata"),
+    ("Autonoe", "brillante"), ("Enceladus", "sussurrata"), ("Iapetus", "nitida"),
+    ("Umbriel", "rilassata"), ("Algieba", "morbida"), ("Despina", "morbida"),
+    ("Erinome", "nitida"), ("Algenib", "roca"), ("Rasalgethi", "informativa"),
+    ("Laomedeia", "vivace"), ("Achernar", "delicata"), ("Alnilam", "decisa"),
+    ("Schedar", "regolare"), ("Gacrux", "matura"), ("Pulcherrima", "diretta"),
+    ("Achird", "amichevole"), ("Zubenelgenubi", "informale"),
+    ("Vindemiatrix", "gentile"), ("Sadachbia", "briosa"),
+    ("Sadaltager", "competente"), ("Sulafat", "calda"),
+]
 
 PAUSA_BATTUTE_MS = 350      # respiro fra una battuta e l'altra
 PAUSA_PREDEFINITA_MS = 600  # valore di [pausa] senza numero
@@ -199,7 +225,12 @@ def leggi_copione(percorso):
 
 def assegna_voci(meta, elementi, motore):
     """Decide quale voce usa ogni personaggio, anche se il copione non lo dice."""
+    # Ogni motore ha nomi di voce suoi: "voci:" vale per tutti, "voci_google:"
+    # (o _elevenlabs, _openai) ha la precedenza quando usi quel motore. Cosi' lo
+    # stesso copione gira ovunque.
     dichiarate = {k.upper(): v for k, v in (meta.get("voci") or {}).items()}
+    dichiarate.update({k.upper(): v
+                       for k, v in (meta.get("voci_" + motore) or {}).items()})
     personaggi = []
     for elemento in elementi:
         if isinstance(elemento, Battuta) and elemento.chi not in personaggi:
@@ -210,6 +241,17 @@ def assegna_voci(meta, elementi, motore):
     voci = {}
     for indice, chi in enumerate(personaggi):
         voci[chi] = dichiarate.get(chi) or alternate[indice % len(alternate)]
+
+    if motore == "google":
+        ammesse = {nome.lower(): nome for nome, _ in VOCI_GOOGLE}
+        for chi, voce in voci.items():
+            if voce.lower() not in ammesse:
+                sostituta = alternate[list(voci).index(chi) % len(alternate)]
+                print(f"[i] \"{voce}\" non e' una voce Google: per {chi} uso "
+                      f"{sostituta}. L'elenco completo: --voci -m google")
+                voci[chi] = sostituta
+            else:
+                voci[chi] = ammesse[voce.lower()]
     return voci
 
 
@@ -326,6 +368,50 @@ def monta_mp3(pezzi):
     return bytes(uscita), durata_totale
 
 
+FREQUENZA_PCM = 24000        # Gemini restituisce sempre 24 kHz, 16 bit, mono
+
+
+def _solo_pcm(dati):
+    """Toglie l'eventuale intestazione WAV, lasciando i campioni grezzi."""
+    if dati[:4] == b"RIFF" and dati[8:12] == b"WAVE":
+        i = 12
+        while i + 8 <= len(dati):
+            nome = dati[i:i + 4]
+            misura = int.from_bytes(dati[i + 4:i + 8], "little")
+            if nome == b"data":
+                return dati[i + 8:i + 8 + misura]
+            i += 8 + misura + (misura & 1)
+    return dati
+
+
+def monta_wav(pezzi, frequenza=FREQUENZA_PCM):
+    """Unisce campioni PCM e silenzi, e ci mette sopra un'intestazione WAV."""
+    campioni = bytearray()
+    for tipo, valore in pezzi:
+        if tipo == "pausa":
+            if valore > 0:
+                campioni += b"\x00\x00" * int(frequenza * valore / 1000)
+        else:
+            campioni += _solo_pcm(valore)
+
+    if not campioni:
+        raise SystemExit("Nessun audio ricevuto: impossibile montare l'episodio.")
+
+    byte_al_secondo = frequenza * 2          # 16 bit mono = 2 byte per campione
+    intestazione = (
+        b"RIFF" + (36 + len(campioni)).to_bytes(4, "little") + b"WAVEfmt "
+        + (16).to_bytes(4, "little")         # lunghezza del blocco fmt
+        + (1).to_bytes(2, "little")          # PCM non compresso
+        + (1).to_bytes(2, "little")          # un canale
+        + frequenza.to_bytes(4, "little")
+        + byte_al_secondo.to_bytes(4, "little")
+        + (2).to_bytes(2, "little")          # allineamento di blocco
+        + (16).to_bytes(2, "little")         # bit per campione
+        + b"data" + len(campioni).to_bytes(4, "little")
+    )
+    return intestazione + bytes(campioni), len(campioni) / byte_al_secondo
+
+
 # --------------------------------------------------------------------------
 # Motori di sintesi vocale
 # --------------------------------------------------------------------------
@@ -344,6 +430,10 @@ CHIAVI = {
         "OPENAI_API_KEY", "chiave-openai.txt", "OpenAI",
         "https://platform.openai.com/api-keys",
     ),
+    "google": (
+        "GEMINI_API_KEY", "chiave-google.txt", "Google",
+        "https://aistudio.google.com/apikey  ->  \"Create API key\"",
+    ),
 }
 
 
@@ -351,9 +441,10 @@ def _chiave(motore):
     """Trova la chiave del servizio: prima l'ambiente, poi il file accanto allo script."""
     variabile, nome_file, servizio, dove = CHIAVI[motore]
 
-    dall_ambiente = (os.environ.get(variabile) or "").strip()
-    if dall_ambiente:
-        return dall_ambiente
+    for nome in (variabile, "GOOGLE_API_KEY" if motore == "google" else variabile):
+        dall_ambiente = (os.environ.get(nome) or "").strip()
+        if dall_ambiente:
+            return dall_ambiente
 
     cartella_script = Path(__file__).resolve().parent
     for cartella in (cartella_script, Path.cwd()):
@@ -487,10 +578,65 @@ async def _sintesi_openai(battuta, voce, globali):
     )
 
 
+def _errore_http(errore):
+    """Google e OpenAI spiegano il problema nel corpo della risposta: mostralo."""
+    try:
+        dettaglio = json.loads(errore.read().decode("utf-8", "replace"))
+        messaggio = dettaglio.get("error", {}).get("message") or str(dettaglio)
+    except Exception:
+        messaggio = errore.reason
+    return f"HTTP {errore.code}: {messaggio}"
+
+
+def _chiamata_google(testo, voce, modello, chiave):
+    corpo = json.dumps({
+        "contents": [{"parts": [{"text": testo}]}],
+        "generationConfig": {
+            "responseModalities": ["AUDIO"],
+            "speechConfig": {
+                "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voce}}
+            },
+        },
+    }).encode("utf-8")
+    url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
+           f"{modello}:generateContent")
+    risposta = json.loads(_richiesta_http(
+        url, corpo, {"x-goog-api-key": chiave, "Content-Type": "application/json"}
+    ))
+    try:
+        parti = risposta["candidates"][0]["content"]["parts"]
+        for parte in parti:
+            if "inlineData" in parte:
+                return base64.b64decode(parte["inlineData"]["data"])
+    except (KeyError, IndexError):
+        pass
+    raise RuntimeError(f"risposta senza audio: {json.dumps(risposta)[:300]}")
+
+
+async def _sintesi_google(battuta, voce, globali):
+    chiave = _chiave("google")
+
+    # Con Gemini il tono non si regola con dei numeri: si dice a parole.
+    regia = battuta.opzioni.get("regia") or globali.get("regia")
+    testo = f"{regia}: {battuta.testo}" if regia else battuta.testo
+
+    richiesti = [globali["modello"]] if globali.get("modello") else MODELLI_GOOGLE
+    ultimo = None
+    for modello in richiesti:
+        try:
+            return await asyncio.to_thread(_chiamata_google, testo, voce, modello, chiave)
+        except urllib.error.HTTPError as errore:
+            ultimo = _errore_http(errore)
+            if errore.code not in (400, 404):   # modello assente: prova il successivo
+                raise RuntimeError(ultimo) from errore
+    raise RuntimeError(f"nessun modello Gemini utilizzabile ({ultimo})")
+
+
 MOTORI = {
     "edge": _sintesi_edge,
     "elevenlabs": _sintesi_elevenlabs,
     "openai": _sintesi_openai,
+    "google": _sintesi_google,
 }
 
 
@@ -499,7 +645,7 @@ async def sintetizza(elementi, voci, motore, globali, silenzioso=False):
     funzione = MOTORI[motore]
     battute = [(i, e) for i, e in enumerate(elementi) if isinstance(e, Battuta)]
     risultati = {}
-    limite = asyncio.Semaphore(RICHIESTE_PARALLELE)
+    limite = asyncio.Semaphore(PARALLELE_PER_MOTORE.get(motore, RICHIESTE_PARALLELE))
     fatte = 0
 
     async def lavora(indice, battuta):
@@ -550,6 +696,12 @@ async def elenca_voci(motore):
             print(f"  {voce['name']:24} {voce.get('labels', {}).get('description', '')}")
         print("\nNel copione basta scrivere il nome, per esempio:  ANNA: "
               f"{disponibili[0]['name'] if disponibili else 'Sarah'}")
+    elif motore == "google":
+        print("Voci Google (Gemini), tutte utilizzabili in italiano:\n")
+        for nome, carattere in VOCI_GOOGLE:
+            print(f"  {nome:16} {carattere}")
+        print("\nPer un monologo intenso: Algenib (roca), Sadaltager (competente),")
+        print("Gacrux (matura), Charon (informativa). Il tono si regola con 'regia:'.")
     else:
         print("Voci OpenAI: alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer")
 
@@ -597,7 +749,12 @@ def main():
         voci = risolvi_voci_elevenlabs(voci)
     globali = {k: v for k, v in meta.items() if k != "voci"}
 
-    uscita = Path(argomenti.out) if argomenti.out else percorso.with_suffix(".mp3")
+    formato = FORMATO[argomenti.motore]
+    uscita = (Path(argomenti.out) if argomenti.out
+              else percorso.with_suffix("." + formato))
+    if uscita.suffix.lower() != "." + formato:
+        print(f"[i] Il motore {argomenti.motore} produce {formato.upper()}: "
+              f"salvo comunque in {uscita.name}, cambia estensione se il lettore protesta.")
     titolo = meta.get("titolo") or percorso.stem
     battute = [e for e in elementi if isinstance(e, Battuta)]
     caratteri = sum(len(e.testo) for e in battute)
@@ -611,7 +768,7 @@ def main():
 
     pezzi = asyncio.run(sintetizza(elementi, voci, argomenti.motore, globali,
                                    argomenti.silenzioso))
-    audio, durata = monta_mp3(pezzi)
+    audio, durata = monta_wav(pezzi) if formato == "wav" else monta_mp3(pezzi)
     uscita.parent.mkdir(parents=True, exist_ok=True)
     uscita.write_bytes(audio)
 
