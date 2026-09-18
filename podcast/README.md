@@ -157,11 +157,34 @@ Chiave da [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 in **`chiave-openai.txt`**. Le voci si chiamano per nome (`nova`, `onyx`,
 `shimmer`, `sage`...) e vale la stessa riga `regia:`.
 
-> In Windows non devi creare nessun file a mano: doppio clic su
-> `CREA-PODCAST.cmd`, scegli il motore, incolla la chiave quando te la chiede.
+### Dove mettere la chiave: tre modi
+
+| Modo | Come | Quando conviene |
+|---|---|---|
+| **File** | `chiave-google.txt` in questa cartella | uso normale sul tuo computer; in Windows te lo crea il `.cmd` |
+| **Variabile d'ambiente** | `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `OPENAI_API_KEY` | ha la precedenza sul file |
+| **Credenziale dell'ambiente** | registrata una volta sull'ambiente cloud, poi `--chiave-esterna` | quando lavori con Claude nel cloud e **non vuoi che la chiave entri nella sessione** |
+
+Il terzo modo merita una spiegazione. Sui piani Pro e Max si puo' registrare una
+chiave sull'ambiente cloud: a quel punto e' il proxy di Anthropic ad aggiungerla
+alle richieste *dopo* che escono dalla macchina della sessione. La chiave non
+arriva mai a Claude, ne' ai comandi che esegue, ne' alle variabili d'ambiente.
+
+Si registra da [claude.ai/code](https://claude.ai/code), aprendo l'ambiente in
+modifica: **API credentials** sotto **Environment variables**, poi
+**Add credential**. Per Gemini:
+
+- **Allowed websites**: `generativelanguage.googleapis.com`
+- **Custom headers**: nome `x-goog-api-key`, **prefisso vuoto**, valore = la chiave
+
+Poi lo strumento va lanciato cosi', perche' non provi a cercare una chiave che
+non vedra' mai e non mandi un'intestazione doppia:
+
+```bash
+python3 crea-podcast.py copione.md -m google --chiave-esterna
+```
+
 > I file delle chiavi restano sul tuo computer e sono esclusi da Git.
-> Se preferisci le variabili d'ambiente classiche (`GEMINI_API_KEY`,
-> `ELEVENLABS_API_KEY`, `OPENAI_API_KEY`) funzionano e hanno la precedenza.
 
 ## Cosa fa funzionare un episodio
 

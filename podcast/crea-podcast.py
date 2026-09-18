@@ -437,8 +437,16 @@ CHIAVI = {
 }
 
 
+# Quando la chiave viene aggiunta a monte (credenziale API dell'ambiente, o un
+# proxy aziendale), qui non ne serve nessuna e l'intestazione va omessa.
+CHIAVE_ESTERNA = False
+
+
 def _chiave(motore):
     """Trova la chiave del servizio: prima l'ambiente, poi il file accanto allo script."""
+    if CHIAVE_ESTERNA:
+        return None
+
     variabile, nome_file, servizio, dove = CHIAVI[motore]
 
     for nome in (variabile, "GOOGLE_API_KEY" if motore == "google" else variabile):
@@ -477,7 +485,8 @@ RE_ID_ELEVENLABS = re.compile(r"[A-Za-z0-9]{20}")
 
 def _elenco_voci_elevenlabs(chiave):
     richiesta = urllib.request.Request(
-        "https://api.elevenlabs.io/v1/voices", headers={"xi-api-key": chiave}
+        "https://api.elevenlabs.io/v1/voices",
+        headers={"xi-api-key": chiave} if chiave else {},
     )
     with urllib.request.urlopen(richiesta, timeout=60) as risposta:
         return json.load(risposta).get("voices", [])
@@ -534,6 +543,14 @@ async def _sintesi_edge(battuta, voce, globali):
     return bytes(audio)
 
 
+def _intestazioni(nome, valore):
+    """Aggiunge l'intestazione di autenticazione solo se abbiamo una chiave."""
+    intestazioni = {"Content-Type": "application/json"}
+    if valore:
+        intestazioni[nome] = valore
+    return intestazioni
+
+
 def _richiesta_http(url, corpo, intestazioni):
     richiesta = urllib.request.Request(url, data=corpo, headers=intestazioni, method="POST")
     with urllib.request.urlopen(richiesta, timeout=180) as risposta:
@@ -555,8 +572,7 @@ async def _sintesi_elevenlabs(battuta, voce, globali):
     url = (f"https://api.elevenlabs.io/v1/text-to-speech/{voce}"
            f"?output_format=mp3_44100_128")
     return await asyncio.to_thread(
-        _richiesta_http, url, corpo,
-        {"xi-api-key": chiave, "Content-Type": "application/json"},
+        _richiesta_http, url, corpo, _intestazioni("xi-api-key", chiave),
     )
 
 
@@ -574,7 +590,7 @@ async def _sintesi_openai(battuta, voce, globali):
     return await asyncio.to_thread(
         _richiesta_http, "https://api.openai.com/v1/audio/speech",
         json.dumps(payload).encode("utf-8"),
-        {"Authorization": f"Bearer {chiave}", "Content-Type": "application/json"},
+        _intestazioni("Authorization", f"Bearer {chiave}" if chiave else None),
     )
 
 
@@ -601,7 +617,7 @@ def _chiamata_google(testo, voce, modello, chiave):
     url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
            f"{modello}:generateContent")
     risposta = json.loads(_richiesta_http(
-        url, corpo, {"x-goog-api-key": chiave, "Content-Type": "application/json"}
+        url, corpo, _intestazioni("x-goog-api-key", chiave)
     ))
     try:
         parti = risposta["candidates"][0]["content"]["parts"]
@@ -722,9 +738,15 @@ def main():
                               help="motore vocale (predefinito: edge)")
     analizzatore.add_argument("--voci", action="store_true",
                               help="elenca le voci disponibili ed esce")
+    analizzatore.add_argument("--chiave-esterna", action="store_true",
+                              help="non cercare nessuna chiave qui: la aggiunge "
+                                   "l'ambiente (credenziale API) o un proxy")
     analizzatore.add_argument("--silenzioso", action="store_true",
                               help="non stampare l'avanzamento battuta per battuta")
     argomenti = analizzatore.parse_args()
+
+    global CHIAVE_ESTERNA
+    CHIAVE_ESTERNA = argomenti.chiave_esterna
 
     if argomenti.voci:
         asyncio.run(elenca_voci(argomenti.motore))
