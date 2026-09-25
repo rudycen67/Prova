@@ -22,6 +22,7 @@ SETUP.cmd  → ⭐ doppio clic: configurazione completa (Windows + WSL) in un co
 ATTIVA-AUTOMATICO.cmd → doppio clic: rende l'aggancio automatico/permanente (se la connessione gia' funziona)
 COMPILA-WINDOWS.cmd   → doppio clic: compila il client Windows (dopo aver estratto ProxSpace)
 APRI-PROXMARK3.cmd    → doppio clic: apre il client Proxmark3 in Windows gia' connesso (dopo ProxSpace)
+SINTESI-VOCALE.cmd    → doppio clic: installa/avvia la sintesi vocale Coqui TTS + RVC in WSL
 
 windows/   → script PowerShell (lato Windows host)
   setup-completo.ps1       orchestratore: FASE 1 (Windows) + FASE 2 (WSL)
@@ -44,9 +45,16 @@ wsl/       → script Bash (dentro Ubuntu/WSL)
   flash-firmware.sh        flash "sicuro" del firmware, gestito per WSL
   pm3-connect.sh           wrapper comodo per connettersi
 
+voce/      → sintesi vocale con la tua voce (Coqui TTS + RVC, dentro Ubuntu/WSL)
+  setup-voce.sh            installa TTS-RVC-API in ~/TTS-RVC-API (Python 3.10 + venv)
+  aggiungi-voce.sh         aggiunge un modello RVC v2 (.pth + .index) come nuova voce
+  avvia-server.sh          avvia l'API su http://localhost:8000 (voce base italiana)
+  genera-voce.py           client: testo -> file .wav con la voce scelta
+
 docs/
   guida-completa.md   guida dettagliata passo-passo con note e troubleshooting
   windows-nativo.md   client Iceman nativo su Windows (letture LF affidabili)
+  sintesi-vocale.md   guida alla sintesi vocale Coqui TTS + RVC
 ```
 
 > **Letture LF/dump inaffidabili in WSL?** Il tunnel usbipd fatica con i
