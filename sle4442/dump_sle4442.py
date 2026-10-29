@@ -150,10 +150,13 @@ def hexdump(data):
 
 def describe_error_counter(ec):
     if ec == 0x07:
-        return "0x07 = ultima verifica PSC corretta (3 tentativi disponibili)"
+        return "0x07 = contatore pieno, 3 tentativi PSC disponibili"
     if ec == 0x00:
-        return "0x00 = carta BLOCCATA (tentativi PSC esauriti)"
-    return "0x%02X = ultima verifica fallita (tentativi residui ridotti)" % ec
+        return "0x00 = carta BLOCCATA in scrittura (tentativi PSC esauriti)"
+    # I bit a '1' nel contatore sono i tentativi ancora disponibili.
+    rimasti = bin(ec).count("1")
+    return ("0x%02X = PSC gia' fallito almeno una volta, %d tentativi rimasti"
+            % (ec, rimasti))
 
 
 def main():
@@ -214,13 +217,25 @@ def main():
         if len(psc) != 3:
             sys.stderr.write("ERRORE: il PSC deve essere di 3 byte (6 hex).\n")
             sys.exit(1)
-        print("\nPasso 5 (facoltativo) - Verifica PSC (nessuna scrittura):")
+        print("\nPasso 5 (facoltativo) - Verifica PSC:")
+        print("  ATTENZIONE: un PSC errato CONSUMA un tentativo (3 errori = "
+              "blocco scrittura definitivo).")
         _, vs1, vs2 = transmit(conn, [0xFF, 0x20, 0x00, 0x00, 0x03] + psc,
                                "PRESENT_CODE")
         if vs1 == 0x90 and vs2 == 0x07:
             print("  PSC CORRETTO (scritture sbloccate per questa sessione).")
+        elif vs1 == 0x90 and vs2 == 0x00:
+            print("  PSC errato: carta BLOCCATA in scrittura (tentativi esauriti).")
         else:
-            print("  PSC errato o carta bloccata (SW=%02X%02X)." % (vs1, vs2))
+            # Il contatore (SW2) e' un valore come 07/03/01/00: i bit a '1'
+            # sono i tentativi ancora disponibili.
+            rimasti = bin(vs2).count("1")
+            print("  PSC ERRATO (SW=%02X%02X). Tentativi di scrittura rimasti: %d."
+                  % (vs1, vs2, rimasti))
+            print("  NON provare altri codici a caso: rischi di bloccare la carta.")
+        # Rileggo il contatore DOPO il tentativo, cosi' il riepilogo mostra lo
+        # stato reale e aggiornato (la lettura non consuma tentativi).
+        sec, es1, es2 = conn.transmit([0xFF, 0xB1, 0x00, 0x00, 0x04])
 
     # ---- Report finale -----------------------------------------------------
     print("\n" + "=" * 60)
