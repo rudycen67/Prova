@@ -142,3 +142,13 @@ gruppo `dialout`).
 
 Dettagli, spiegazioni e troubleshooting completo in
 [`docs/guida-completa.md`](docs/guida-completa.md).
+
+---
+
+## Altro contenuto: add-on Home Assistant "Bentel Socat Bridge"
+
+Questo repository e' anche un **archivio di add-on per Home Assistant**
+(`repository.yaml` + cartella `bentel_socat/`): un proxy TCP `socat` verso la
+centrale di allarme Bentel Kyo, installabile e configurabile **solo dalla GUI**.
+Aggiungi `https://github.com/rudycen67/Prova` tra gli archivi dello store e segui
+[`docs/home-assistant-bentel-socat.md`](docs/home-assistant-bentel-socat.md).

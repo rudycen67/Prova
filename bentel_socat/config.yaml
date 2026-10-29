@@ -1,0 +1,28 @@
+name: Bentel Socat Bridge
+version: "1.0.0"
+slug: bentel_socat
+description: Proxy TCP trasparente (socat) verso la centrale di allarme Bentel Kyo
+url: https://github.com/rudycen67/Prova/blob/main/docs/home-assistant-bentel-socat.md
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: application
+boot: auto
+# Le immagini base di Home Assistant hanno gia' un proprio init (s6-overlay v3):
+# con init:true il container non parte.
+init: false
+ports:
+  26501/tcp: 26501
+ports_description:
+  26501/tcp: Porta su cui Home Assistant espone il proxy verso la centrale Bentel
+options:
+  bentel_host: 192.168.1.249
+  bentel_port: 26501
+  verbose: true
+schema:
+  bentel_host: str
+  bentel_port: port
+  verbose: bool

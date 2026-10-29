@@ -1,0 +1,12 @@
+configuration:
+  bentel_host:
+    name: Bentel panel IP address
+    description: Local IP of the Bentel Kyo alarm panel (e.g. 192.168.1.249).
+  bentel_port:
+    name: Bentel panel port
+    description: TCP port the panel listens on (usually 26501).
+  verbose:
+    name: Verbose logging
+    description: Log every connection opened and closed by the proxy.
+network:
+  26501/tcp: Local proxy port (the one the Home Assistant integration connects to).
