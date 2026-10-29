@@ -103,3 +103,52 @@ Il dump della memoria principale viene salvato in `sle4442_dump.bin`
   SLE4432/SLE4442, oppure non è inserita correttamente.
 - **Risposte ancora vuote** — assicurati di usare `transmit()` e non
   `control()`: è proprio l'errore che questo script corregge.
+
+---
+
+## Clonare una SLE4442
+
+> Clona **solo tessere tue o per cui hai l'autorizzazione**. Duplicare la
+> tessera di un impianto altrui può essere illegale.
+
+Clonare una SLE4442 significa **copiare i 256 byte** della memoria su una
+carta vergine. La lettura non richiede codici (lo fa già `dump_sle4442.py`);
+la **scrittura** richiede il PSC della carta di destinazione.
+
+Su Windows: doppio clic su **`CLONA-SLE4442.cmd`** (ti chiede il PSC della
+vergine, default `FFFFFF`), oppure da riga di comando:
+
+```bash
+python clona_sle4442.py sle4442_dump.bin --psc FFFFFF
+```
+
+Lo script: seleziona il tipo carta, presenta il PSC **una sola volta**
+(un PSC errato brucia 1 dei 3 tentativi; 3 errori bloccano la scrittura per
+sempre), scrive i 256 byte a blocchi e rilegge per verificare byte per byte.
+
+I bit di protezione **non** vengono replicati (operazione irreversibile): se
+l'originale aveva byte protetti in scrittura, sul clone restano scrivibili.
+
+---
+
+## Nota sulla sicurezza della SLE4442
+
+La SLE4442 è una **memoria con lucchetto a password, senza crittografia**.
+Per questo è considerata debole:
+
+1. **Nessuna crittografia / nessun challenge-response.** La carta non cifra
+   nulla e non dimostra la propria identità: c'è solo un confronto di password.
+2. **Il PSC viaggia in chiaro** sui pin Clock/Data quando un lettore sblocca
+   la carta per scrivere. Con un analizzatore logico sui due fili, durante una
+   normale transazione, si cattura la password: non va "indovinata", si ascolta.
+3. **La lettura è sempre libera**: qualunque dato in memoria è già esposto.
+4. **Nessun seriale crittografico**: tutto ciò che definisce la carta sono i
+   256 byte, copiabili byte per byte. Un lettore che confronta solo il
+   contenuto non distingue originale da clone.
+5. **PSC a 24 bit**: il brute-force diretto è frenato dal contatore a 3
+   tentativi, ma esistono attacchi di *power-glitch* documentati che azzerano
+   il contatore.
+
+Conseguenza: la SLE4442 non offre una vera difesa contro chi ha **accesso
+fisico** alla carta o al lettore. Il controllo accessi moderno usa carte con
+crittografia (es. MIFARE DESFire) proprio per questo.

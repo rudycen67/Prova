@@ -23,6 +23,7 @@ ATTIVA-AUTOMATICO.cmd → doppio clic: rende l'aggancio automatico/permanente (s
 COMPILA-WINDOWS.cmd   → doppio clic: compila il client Windows (dopo aver estratto ProxSpace)
 APRI-PROXMARK3.cmd    → doppio clic: apre il client Proxmark3 in Windows gia' connesso (dopo ProxSpace)
 LEGGI-SLE4442.cmd     → doppio clic: dump di una smart card SLE4442 con lettore ACS ACR39U
+CLONA-SLE4442.cmd     → doppio clic: clona un dump su una SLE4442 vergine (solo tessere proprie)
 
 windows/   → script PowerShell (lato Windows host)
   setup-completo.ps1       orchestratore: FASE 1 (Windows) + FASE 2 (WSL)
@@ -51,6 +52,7 @@ docs/
 
 sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR39U
   dump_sle4442.py   tool Python (pyscard) per leggere i 256 byte + protezione/PSC
+  clona_sle4442.py  tool Python per scrivere un dump su una SLE4442 vergine
   README.md         spiegazione del problema (canale escape errato) e soluzione
 ```
 
