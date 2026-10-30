@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0
+
+- **nginx davanti a socat**: il modulo Marss regge una sola connessione SSLv3
+  alla volta, mentre i browser ne aprono sei insieme e lo bloccavano
+  ("Operation timed out"). Ora nginx accoda le richieste e socat
+  (`max-children=1`) apre verso il modulo una connessione breve per richiesta.
+- Link assoluti del modulo riscritti attraverso il ponte (`sub_filter`).
+- Timeout di connessione (20 s) sul lato modulo.
+
 ## 2.0.1
 
 - Porta predefinita del modulo: **443** (pagina web del Marss IP Controller).

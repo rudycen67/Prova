@@ -1,5 +1,5 @@
 name: Bentel Socat Bridge
-version: "2.0.1"
+version: "2.1.0"
 slug: bentel_socat
 description: Ponte socat verso il modulo IP dell'antifurto (Marss IP Controller / Bentel), con supporto SSLv3
 url: https://github.com/rudycen67/Prova/blob/main/docs/home-assistant-bentel-socat.md

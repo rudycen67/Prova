@@ -41,7 +41,13 @@ RUN apk add --no-cache socat \
  && cd / && rm -rf /tmp/build /opt/ssl3 \
  && apk del .build-deps
 
+# nginx fa da "sala d'attesa": i browser aprono molte connessioni insieme,
+# il modulo Marss ne regge una sola. nginx le accoda e apre verso socat una
+# connessione breve per richiesta.
+RUN apk add --no-cache nginx
+
 COPY run.sh /
+COPY nginx-bridge.conf /etc/nginx/bridge.conf.template
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]

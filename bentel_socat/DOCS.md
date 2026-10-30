@@ -28,6 +28,16 @@ Utente e password sono quelli del modulo (di fabbrica: `admin` / `marss`).
 5. Scheda **Registro**: deve comparire `In ascolto su 0.0.0.0:26501 -> ...`.
 6. Dal browser apri `http://<IP di Home Assistant>:26501/`.
 
+## Come funziona (modalita' cifrate)
+
+```text
+browser / Home Assistant --HTTP--> nginx :26501 --> socat-ssl3 :26502 --SSLv3--> modulo :443
+```
+
+nginx accoda le richieste e apre verso socat una connessione breve per
+richiesta; socat ne tiene aperta **una sola alla volta** verso il modulo, che
+non ne regge di piu'.
+
 ## Opzioni
 
 | Opzione | Predefinito | Significato |
