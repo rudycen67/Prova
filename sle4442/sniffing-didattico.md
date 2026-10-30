@@ -157,3 +157,45 @@ bug: è il **principio** di una carta senza crittografia.
   `SLE44xx`.
 - **Non trovi il PSC**: assicurati di aver lanciato un comando che **scrive**
   (`--psc` o `CLONA`). Una semplice lettura non manda mai il PSC.
+
+---
+
+## 12. Dove comprare e link utili
+
+### Logic analyzer USB economico (~10-15 €)
+- Cosa cercare: `USB logic analyzer 24MHz 8CH` (clone compatibile `fx2lafw`).
+- Dove: **AliExpress** / **eBay** (i piu' economici), **Amazon** (piu' caro ma
+  rapido).
+- Riferimento/tutorial ufficiale (unita' 24 MHz 8 canali):
+  https://learn.sparkfun.com/tutorials/using-the-usb-logic-analyzer-with-sigrok-pulseview
+
+### Extender / prolunga per smart card (per esporre i contatti)
+- Cosa cercare: `smart card extender`, `ISO7816 smart card extension cable`,
+  `card extender` (eredita' pay-TV/CAM), oppure il socket `KF-011C` se piloti
+  tu la carta.
+- Dove: **AliExpress** / **eBay**. Prezzo: pochi euro.
+
+### PulseView (software, gratis)
+- Download ufficiale (Windows/Linux/Mac): https://sigrok.org/wiki/Downloads
+- Pagina del programma: https://sigrok.org/wiki/PulseView
+- Guida d'uso passo-passo (SparkFun):
+  https://learn.sparkfun.com/tutorials/using-the-usb-logic-analyzer-with-sigrok-pulseview
+
+### Driver su Windows: Zadig (gratis)
+- Download: https://zadig.akeo.ie
+- Serve per assegnare il driver **WinUSB** all'analizzatore, altrimenti
+  PulseView non lo vede.
+
+### Decoder SLE44xx
+- E' incluso in PulseView (libsigrokdecode). In PulseView apri la finestra dei
+  decoder e cerca **SLE44xx**. Se non c'e', aggiorna PulseView all'ultima
+  versione dalla pagina Downloads qui sopra.
+- Elenco decoder di sigrok: https://sigrok.org/wiki/Protocol_decoders
+
+### Riepilogo acquisti per lo sniffing didattico
+| Articolo | Cerca | Dove | Prezzo |
+|---|---|---|---|
+| Logic analyzer | `USB logic analyzer 24MHz 8CH` | AliExpress/eBay | ~10-15 € |
+| Extender smart card | `smart card extender ISO7816` | AliExpress/eBay | pochi € |
+| PulseView | — | sigrok.org (gratis) | 0 € |
+| Zadig (Windows) | — | zadig.akeo.ie (gratis) | 0 € |
