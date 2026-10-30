@@ -54,6 +54,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   dump_sle4442.py   tool Python (pyscard) per leggere i 256 byte + protezione/PSC
   clona_sle4442.py  tool Python per scrivere un dump su una SLE4442 vergine
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
+  esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   README.md         spiegazione del problema (canale escape errato) e soluzione
 ```
 
