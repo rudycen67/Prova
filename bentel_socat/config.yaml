@@ -1,7 +1,7 @@
 name: Bentel Socat Bridge
-version: "1.0.0"
+version: "2.0.0"
 slug: bentel_socat
-description: Proxy TCP trasparente (socat) verso la centrale di allarme Bentel Kyo
+description: Ponte socat verso il modulo IP dell'antifurto (Marss IP Controller / Bentel), con supporto SSLv3
 url: https://github.com/rudycen67/Prova/blob/main/docs/home-assistant-bentel-socat.md
 arch:
   - aarch64
@@ -17,12 +17,14 @@ init: false
 ports:
   26501/tcp: 26501
 ports_description:
-  26501/tcp: Porta su cui Home Assistant espone il proxy verso la centrale Bentel
+  26501/tcp: Porta su cui Home Assistant espone il ponte (HTTP semplice in modalita' ssl3/tls)
 options:
   bentel_host: 192.168.1.249
   bentel_port: 26501
+  tls_mode: ssl3
   verbose: true
 schema:
   bentel_host: str
   bentel_port: port
+  tls_mode: list(ssl3|tls1|tls_auto|none)
   verbose: bool

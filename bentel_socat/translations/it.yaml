@@ -5,6 +5,9 @@ configuration:
   bentel_port:
     name: Porta della centrale Bentel
     description: Porta TCP su cui risponde la centrale (di norma 26501).
+  tls_mode:
+    name: Modalita' di cifratura verso il modulo
+    description: ssl3 = modulo Marss IP Controller (SSLv3). tls1 = TLS 1.0. tls_auto = negozia da SSLv3 in su. none = inoltro TCP semplice.
   verbose:
     name: Log dettagliato
     description: Scrive nel log ogni connessione aperta e chiusa dal proxy.

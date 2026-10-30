@@ -130,3 +130,29 @@ bentel_socat/
   DOCS.md                       documentazione mostrata nella scheda "Documentazione"
   icon.png, logo.png            icona nello store
 ```
+
+---
+
+## Aggiornamento: il modulo e' un Marss IP Controller (SSLv3)
+
+Indagando con i test di rete e' emerso che a `192.168.1.249` non risponde la
+centrale Bentel ma un **modulo Marss IP Controller** (IPC-3008/3108 o simile)
+collegato alla centrale: una scheda con 8 ingressi e 8 uscite, un web server
+integrato sulla porta 26501 e un'app per smartphone. Il web server parla solo
+**SSLv3 con cifrari RC4** (anno 2012): Windows, Chrome, Edge, Firefox e lo
+stesso OpenSSL di Home Assistant rifiutano la connessione
+(`SEC_E_ALGORITHM_MISMATCH` da Windows, `unsupported protocol` da OpenSSL 3).
+
+La **versione 2.0.0** dell'add-on risolve il problema compilando al suo interno
+un OpenSSL con SSLv3 riabilitato. Dopo l'aggiornamento:
+
+1. Store delle app → ⋮ → **Verifica aggiornamenti**, poi apri **Bentel Socat
+   Bridge** e premi **Aggiorna** (compilazione: 15-30 minuti su Pi 3).
+2. Scheda Configurazione: modalita' `ssl3`, IP `192.168.1.249`, porta `26501`.
+3. Avvia l'add-on e apri dal browser `http://192.168.1.13:26501/`.
+4. Accedi con le credenziali del modulo (di fabbrica `admin` / `marss`).
+
+Da quella pagina si vedono gli ingressi (stato dell'antifurto) e si comandano
+le uscite (inserimento/disinserimento). Il passo successivo e' leggere e
+comandare la stessa pagina da Home Assistant con le integrazioni standard
+(`scrape` / `rest_command`), una volta visto come e' fatta.

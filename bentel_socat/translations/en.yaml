@@ -5,6 +5,9 @@ configuration:
   bentel_port:
     name: Bentel panel port
     description: TCP port the panel listens on (usually 26501).
+  tls_mode:
+    name: Encryption mode towards the module
+    description: ssl3 = Marss IP Controller module (SSLv3). tls1 = TLS 1.0. tls_auto = negotiate from SSLv3 up. none = plain TCP forwarding.
   verbose:
     name: Verbose logging
     description: Log every connection opened and closed by the proxy.
