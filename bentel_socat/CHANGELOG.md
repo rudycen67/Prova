@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1
+
+- `/protect/status.xml` servito con `Content-Type: text/xml`, cosi' il
+  sensore `rest` di Home Assistant lo legge come JSON senza altri passaggi.
+- Esempio di configurazione Home Assistant: `docs/home-assistant-marss.yaml`.
+
 ## 2.1.0
 
 - **nginx davanti a socat**: il modulo Marss regge una sola connessione SSLv3

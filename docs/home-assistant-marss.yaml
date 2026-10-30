@@ -1,0 +1,121 @@
+# =============================================================================
+# Antifurto (modulo Marss IP Controller) in Home Assistant
+# tramite l'add-on "Bentel Socat Bridge" (porta 26501, HTTP semplice).
+#
+# Da incollare IN FONDO a configuration.yaml con il File Editor, poi:
+# Strumenti per sviluppatori -> YAML -> "Verifica configurazione" -> Riavvia.
+#
+# Da adattare:
+#   - 192.168.1.13  = IP di Home Assistant (dove gira l'add-on)
+#   - admin / marss = credenziali del modulo
+#   - 123456        = codice attivazione uscite del modulo (6 cifre)
+# =============================================================================
+
+# ---- STATO: ingressi e uscite letti da /protect/status.xml ogni 5 secondi ----
+rest:
+  - resource: http://192.168.1.13:26501/protect/status.xml
+    method: GET
+    authentication: basic
+    username: admin
+    password: marss
+    scan_interval: 5
+    timeout: 60
+    binary_sensor:
+      # ledi = 2 -> ingresso attivo (luce rossa nella pagina del modulo)
+      - name: "Antifurto ingresso 1"
+        unique_id: marss_ipc_in1
+        value_template: "{{ value_json.response.ledi1 | int == 2 }}"
+      - name: "Antifurto ingresso 2"
+        unique_id: marss_ipc_in2
+        value_template: "{{ value_json.response.ledi2 | int == 2 }}"
+      - name: "Antifurto ingresso 3"
+        unique_id: marss_ipc_in3
+        value_template: "{{ value_json.response.ledi3 | int == 2 }}"
+      - name: "Antifurto ingresso 4"
+        unique_id: marss_ipc_in4
+        value_template: "{{ value_json.response.ledi4 | int == 2 }}"
+      # ledo = 1 -> uscita attiva
+      - name: "Antifurto uscita 1 stato"
+        unique_id: marss_ipc_out1
+        value_template: "{{ value_json.response.ledo1 | int == 1 }}"
+      - name: "Antifurto uscita 2 stato"
+        unique_id: marss_ipc_out2
+        value_template: "{{ value_json.response.ledo2 | int == 1 }}"
+      - name: "Antifurto uscita 3 stato"
+        unique_id: marss_ipc_out3
+        value_template: "{{ value_json.response.ledo3 | int == 1 }}"
+      - name: "Antifurto uscita 4 stato"
+        unique_id: marss_ipc_out4
+        value_template: "{{ value_json.response.ledo4 | int == 1 }}"
+      # tamper del modulo (ingresso "Tamper esterno" = canale 0)
+      - name: "Antifurto modulo tamper"
+        unique_id: marss_ipc_tamper
+        device_class: tamper
+        value_template: "{{ value_json.response.msgTampCh0 | int == 1 }}"
+    sensor:
+      - name: "Antifurto modulo codice richiesto"
+        unique_id: marss_ipc_ver_pass
+        value_template: "{{ value_json.response.ver_pass }}"
+      - name: "Antifurto modulo errore codice"
+        unique_id: marss_ipc_errcode
+        value_template: "{{ value_json.response.errCode }}"
+
+# ---- COMANDI: stessi indirizzi usati dalla pagina web del modulo ----
+rest_command:
+  marss_premi_uscita:
+    url: "http://192.168.1.13:26501/protect/buttons.cgi?button={{ uscita }}"
+    method: GET
+    username: admin
+    password: marss
+    timeout: 60
+  marss_invia_codice:
+    url: "http://192.168.1.13:26501/protect/index.htm"
+    method: POST
+    username: admin
+    password: marss
+    content_type: "application/x-www-form-urlencoded"
+    payload: "password=123456"
+    timeout: 60
+  marss_annulla:
+    url: "http://192.168.1.13:26501/protect/annulla.cgi?butt=0"
+    method: GET
+    username: admin
+    password: marss
+    timeout: 60
+
+# ---- SCRIPT: "premi" un'uscita come dal pulsante della pagina web ----
+# Il modulo, dopo il click, chiede il codice a 6 cifre: lo script lo invia.
+# Se l'uscita e' configurata "senza codice", il secondo passo e' innocuo.
+script:
+  antifurto_premi_uscita_1:
+    alias: "Antifurto: premi uscita 1"
+    icon: mdi:gesture-tap-button
+    sequence:
+      - action: rest_command.marss_premi_uscita
+        data: { uscita: 1 }
+      - delay: { seconds: 2 }
+      - action: rest_command.marss_invia_codice
+  antifurto_premi_uscita_2:
+    alias: "Antifurto: premi uscita 2"
+    icon: mdi:gesture-tap-button
+    sequence:
+      - action: rest_command.marss_premi_uscita
+        data: { uscita: 2 }
+      - delay: { seconds: 2 }
+      - action: rest_command.marss_invia_codice
+  antifurto_premi_uscita_3:
+    alias: "Antifurto: premi uscita 3"
+    icon: mdi:gesture-tap-button
+    sequence:
+      - action: rest_command.marss_premi_uscita
+        data: { uscita: 3 }
+      - delay: { seconds: 2 }
+      - action: rest_command.marss_invia_codice
+  antifurto_premi_uscita_4:
+    alias: "Antifurto: premi uscita 4"
+    icon: mdi:gesture-tap-button
+    sequence:
+      - action: rest_command.marss_premi_uscita
+        data: { uscita: 4 }
+      - delay: { seconds: 2 }
+      - action: rest_command.marss_invia_codice

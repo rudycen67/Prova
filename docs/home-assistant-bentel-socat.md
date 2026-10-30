@@ -157,3 +157,29 @@ Da quella pagina si vedono gli ingressi (stato dell'antifurto) e si comandano
 le uscite (inserimento/disinserimento). Il passo successivo e' leggere e
 comandare la stessa pagina da Home Assistant con le integrazioni standard
 (`scrape` / `rest_command`), una volta visto come e' fatta.
+
+---
+
+## Leggere e comandare il modulo da Home Assistant
+
+La pagina del modulo (`/protect/index.htm`) e' fatta cosi':
+
+- legge lo stato da **`/protect/status.xml`** (`ledi1..8` ingressi: 1 = spento,
+  2 = attivo/rosso, 3 = giallo; `ledo1..8` uscite: 1 = attiva; `ver_pass` = 1
+  quando il modulo aspetta il codice; `errCode` = 1 codice errato;
+  `msgTampCh0..8` tamper);
+- attiva un'uscita con **`/protect/buttons.cgi?button=N`** e poi, se richiesto,
+  riceve il **codice attivazione uscite** (6 cifre, di fabbrica `123456`) con
+  un POST del campo `password` su `/protect/index.htm`; `annulla.cgi?butt=0`
+  annulla. Tutto con autenticazione HTTP Basic (`admin` / `marss` di fabbrica).
+
+Il file [`home-assistant-marss.yaml`](home-assistant-marss.yaml) contiene una
+configurazione pronta: sensori binari per ingressi e uscite, tamper, e script
+che "premono" le uscite come dal pulsante della pagina. Si incolla in fondo a
+`configuration.yaml` con il **File Editor**, poi *Strumenti per sviluppatori ->
+YAML -> Verifica configurazione* e riavvio.
+
+Le etichette di fabbrica (`in1`, `out1`...) non dicono a cosa sono collegati i
+fili: va verificato sul campo osservando quale ingresso cambia quando l'allarme
+viene inserito/scatta, e provando le uscite una alla volta con l'allarme sotto
+controllo.
