@@ -1,12 +1,12 @@
 # Bentel Socat Bridge
 
-Add-on per Home Assistant che avvia un **proxy TCP trasparente** (`socat`)
-verso la centrale di allarme **Bentel Kyo**.
+Add-on per Home Assistant che fa da ponte verso il **modulo IP dell'antifurto**
+(Marss IP Controller collegato a una centrale Bentel). Il modulo parla solo
+**SSLv3**, rifiutato da tutti i browser moderni: l'add-on compila un OpenSSL
+con SSLv3 riabilitato e offre la pagina web del modulo in HTTP semplice su
+`http://<IP di Home Assistant>:26501/`.
 
-Tutto quello che arriva sulla porta `26501` di Home Assistant viene inoltrato,
-senza modifiche, alla centrale (per impostazione predefinita
-`192.168.1.249:26501`). Indirizzo e porta si cambiano dalla scheda
-**Configurazione** dell'add-on, senza terminale.
+Modalita' `none` = semplice proxy TCP trasparente (versione 1.x).
 
 Guida completa, solo da interfaccia grafica:
 [docs/home-assistant-bentel-socat.md](../docs/home-assistant-bentel-socat.md).

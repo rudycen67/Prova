@@ -1,10 +1,10 @@
 configuration:
   bentel_host:
-    name: Indirizzo IP della centrale Bentel
-    description: IP locale della centrale Bentel Kyo (es. 192.168.1.249).
+    name: Indirizzo IP del modulo
+    description: IP locale del modulo IP dell'antifurto (Marss IP Controller, es. 192.168.1.249).
   bentel_port:
-    name: Porta della centrale Bentel
-    description: Porta TCP su cui risponde la centrale (di norma 26501).
+    name: Porta del modulo
+    description: 443 = pagina web del Marss IP Controller (SSLv3). 26501 = protocollo dell'app.
   tls_mode:
     name: Modalita' di cifratura verso il modulo
     description: ssl3 = modulo Marss IP Controller (SSLv3). tls1 = TLS 1.0. tls_auto = negozia da SSLv3 in su. none = inoltro TCP semplice.

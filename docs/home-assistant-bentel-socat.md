@@ -148,7 +148,8 @@ un OpenSSL con SSLv3 riabilitato. Dopo l'aggiornamento:
 
 1. Store delle app → ⋮ → **Verifica aggiornamenti**, poi apri **Bentel Socat
    Bridge** e premi **Aggiorna** (compilazione: 15-30 minuti su Pi 3).
-2. Scheda Configurazione: modalita' `ssl3`, IP `192.168.1.249`, porta `26501`.
+2. Scheda Configurazione: modalita' `ssl3`, IP `192.168.1.249`, porta **`443`**
+   (la 26501 e' il protocollo dell'app, non la pagina web: verificato sul campo).
 3. Avvia l'add-on e apri dal browser `http://192.168.1.13:26501/`.
 4. Accedi con le credenziali del modulo (di fabbrica `admin` / `marss`).
 

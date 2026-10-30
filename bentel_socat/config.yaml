@@ -1,5 +1,5 @@
 name: Bentel Socat Bridge
-version: "2.0.0"
+version: "2.0.1"
 slug: bentel_socat
 description: Ponte socat verso il modulo IP dell'antifurto (Marss IP Controller / Bentel), con supporto SSLv3
 url: https://github.com/rudycen67/Prova/blob/main/docs/home-assistant-bentel-socat.md
@@ -20,7 +20,7 @@ ports_description:
   26501/tcp: Porta su cui Home Assistant espone il ponte (HTTP semplice in modalita' ssl3/tls)
 options:
   bentel_host: 192.168.1.249
-  bentel_port: 26501
+  bentel_port: 443
   tls_mode: ssl3
   verbose: true
 schema:

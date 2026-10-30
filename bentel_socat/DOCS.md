@@ -23,7 +23,7 @@ Utente e password sono quelli del modulo (di fabbrica: `admin` / `marss`).
 2. Apri **Bentel Socat Bridge** e premi **Installa**. L'add-on compila OpenSSL
    sul dispositivo: su Raspberry Pi 3 servono **15-30 minuti**. Non chiudere la
    pagina.
-3. Scheda **Configurazione**: IP e porta del modulo, modalita' `ssl3`. **Salva**.
+3. Scheda **Configurazione**: IP del modulo, porta `443`, modalita' `ssl3`. **Salva**.
 4. Scheda **Informazioni**: *Avvia all'avvio* e **Avvia**.
 5. Scheda **Registro**: deve comparire `In ascolto su 0.0.0.0:26501 -> ...`.
 6. Dal browser apri `http://<IP di Home Assistant>:26501/`.
@@ -33,7 +33,7 @@ Utente e password sono quelli del modulo (di fabbrica: `admin` / `marss`).
 | Opzione | Predefinito | Significato |
 | --- | --- | --- |
 | `bentel_host` | `192.168.1.249` | IP del modulo (o della centrale) |
-| `bentel_port` | `26501` | Porta TCP del modulo |
+| `bentel_port` | `443` | Porta TCP del modulo: 443 = pagina web; 26501 = protocollo dell'app (non HTTP) |
 | `tls_mode` | `ssl3` | `ssl3` Marss IP Controller; `tls1` TLS 1.0; `tls_auto` negozia; `none` inoltro TCP puro |
 | `verbose` | `true` | Scrive nel log ogni connessione aperta/chiusa |
 

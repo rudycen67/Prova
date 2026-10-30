@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+- Porta predefinita del modulo: **443** (pagina web del Marss IP Controller).
+  Verificato sul campo: la 26501 e' il protocollo dell'app, non HTTP.
+- Etichette delle opzioni aggiornate.
+
 ## 2.0.0
 
 - Supporto **SSLv3**: il modulo IP dell'antifurto (Marss IP Controller) parla
