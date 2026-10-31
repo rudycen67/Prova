@@ -55,6 +55,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   dump_sle4442.py   tool Python (pyscard) per leggere i 256 byte + protezione/PSC
   clona_sle4442.py  tool Python per scrivere un dump su una SLE4442 vergine
   sle4442_gui.py    programma con interfaccia grafica: legge, scrive, salva/carica .bin
+  UBUNTU.md         istruzioni per usare la GUI su Ubuntu/Linux (e WSL)
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek
