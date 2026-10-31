@@ -24,6 +24,7 @@ COMPILA-WINDOWS.cmd   → doppio clic: compila il client Windows (dopo aver estr
 APRI-PROXMARK3.cmd    → doppio clic: apre il client Proxmark3 in Windows gia' connesso (dopo ProxSpace)
 LEGGI-SLE4442.cmd     → doppio clic: dump di una smart card SLE4442 con lettore ACS ACR39U
 CLONA-SLE4442.cmd     → doppio clic: clona un dump su una SLE4442 vergine (solo tessere proprie)
+SLE4442-GUI.cmd       → doppio clic: programma con interfaccia grafica (legge e scrive la SLE4442)
 
 windows/   → script PowerShell (lato Windows host)
   setup-completo.ps1       orchestratore: FASE 1 (Windows) + FASE 2 (WSL)
@@ -53,6 +54,7 @@ docs/
 sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR39U
   dump_sle4442.py   tool Python (pyscard) per leggere i 256 byte + protezione/PSC
   clona_sle4442.py  tool Python per scrivere un dump su una SLE4442 vergine
+  sle4442_gui.py    programma con interfaccia grafica: legge, scrive, salva/carica .bin
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek
