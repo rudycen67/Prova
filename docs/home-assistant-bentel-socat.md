@@ -183,3 +183,40 @@ Le etichette di fabbrica (`in1`, `out1`...) non dicono a cosa sono collegati i
 fili: va verificato sul campo osservando quale ingresso cambia quando l'allarme
 viene inserito/scatta, e provando le uscite una alla volta con l'allarme sotto
 controllo.
+
+---
+
+## Cablaggio modulo Marss <-> centrale Bentel KYO 32
+
+Verificato sul campo: il modulo Marss **non e' cablato** alla centrale (i relè
+scattano ma la centrale non reagisce, gli ingressi non ricevono nulla). Senza
+questi fili ne' l'app Marss ne' Home Assistant possono comandare l'allarme.
+Riferimento: manuale installatore Bentel KYO 4/8/32 (CTS Tecnologie), capitoli
+"Zone", "Uscite Ausiliarie O.C." e tabella eventi uscite.
+
+Il modulo e' un IPC-3004: uscite 1-2 = relè (contatto pulito), uscite 3-4 =
+open collector (nessun click, max 50 mA). Ingressi 1-4 configurabili NA/NC/
+bilanciati.
+
+| # | Dal modulo Marss | Alla centrale KYO 32 | Programmazione centrale | Scopo |
+| --- | --- | --- | --- | --- |
+| 1 | Relè 1, contatti C e NO | Zona libera [Ln] e negativo [-] | Zona tipo **Commutazione**, N.A., Area 1 | Ogni impulso inserisce/disinserisce |
+| 2 | Ingresso in1 e negativo | Uscita O.C. [O1] | Evento **Inserimento Area 1**, N.A. | Stato "inserito" |
+| 3 | Ingresso in2 e negativo | Uscita O.C. [O2] | Evento **Allarme Area 1**, N.A. | Stato "allarme in corso" |
+| 4 | [-] del modulo | [-] della centrale | — | Massa comune (gia' presente se il modulo e' alimentato dalla centrale) |
+
+Sul modulo (pagina web, **Output Configuration**): uscita 1 con
+**temporizzazione 2 s**, cosi' ogni pressione da Home Assistant e' un impulso e
+la zona Commutazione cambia stato una sola volta. In **Input Configuration**:
+in1 e in2 **normalmente aperti** (l'O.C. della centrale chiude verso negativo
+quando l'evento e' attivo).
+
+Con questi fili, in Home Assistant: `binary_sensor.antifurto_ingresso_1` =
+impianto inserito, `binary_sensor.antifurto_ingresso_2` = allarme in corso,
+`script.antifurto_premi_uscita_1` = inserisci/disinserisci. Da li' si costruisce
+un `alarm_control_panel` template e le notifiche sull'app Home Assistant.
+
+Nota: la zona Commutazione va programmata con il **codice installatore** (da
+tastiera o con il software Bentel). La norma CEI 79-2 chiede che l'organo che
+comanda la zona stia nello stesso contenitore della centrale: il modulo Marss
+dentro la scatola della centrale soddisfa il requisito.
