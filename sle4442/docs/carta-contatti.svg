@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="560" fill="#ffffff"/>
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#1a1a1a">Smart card SLE4442 — formato e contatti</text>
+  <text x="40" y="66" font-size="14" fill="#555">ISO/IEC 7810 ID-1 (dimensioni) · ISO/IEC 7816-2 (posizione e numerazione contatti)</text>
+
+  <!-- ===== CARTA (sinistra) ===== -->
+  <!-- scala ~5,14 px/mm -->
+  <rect x="40" y="100" width="440" height="277" rx="16" fill="#f3f2ef" stroke="#444" stroke-width="2"/>
+
+  <!-- modulo chip in alto a sinistra -->
+  <g>
+    <rect x="118" y="175" width="70" height="64" rx="7" fill="#d9b84a" stroke="#b89530" stroke-width="1.5"/>
+    <line x1="153" y1="177" x2="153" y2="237" stroke="#b89530" stroke-width="1"/>
+    <line x1="120" y1="191" x2="186" y2="191" stroke="#b89530" stroke-width="1"/>
+    <line x1="120" y1="207" x2="186" y2="207" stroke="#b89530" stroke-width="1"/>
+    <line x1="120" y1="223" x2="186" y2="223" stroke="#b89530" stroke-width="1"/>
+  </g>
+  <text x="153" y="258" font-size="11" fill="#444" text-anchor="middle">modulo a contatti (chip)</text>
+  <text x="153" y="272" font-size="11" fill="#444" text-anchor="middle">in alto a sinistra</text>
+
+  <!-- connettore -> dettaglio -->
+  <line x1="192" y1="207" x2="520" y2="150" stroke="#999" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="300" y="150" font-size="11" fill="#888" transform="rotate(-9 300 150)">dettaglio contatti &#8594;</text>
+
+  <!-- quota larghezza -->
+  <line x1="40" y1="398" x2="480" y2="398" stroke="#555" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <text x="260" y="416" font-size="14" fill="#333" text-anchor="middle" font-weight="600">85,60 mm</text>
+
+  <!-- quota altezza -->
+  <line x1="24" y1="100" x2="24" y2="377" stroke="#555" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <text x="18" y="238" font-size="14" fill="#333" text-anchor="middle" font-weight="600" transform="rotate(-90 18 238)">53,98 mm</text>
+
+  <!-- note -->
+  <text x="300" y="118" font-size="11" fill="#777">angoli r 3,18 mm</text>
+
+  <!-- spessore (vista laterale, non in scala) -->
+  <rect x="40" y="440" width="440" height="10" rx="3" fill="#e2e0db" stroke="#9a978f" stroke-width="1"/>
+  <text x="260" y="470" font-size="12" fill="#555" text-anchor="middle">spessore 0,76 mm (vista di taglio, non in scala)</text>
+
+  <!-- ===== DETTAGLIO CONTATTI (destra) ===== -->
+  <text x="545" y="94" font-size="14" fill="#333" font-weight="600">Contatti ISO 7816-2 (lato chip verso di te)</text>
+
+  <!-- helper: ogni pad e' un gruppo -->
+  <!-- Colonna sinistra C1..C4, colonna destra C5..C8 -->
+  <!-- C1 VCC -->
+  <rect x="545" y="104" width="150" height="54" rx="8" fill="#e9d88f" stroke="#b89530" stroke-width="2"/>
+  <text x="620" y="128" font-size="17" font-weight="700" fill="#1a1a1a" text-anchor="middle">C1 — VCC</text>
+  <text x="620" y="146" font-size="12" fill="#555" text-anchor="middle">alimentazione</text>
+  <!-- C2 RST -->
+  <rect x="545" y="170" width="150" height="54" rx="8" fill="#e9d88f" stroke="#b89530" stroke-width="2"/>
+  <text x="620" y="194" font-size="17" font-weight="700" fill="#1a1a1a" text-anchor="middle">C2 — RST</text>
+  <text x="620" y="212" font-size="12" fill="#555" text-anchor="middle">reset</text>
+  <!-- C3 CLK (2-wire) -->
+  <rect x="545" y="236" width="150" height="54" rx="8" fill="#cdeedd" stroke="#2e9e5b" stroke-width="3"/>
+  <text x="620" y="260" font-size="17" font-weight="700" fill="#15532f" text-anchor="middle">C3 — CLK</text>
+  <text x="620" y="278" font-size="12" fill="#1f6b41" text-anchor="middle">clock (ritmo bit)</text>
+  <!-- C4 n.c. -->
+  <rect x="545" y="302" width="150" height="54" rx="8" fill="#eceae5" stroke="#bdbab2" stroke-width="2"/>
+  <text x="620" y="326" font-size="17" font-weight="700" fill="#8a8880" text-anchor="middle">C4</text>
+  <text x="620" y="344" font-size="12" fill="#8a8880" text-anchor="middle">non usato</text>
+
+  <!-- C5 GND -->
+  <rect x="715" y="104" width="150" height="54" rx="8" fill="#d7e3f0" stroke="#5b7a9e" stroke-width="3"/>
+  <text x="790" y="128" font-size="17" font-weight="700" fill="#2b4866" text-anchor="middle">C5 — GND</text>
+  <text x="790" y="146" font-size="12" fill="#3a5a7d" text-anchor="middle">massa</text>
+  <!-- C6 VPP -->
+  <rect x="715" y="170" width="150" height="54" rx="8" fill="#eceae5" stroke="#bdbab2" stroke-width="2"/>
+  <text x="790" y="194" font-size="17" font-weight="700" fill="#8a8880" text-anchor="middle">C6 — VPP</text>
+  <text x="790" y="212" font-size="12" fill="#8a8880" text-anchor="middle">non usato</text>
+  <!-- C7 I/O (2-wire) -->
+  <rect x="715" y="236" width="150" height="54" rx="8" fill="#cdeedd" stroke="#2e9e5b" stroke-width="3"/>
+  <text x="790" y="260" font-size="17" font-weight="700" fill="#15532f" text-anchor="middle">C7 — I/O</text>
+  <text x="790" y="278" font-size="12" fill="#1f6b41" text-anchor="middle">dato</text>
+  <!-- C8 n.c. -->
+  <rect x="715" y="302" width="150" height="54" rx="8" fill="#eceae5" stroke="#bdbab2" stroke-width="2"/>
+  <text x="790" y="326" font-size="17" font-weight="700" fill="#8a8880" text-anchor="middle">C8</text>
+  <text x="790" y="344" font-size="12" fill="#8a8880" text-anchor="middle">non usato</text>
+
+  <!-- legenda -->
+  <rect x="545" y="376" width="320" height="150" rx="8" fill="#fafafa" stroke="#ddd" stroke-width="1"/>
+  <text x="561" y="400" font-size="13" font-weight="700" fill="#1a1a1a">Protocollo 2-wire della SLE4442</text>
+  <rect x="561" y="412" width="16" height="12" rx="2" fill="#cdeedd" stroke="#2e9e5b" stroke-width="2"/>
+  <text x="585" y="422" font-size="12" fill="#333">C3 (CLK) e C7 (I/O) = i due fili dati</text>
+  <rect x="561" y="432" width="16" height="12" rx="2" fill="#d7e3f0" stroke="#5b7a9e" stroke-width="2"/>
+  <text x="585" y="442" font-size="12" fill="#333">C5 (GND) = massa di riferimento</text>
+  <rect x="561" y="452" width="16" height="12" rx="2" fill="#e9d88f" stroke="#b89530" stroke-width="2"/>
+  <text x="585" y="462" font-size="12" fill="#333">C1 (VCC) e C2 (RST) = alimentazione/avvio</text>
+  <rect x="561" y="472" width="16" height="12" rx="2" fill="#eceae5" stroke="#bdbab2" stroke-width="2"/>
+  <text x="585" y="482" font-size="12" fill="#333">C4, C6, C8 = non usati dalla SLE4442</text>
+  <text x="561" y="506" font-size="11" fill="#777">Per leggere/scrivere basta il lettore (usa C1,C2,C3,C5,C7).</text>
+  <text x="561" y="520" font-size="11" fill="#777">Per sniffare servono solo C3, C7 e C5.</text>
+</svg>
