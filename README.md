@@ -57,6 +57,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   sle4442_gui.py    programma con interfaccia grafica: legge, scrive, salva/carica .bin
   UBUNTU.md         istruzioni per usare la GUI su Ubuntu/Linux (e WSL)
   docs/carta-contatti.svg  disegno della carta: formato ISO ID-1 e mappa contatti ISO-7816-2
+  docs/chip-contatti.svg   chip ingrandito: ogni contatto etichettato in posizione (C3/C7/C5 da collegare)
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek

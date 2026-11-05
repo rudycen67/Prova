@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <pattern id="pPower" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#fdeccf"/><circle cx="4.5" cy="4.5" r="1.5" fill="#b5760f"/>
+    </pattern>
+    <pattern id="pGnd" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#eef2f6"/><line x1="0" y1="3.5" x2="7" y2="3.5" stroke="#111" stroke-width="1.4"/>
+    </pattern>
+    <pattern id="pUnused" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#efeee9"/><path d="M0,9 L9,0" stroke="#b7b4ac" stroke-width="1.4"/>
+    </pattern>
+  </defs>
+
+  <rect x="0" y="0" width="760" height="560" fill="#ffffff"/>
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#1a1a1a">Il chip ingrandito — quale contatto è quale</text>
+  <text x="30" y="55" font-size="13" fill="#555">Lato contatti verso di te. C1 in alto a sinistra, C5 in alto a destra. In fondo i 3 da collegare.</text>
+
+  <!-- corpo del modulo dorato -->
+  <rect x="210" y="80" width="320" height="404" rx="14" fill="#d9b84a" stroke="#8a6d1c" stroke-width="2"/>
+
+  <!-- ===== PAD con etichette in posizione ===== -->
+  <!-- C1 VCC -->
+  <rect x="230" y="100" width="130" height="82" rx="8" fill="url(#pPower)" stroke="#b5760f" stroke-width="3"/>
+  <rect x="267" y="106" width="56" height="16" rx="4" fill="#b5760f"/>
+  <text x="295" y="118" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">ALIM.</text>
+  <text x="295" y="148" font-size="21" font-weight="700" fill="#1a1a1a" text-anchor="middle">C1 · VCC</text>
+  <text x="295" y="168" font-size="12" fill="#444" text-anchor="middle">alimentazione</text>
+  <!-- C2 RST -->
+  <rect x="230" y="196" width="130" height="82" rx="8" fill="url(#pPower)" stroke="#b5760f" stroke-width="3"/>
+  <rect x="267" y="202" width="56" height="16" rx="4" fill="#b5760f"/>
+  <text x="295" y="214" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">ALIM.</text>
+  <text x="295" y="244" font-size="21" font-weight="700" fill="#1a1a1a" text-anchor="middle">C2 · RST</text>
+  <text x="295" y="264" font-size="12" fill="#444" text-anchor="middle">reset</text>
+  <!-- C3 CLK -->
+  <rect x="230" y="292" width="130" height="82" rx="8" fill="#cfe3f3" stroke="#0072B2" stroke-width="5"/>
+  <rect x="267" y="298" width="56" height="16" rx="4" fill="#0072B2"/>
+  <text x="295" y="310" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">DATO</text>
+  <text x="295" y="340" font-size="21" font-weight="700" fill="#06365e" text-anchor="middle">C3 · CLK</text>
+  <text x="295" y="360" font-size="12" fill="#0a4a7a" text-anchor="middle">clock</text>
+  <!-- C4 -->
+  <rect x="230" y="388" width="130" height="82" rx="8" fill="url(#pUnused)" stroke="#a9a69e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="261" y="394" width="68" height="16" rx="4" fill="#a9a69e"/>
+  <text x="295" y="406" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">NON USATO</text>
+  <text x="295" y="440" font-size="21" font-weight="700" fill="#6f6d66" text-anchor="middle">C4</text>
+
+  <!-- C5 GND -->
+  <rect x="380" y="100" width="130" height="82" rx="8" fill="url(#pGnd)" stroke="#111" stroke-width="4" stroke-dasharray="7 4"/>
+  <rect x="417" y="106" width="56" height="16" rx="4" fill="#111"/>
+  <text x="445" y="118" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">MASSA</text>
+  <text x="445" y="148" font-size="21" font-weight="700" fill="#1a1a1a" text-anchor="middle">C5 · GND</text>
+  <text x="445" y="168" font-size="12" fill="#444" text-anchor="middle">massa</text>
+  <!-- C6 -->
+  <rect x="380" y="196" width="130" height="82" rx="8" fill="url(#pUnused)" stroke="#a9a69e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="411" y="202" width="68" height="16" rx="4" fill="#a9a69e"/>
+  <text x="445" y="214" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">NON USATO</text>
+  <text x="445" y="244" font-size="21" font-weight="700" fill="#6f6d66" text-anchor="middle">C6 · VPP</text>
+  <!-- C7 I/O -->
+  <rect x="380" y="292" width="130" height="82" rx="8" fill="#cfe3f3" stroke="#0072B2" stroke-width="5"/>
+  <rect x="417" y="298" width="56" height="16" rx="4" fill="#0072B2"/>
+  <text x="445" y="310" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">DATO</text>
+  <text x="445" y="340" font-size="21" font-weight="700" fill="#06365e" text-anchor="middle">C7 · I/O</text>
+  <text x="445" y="360" font-size="12" fill="#0a4a7a" text-anchor="middle">dato</text>
+  <!-- C8 -->
+  <rect x="380" y="388" width="130" height="82" rx="8" fill="url(#pUnused)" stroke="#a9a69e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="411" y="394" width="68" height="16" rx="4" fill="#a9a69e"/>
+  <text x="445" y="406" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">NON USATO</text>
+  <text x="445" y="440" font-size="21" font-weight="700" fill="#6f6d66" text-anchor="middle">C8</text>
+
+  <!-- ===== Callout: i 3 da collegare ===== -->
+  <!-- C3 -> sinistra -->
+  <line x1="230" y1="333" x2="150" y2="333" stroke="#0072B2" stroke-width="2"/>
+  <rect x="18" y="312" width="130" height="42" rx="6" fill="#eaf3fb" stroke="#0072B2" stroke-width="2"/>
+  <text x="30" y="330" font-size="13" font-weight="700" fill="#06365e">C3 (CLK)</text>
+  <text x="30" y="347" font-size="12" fill="#0a4a7a">→ canale "clock"</text>
+
+  <!-- C7 -> destra -->
+  <line x1="510" y1="333" x2="600" y2="333" stroke="#0072B2" stroke-width="2"/>
+  <rect x="600" y="312" width="140" height="42" rx="6" fill="#eaf3fb" stroke="#0072B2" stroke-width="2"/>
+  <text x="612" y="330" font-size="13" font-weight="700" fill="#06365e">C7 (I/O)</text>
+  <text x="612" y="347" font-size="12" fill="#0a4a7a">→ canale "dato"</text>
+
+  <!-- C5 -> destra alto -->
+  <line x1="510" y1="141" x2="600" y2="141" stroke="#111" stroke-width="2"/>
+  <rect x="600" y="120" width="140" height="42" rx="6" fill="#f0f0f0" stroke="#111" stroke-width="2"/>
+  <text x="612" y="138" font-size="13" font-weight="700" fill="#111">C5 (GND)</text>
+  <text x="612" y="155" font-size="12" fill="#333">→ massa (GND)</text>
+
+  <!-- riquadro riassunto in basso -->
+  <rect x="18" y="494" width="724" height="52" rx="8" fill="#fafafa" stroke="#ddd" stroke-width="1"/>
+  <text x="34" y="516" font-size="13" font-weight="700" fill="#1a1a1a">Per lo sniffing colleghi SOLO questi tre:</text>
+  <text x="34" y="536" font-size="13" fill="#333">C3 = CLK (clock) · C7 = I/O (dato) · C5 = GND (massa). Gli altri li gestisce il lettore (C1, C2) o non si usano (C4, C6, C8).</text>
+</svg>
