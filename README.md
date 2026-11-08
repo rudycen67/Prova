@@ -64,6 +64,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   docs/fpc-adattatore.svg   SIMtrace: com'e' fatto l'adattatore FPC (estremita' carta, pad X1, connettore FPC)
   docs/fpc-modo-b.svg       uso dell'adattatore FPC col proprio ACR39U + socket + analizzatore (pad X1)
   docs/forme-donda-2wire.svg  forme d'onda CLK/IO del protocollo 2-wire (START, bit LSB-first, STOP)
+  docs/interfaccia-fisica.svg  interfacciamento fisico: carta nel socket, contatti a molla, pin ai fili
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek

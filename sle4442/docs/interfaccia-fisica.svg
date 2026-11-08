@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="540" fill="#ffffff"/>
+  <text x="30" y="32" font-size="19" font-weight="700" fill="#1a1a1a">Interfacciamento fisico con la tua carta</text>
+  <text x="30" y="53" font-size="12" fill="#555">La carta si infila nel SOCKET; i contatti a molla toccano il chip; i pin del socket vanno ai fili.</text>
+
+  <!-- CARTA -->
+  <rect x="240" y="75" width="250" height="140" rx="12" fill="#f3f2ef" stroke="#444" stroke-width="2"/>
+  <rect x="270" y="150" width="60" height="48" rx="5" fill="#d9b84a" stroke="#8a6d1c" stroke-width="1.5"/>
+  <line x1="300" y1="152" x2="300" y2="196" stroke="#8a6d1c"/><line x1="272" y1="166" x2="328" y2="166" stroke="#8a6d1c"/><line x1="272" y1="182" x2="328" y2="182" stroke="#8a6d1c"/>
+  <text x="410" y="120" font-size="13" font-weight="700" fill="#333">La tua SLE4442</text>
+  <text x="410" y="138" font-size="11" fill="#555">chip (contatti) in basso</text>
+
+  <!-- freccia giu -->
+  <line x1="300" y1="222" x2="300" y2="258" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="315" y="245" font-size="11" fill="#c0392b">si infila qui</text>
+
+  <!-- SOCKET -->
+  <rect x="200" y="265" width="320" height="150" rx="10" fill="#e4e2dd" stroke="#555" stroke-width="2"/>
+  <text x="360" y="300" font-size="13" font-weight="700" fill="#333" text-anchor="middle">Socket smart card</text>
+  <!-- contatti a molla -->
+  <g fill="#c99a2e">
+    <circle cx="276" cy="330" r="4"/><circle cx="292" cy="330" r="4"/><circle cx="308" cy="330" r="4"/><circle cx="324" cy="330" r="4"/>
+  </g>
+  <text x="300" y="356" font-size="10" fill="#8a5a0c" text-anchor="middle">contatti a molla (toccano il chip)</text>
+
+  <!-- pin del socket -->
+  <g>
+    <rect x="236" y="415" width="10" height="26" fill="#d9b84a" stroke="#8a6d1c"/>
+    <rect x="286" y="415" width="10" height="26" fill="#d9b84a" stroke="#8a6d1c"/>
+    <rect x="336" y="415" width="10" height="26" fill="#d9b84a" stroke="#8a6d1c"/>
+    <rect x="386" y="415" width="10" height="26" fill="#d9b84a" stroke="#8a6d1c"/>
+    <rect x="436" y="415" width="10" height="26" fill="#d9b84a" stroke="#8a6d1c"/>
+  </g>
+  <g font-size="9" fill="#333" text-anchor="middle">
+    <text x="241" y="456">C1</text><text x="241" y="467">VCC</text>
+    <text x="291" y="456">C2</text><text x="291" y="467">RST</text>
+    <text x="341" y="456">C3</text><text x="341" y="467">CLK</text>
+    <text x="391" y="456">C5</text><text x="391" y="467">GND</text>
+    <text x="441" y="456">C7</text><text x="441" y="467">I/O</text>
+  </g>
+
+  <!-- fili -->
+  <line x1="241" y1="441" x2="241" y2="490" stroke="#b5760f" stroke-width="2"/>
+  <line x1="291" y1="441" x2="291" y2="490" stroke="#555" stroke-width="2"/>
+  <line x1="341" y1="441" x2="341" y2="490" stroke="#0072B2" stroke-width="2"/>
+  <line x1="391" y1="441" x2="391" y2="490" stroke="#111" stroke-width="2"/>
+  <line x1="441" y1="441" x2="441" y2="490" stroke="#0072B2" stroke-width="2" stroke-dasharray="6 3"/>
+  <rect x="200" y="490" width="360" height="34" rx="6" fill="#eaf3fb" stroke="#0072B2"/>
+  <text x="380" y="512" font-size="12" font-weight="700" fill="#06365e" text-anchor="middle">ai fili → Bus Pirate / ESP32 / logic analyzer</text>
+
+  <!-- nota -->
+  <rect x="560" y="265" width="180" height="150" rx="8" fill="#fafafa" stroke="#ddd"/>
+  <text x="574" y="288" font-size="12" font-weight="700" fill="#1a1a1a">In pratica:</text>
+  <text x="574" y="309" font-size="11" fill="#333">1. La carta entra nel socket.</text>
+  <text x="574" y="328" font-size="11" fill="#333">2. I contatti a molla</text>
+  <text x="590" y="343" font-size="11" fill="#333">toccano il chip.</text>
+  <text x="574" y="362" font-size="11" fill="#333">3. I pin del socket</text>
+  <text x="590" y="377" font-size="11" fill="#333">portano i segnali ai fili.</text>
+  <text x="574" y="398" font-size="11" fill="#333">Nessuna saldatura</text>
+  <text x="590" y="413" font-size="11" fill="#333">sulla carta.</text>
+</svg>
