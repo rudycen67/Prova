@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 470" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="840" height="470" fill="#ffffff"/>
+  <text x="30" y="32" font-size="19" font-weight="700" fill="#1a1a1a">Socket e adattatore FPC: come si collegano fisicamente</text>
+  <text x="30" y="53" font-size="12" fill="#555">Si uniscono con 5 FILI: ogni pad X1 dell'adattatore va al pin corrispondente del socket.</text>
+
+  <!-- ADATTATORE FPC -->
+  <rect x="60" y="110" width="170" height="260" rx="8" fill="#2a6b4f" stroke="#1c4733" stroke-width="2"/>
+  <text x="145" y="135" font-size="13" font-weight="700" fill="#cdeedd" text-anchor="middle">Adattatore FPC</text>
+  <text x="145" y="152" font-size="10" fill="#b7d9c7" text-anchor="middle">pad di test X1</text>
+  <!-- pad X1 -->
+  <g font-size="11" fill="#1c4733" font-weight="700">
+    <rect x="206" y="178" width="24" height="16" rx="3" fill="#d9b84a"/><text x="200" y="190" text-anchor="end">VCC</text>
+    <rect x="206" y="218" width="24" height="16" rx="3" fill="#d9b84a"/><text x="200" y="230" text-anchor="end">RST</text>
+    <rect x="206" y="258" width="24" height="16" rx="3" fill="#d9b84a"/><text x="200" y="270" text-anchor="end">CLK</text>
+    <rect x="206" y="298" width="24" height="16" rx="3" fill="#d9b84a"/><text x="200" y="310" text-anchor="end">GND</text>
+    <rect x="206" y="338" width="24" height="16" rx="3" fill="#d9b84a"/><text x="200" y="350" text-anchor="end">I/O</text>
+  </g>
+
+  <!-- SOCKET -->
+  <rect x="610" y="110" width="180" height="260" rx="8" fill="#e4e2dd" stroke="#555" stroke-width="2"/>
+  <text x="700" y="135" font-size="13" font-weight="700" fill="#333" text-anchor="middle">Socket smart card</text>
+  <!-- carta -->
+  <rect x="650" y="150" width="100" height="70" rx="6" fill="#f3f2ef" stroke="#444"/>
+  <rect x="660" y="164" width="20" height="16" rx="2" fill="#d9b84a" stroke="#8a6d1c"/>
+  <text x="710" y="192" font-size="9" fill="#333" text-anchor="middle">la tua carta</text>
+  <!-- pin socket -->
+  <g font-size="11" fill="#333" font-weight="700">
+    <rect x="610" y="178" width="24" height="16" rx="3" fill="#d9b84a"/><text x="640" y="190">C1 VCC</text>
+    <rect x="610" y="218" width="24" height="16" rx="3" fill="#d9b84a"/><text x="640" y="230">C2 RST</text>
+    <rect x="610" y="258" width="24" height="16" rx="3" fill="#d9b84a"/><text x="640" y="270">C3 CLK</text>
+    <rect x="610" y="298" width="24" height="16" rx="3" fill="#d9b84a"/><text x="640" y="310">C5 GND</text>
+    <rect x="610" y="338" width="24" height="16" rx="3" fill="#d9b84a"/><text x="640" y="350">C7 I/O</text>
+  </g>
+
+  <!-- 5 FILI -->
+  <line x1="230" y1="186" x2="610" y2="186" stroke="#b5760f" stroke-width="2.5"/>
+  <line x1="230" y1="226" x2="610" y2="226" stroke="#7a5ca0" stroke-width="2.5"/>
+  <line x1="230" y1="266" x2="610" y2="266" stroke="#0072B2" stroke-width="2.5"/>
+  <line x1="230" y1="306" x2="610" y2="306" stroke="#111" stroke-width="2.5"/>
+  <line x1="230" y1="346" x2="610" y2="346" stroke="#0072B2" stroke-width="2.5" stroke-dasharray="7 3"/>
+  <g font-size="10" fill="#555" text-anchor="middle">
+    <text x="420" y="180">filo 1 — alimentazione</text>
+    <text x="420" y="220">filo 2 — reset</text>
+    <text x="420" y="260">filo 3 — clock</text>
+    <text x="420" y="300">filo 4 — massa</text>
+    <text x="420" y="340">filo 5 — dato</text>
+  </g>
+
+  <rect x="30" y="398" width="780" height="54" rx="6" fill="#fafafa" stroke="#ddd"/>
+  <text x="44" y="420" font-size="12" font-weight="700" fill="#1a1a1a">Come si attaccano i fili:</text>
+  <text x="44" y="440" font-size="12" fill="#333">Si SALDANO (o si usa un header + jumper su breadboard) ai pad X1 e ai pin del socket. VPP/C6, C4 e C8 non si collegano.</text>
+</svg>

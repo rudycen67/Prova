@@ -66,6 +66,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   docs/forme-donda-2wire.svg  forme d'onda CLK/IO del protocollo 2-wire (START, bit LSB-first, STOP)
   docs/interfaccia-fisica.svg  interfacciamento fisico: carta nel socket, contatti a molla, pin ai fili
   docs/carta-con-fpc.svg    dove va la carta con l'adattatore FPC (non sull'adattatore: socket o SIMtrace2)
+  docs/socket-fpc-collegamento.svg  i 5 fili tra i pad X1 dell'adattatore FPC e i pin del socket
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek
