@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2a6b4f"/></marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="520" fill="#ffffff"/>
+  <text x="30" y="32" font-size="19" font-weight="700" fill="#1a1a1a">La tua carta con l'adattatore FPC: dove va davvero</text>
+  <text x="30" y="53" font-size="12" fill="#555">L'adattatore NON ha uno slot per la tua carta. L'adattatore È la "finta carta" che entra nel lettore.</text>
+
+  <!-- ADATTATORE FPC -->
+  <rect x="250" y="120" width="360" height="60" rx="5" fill="#2a6b4f" stroke="#1c4733" stroke-width="2"/>
+  <rect x="250" y="120" width="70" height="60" rx="5" fill="#3a7d5f" stroke="#1c4733"/>
+  <rect x="258" y="130" width="12" height="10" fill="#d9b84a"/><rect x="258" y="144" width="12" height="10" fill="#d9b84a"/><rect x="258" y="158" width="12" height="10" fill="#d9b84a"/>
+  <rect x="276" y="130" width="12" height="10" fill="#d9b84a"/><rect x="276" y="144" width="12" height="10" fill="#d9b84a"/><rect x="276" y="158" width="12" height="10" fill="#d9b84a"/>
+  <text x="285" y="200" font-size="10" fill="#1c4733" text-anchor="middle">estremità carta</text>
+  <text x="285" y="213" font-size="10" fill="#1c4733" text-anchor="middle">(nel lettore)</text>
+  <!-- X1 -->
+  <rect x="400" y="135" width="14" height="10" fill="#d9b84a"/><rect x="400" y="150" width="14" height="10" fill="#d9b84a"/>
+  <rect x="420" y="135" width="14" height="10" fill="#d9b84a"/><rect x="420" y="150" width="14" height="10" fill="#d9b84a"/>
+  <text x="417" y="200" font-size="10" fill="#1c4733" text-anchor="middle">pad X1</text>
+  <!-- FPC conn -->
+  <rect x="560" y="130" width="40" height="40" rx="3" fill="#444"/><text x="580" y="155" font-size="9" fill="#fff" text-anchor="middle">FPC</text>
+
+  <!-- X rosso -->
+  <text x="430" y="95" font-size="14" font-weight="700" fill="#c0392b" text-anchor="middle">&#10007; la tua carta NON si infila qui</text>
+
+  <!-- PATH B (sinistra): X1 -> socket -->
+  <line x1="410" y1="180" x2="200" y2="300" stroke="#2a6b4f" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="80" y="300" width="230" height="170" rx="8" fill="#eef5f1" stroke="#2a6b4f" stroke-width="2"/>
+  <text x="195" y="324" font-size="13" font-weight="700" fill="#1c4733" text-anchor="middle">MODO B (col tuo ACR39U)</text>
+  <text x="195" y="342" font-size="11" fill="#333" text-anchor="middle">cabli i pad X1 a un SOCKET</text>
+  <!-- socket + carta -->
+  <rect x="120" y="390" width="150" height="70" rx="6" fill="#e4e2dd" stroke="#555"/>
+  <rect x="150" y="352" width="90" height="70" rx="6" fill="#f3f2ef" stroke="#444"/>
+  <rect x="160" y="366" width="20" height="16" rx="2" fill="#d9b84a" stroke="#8a6d1c"/>
+  <text x="215" y="378" font-size="10" font-weight="700" fill="#333">la tua</text>
+  <text x="215" y="391" font-size="10" font-weight="700" fill="#333">carta QUI</text>
+
+  <!-- PATH A (destra): FPC -> SIMtrace2 -->
+  <line x1="590" y1="170" x2="660" y2="300" stroke="#2a6b4f" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="560" y="300" width="290" height="170" rx="8" fill="#eef5f1" stroke="#2a6b4f" stroke-width="2"/>
+  <text x="705" y="324" font-size="13" font-weight="700" fill="#1c4733" text-anchor="middle">MODO SIMtrace</text>
+  <text x="705" y="342" font-size="11" fill="#333" text-anchor="middle">cavo flat → dispositivo SIMtrace2</text>
+  <rect x="600" y="360" width="100" height="80" rx="6" fill="#e8edf2" stroke="#0072B2" stroke-width="2"/>
+  <text x="650" y="398" font-size="12" font-weight="700" fill="#06365e" text-anchor="middle">SIMtrace2</text>
+  <text x="650" y="414" font-size="9" fill="#06365e" text-anchor="middle">(~101 €)</text>
+  <rect x="720" y="352" width="90" height="70" rx="6" fill="#f3f2ef" stroke="#444"/>
+  <rect x="730" y="366" width="20" height="16" rx="2" fill="#d9b84a" stroke="#8a6d1c"/>
+  <text x="785" y="378" font-size="10" font-weight="700" fill="#333">la tua</text>
+  <text x="785" y="391" font-size="10" font-weight="700" fill="#333">carta QUI</text>
+  <line x1="700" y1="400" x2="720" y2="390" stroke="#555" stroke-width="1.5"/>
+
+  <text x="30" y="500" font-size="11" fill="#777">In sintesi: sull'adattatore la carta NON entra. Va in un socket cablato ai pad X1 (Modo B) oppure al SIMtrace2 (Modo SIMtrace).</text>
+</svg>
