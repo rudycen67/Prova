@@ -94,3 +94,38 @@ E' la dimostrazione, sulla tua carta, che il PSC viaggia **in chiaro**.
 Qui conosci gia' il PSC (`FFFFFF`): serve per **capire** il protocollo, non per
 scoprire un codice. Per l'uso reale della chiave non serve nulla di tutto
 questo: il clone su carta vergine funziona gia'.
+
+---
+
+## Collegamento dettagliato: socket → Bus Pirate
+
+I 5 fili (il pin del socket corrisponde al contatto della carta):
+
+| Contatto carta | Pin Bus Pirate | Segnale |
+|---|---|---|
+| C1 | VOUT | VCC (alimentazione) |
+| C5 | GND | massa |
+| C3 | IO1 | CLK (clock) |
+| C7 | IO0 | I/O (dato) |
+| C2 | IO2 | RST (reset) |
+
+Passi:
+1. Dal datasheet del socket, individua i piedini C1, C2, C3, C5, C7.
+2. Salda un header (o i fili) sui piedini del socket.
+3. Collega i 5 cavetti secondo la tabella.
+4. Inserisci la carta vergine nel socket.
+5. Collega il Bus Pirate al PC (USB), apri il terminale seriale.
+6. Configura il Bus Pirate:
+   - modalita' 2-wire (`m` -> 2-WIRE);
+   - alimentazione ON (`W`, 5 V);
+   - pull-up ON (`P`) -- indispensabili sul 2-wire;
+   - LSB first (`L`).
+7. In 2-wire, usa il comando `sle4442` (digita `sle4442` per l'uso) per
+   reset / dump / present-code.
+
+Avvertenze:
+- Le pull-up (passo 6) sono obbligatorie, altrimenti il filo dato non va.
+- La massa (GND) deve essere comune a tutto; quando aggiungi il logic
+  analyzer, il suo GND va sullo stesso GND.
+- La sintassi esatta dei sotto-comandi `sle4442` puo' variare con la
+  versione del firmware: controlla l'aiuto a bordo.
