@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="840" height="380" fill="#ffffff"/>
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#1a1a1a">Adattatore FPC SIMtrace — com'è fatto</text>
+  <text x="30" y="55" font-size="13" fill="#555">Tre zone: estremità-carta (nel lettore) · pad di test X1 (per l'analizzatore) · connettore FPC (al SIMtrace2).</text>
+
+  <!-- PCB corpo -->
+  <rect x="60" y="150" width="560" height="90" rx="6" fill="#2a6b4f" stroke="#1c4733" stroke-width="2"/>
+
+  <!-- ZONA 1: estremità carta (sinistra) -->
+  <rect x="60" y="150" width="120" height="90" rx="6" fill="#3a7d5f" stroke="#1c4733" stroke-width="1"/>
+  <!-- contatti dorati 2x4 -->
+  <rect x="72" y="162" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="72" y="182" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="72" y="202" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="72" y="222" width="20" height="12" rx="2" fill="#d9b84a"/>
+  <rect x="100" y="162" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="100" y="182" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="100" y="202" width="20" height="14" rx="2" fill="#d9b84a"/>
+  <rect x="100" y="222" width="20" height="12" rx="2" fill="#d9b84a"/>
+  <text x="120" y="275" font-size="12" font-weight="700" fill="#1c4733" text-anchor="middle">1) estremità carta</text>
+  <line x1="120" y1="300" x2="120" y2="330" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="120" y="348" font-size="11" fill="#555" text-anchor="middle">entra nel LETTORE</text>
+
+  <!-- ZONA 2: pad di test X1 (centro) -->
+  <g>
+    <rect x="250" y="170" width="16" height="12" rx="2" fill="#d9b84a"/><text x="270" y="180" font-size="9" fill="#fff">VCC</text>
+    <rect x="250" y="188" width="16" height="12" rx="2" fill="#d9b84a"/><text x="270" y="198" font-size="9" fill="#fff">RST</text>
+    <rect x="250" y="206" width="16" height="12" rx="2" fill="#d9b84a"/><text x="270" y="216" font-size="9" fill="#fff">CLK</text>
+    <rect x="320" y="170" width="16" height="12" rx="2" fill="#d9b84a"/><text x="340" y="180" font-size="9" fill="#fff">GND</text>
+    <rect x="320" y="188" width="16" height="12" rx="2" fill="#d9b84a"/><text x="340" y="198" font-size="9" fill="#fff">VPP</text>
+    <rect x="320" y="206" width="16" height="12" rx="2" fill="#d9b84a"/><text x="340" y="216" font-size="9" fill="#fff">I/O</text>
+  </g>
+  <text x="300" y="275" font-size="12" font-weight="700" fill="#1c4733" text-anchor="middle">2) pad di test X1</text>
+  <line x1="300" y1="300" x2="300" y2="330" stroke="#0072B2" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="300" y="348" font-size="11" fill="#0072B2" text-anchor="middle">qui il LOGIC ANALYZER (CLK, I/O, GND)</text>
+
+  <!-- ZONA 3: connettore FPC (destra) -->
+  <rect x="560" y="160" width="60" height="70" rx="3" fill="#444" stroke="#222" stroke-width="1.5"/>
+  <text x="590" y="200" font-size="9" fill="#fff" text-anchor="middle">FPC</text>
+  <text x="590" y="275" font-size="12" font-weight="700" fill="#1c4733" text-anchor="middle">3) connettore FPC</text>
+  <!-- cavo flat verso simtrace -->
+  <rect x="620" y="188" width="110" height="16" fill="#cbb26a" stroke="#8a6d1c"/>
+  <rect x="730" y="165" width="80" height="60" rx="6" fill="#e8edf2" stroke="#0072B2" stroke-width="2"/>
+  <text x="770" y="192" font-size="12" font-weight="700" fill="#06365e" text-anchor="middle">SIM-</text>
+  <text x="770" y="208" font-size="12" font-weight="700" fill="#06365e" text-anchor="middle">trace2</text>
+  <text x="675" y="348" font-size="11" fill="#555" text-anchor="middle">cavo flat → al SIMtrace2</text>
+</svg>
