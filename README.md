@@ -60,6 +60,7 @@ sle4442/   → dump di smart card a memoria sincrona SLE4442 con lettore ACS ACR
   docs/chip-contatti.svg   chip ingrandito: ogni contatto etichettato in posizione (C3/C7/C5 da collegare)
   docs/interposer-schema.svg  schema di assemblaggio dell'interposer (dov'e' lo slot/connettore)
   docs/didattica-vedere-protocollo.md  setup socket + pilota + analizzatore per osservare il 2-wire
+  docs/buspirate-collegamento.svg  schema: la carta va nel socket, Bus Pirate collegato con 5 fili
   sniffing-didattico.md  guida per osservare il protocollo 2-wire e il PSC in chiaro
   esp32-sniffer/    firmware ESP32 (sniffer passivo didattico) + guida collegamenti
   cardpeek/         script Lua per leggere la SLE4442 dalla GUI Cardpeek
