@@ -1,0 +1,16 @@
+antifurto_premi_uscita_1:
+  alias: "Antifurto: inserisci / disinserisci (zona chiave)"
+  icon: mdi:shield-sync
+  mode: single
+  sequence:
+    - action: rest_command.marss_premi_uscita
+      data: { uscita: 1 }
+    - delay: { seconds: 2 }
+    - action: rest_command.marss_invia_codice
+
+antifurto_riavvia_ponte:
+  alias: "Antifurto: riavvia add-on ponte Marss"
+  icon: mdi:restart
+  sequence:
+    - action: hassio.addon_restart
+      data: { addon: 92d7005e_bentel_socat }

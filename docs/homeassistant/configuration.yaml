@@ -1,0 +1,71 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# ===== Antifurto Bentel KYO 32 + modulo Marss (add-on Bentel Socat Bridge) =====
+rest:
+  - resource: http://92d7005e-bentel-socat:26501/protect/status.xml
+    method: GET
+    authentication: basic
+    username: admin
+    password: marss
+    scan_interval: 5
+    timeout: 60
+    binary_sensor:
+      - name: "Antifurto inserito"
+        unique_id: marss_ipc_inserito
+        icon: mdi:shield-lock
+        value_template: "{{ value_json.response.ledi1 | int == 2 }}"
+      - name: "Antifurto allarme in corso"
+        unique_id: marss_ipc_allarme
+        device_class: safety
+        value_template: "{{ value_json.response.ledi2 | int == 2 }}"
+      - name: "Antifurto modulo tamper"
+        unique_id: marss_ipc_tamper
+        device_class: tamper
+        value_template: "{{ value_json.response.msgTampCh0 | int == 1 }}"
+
+rest_command:
+  marss_premi_uscita:
+    url: "http://92d7005e-bentel-socat:26501/protect/buttons.cgi?button={{ uscita }}"
+    method: GET
+    username: admin
+    password: marss
+    timeout: 60
+  marss_invia_codice:
+    url: "http://92d7005e-bentel-socat:26501/protect/index.htm"
+    method: POST
+    username: admin
+    password: marss
+    content_type: "application/x-www-form-urlencoded"
+    payload: "password=123456"
+    timeout: 60
+
+alarm_control_panel:
+  - platform: template
+    panels:
+      antifurto:
+        name: "Antifurto"
+        unique_id: marss_antifurto_pannello
+        code_arm_required: false
+        value_template: >-
+          {% if is_state('binary_sensor.antifurto_allarme_in_corso', 'on') %}triggered
+          {% elif is_state('binary_sensor.antifurto_inserito', 'on') %}armed_away
+          {% else %}disarmed{% endif %}
+        arm_away:
+          - condition: state
+            entity_id: binary_sensor.antifurto_inserito
+            state: "off"
+          - action: script.antifurto_premi_uscita_1
+        disarm:
+          - condition: state
+            entity_id: binary_sensor.antifurto_inserito
+            state: "on"
+          - action: script.antifurto_premi_uscita_1

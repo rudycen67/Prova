@@ -1,0 +1,52 @@
+- id: antifurto_notifica_allarme
+  alias: "Antifurto: notifica ALLARME"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.antifurto_allarme_in_corso
+      to: "on"
+  action:
+    - action: notify.mobile_app_NOME_TELEFONO
+      data:
+        title: "ALLARME IN CASA"
+        message: "L'antifurto sta suonando ({{ now().strftime('%H:%M') }})"
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          importance: high
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+
+- id: antifurto_notifica_stato
+  alias: "Antifurto: notifica inserito / disinserito"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.antifurto_inserito
+      from: "off"
+      to: "on"
+      id: inserito
+    - platform: state
+      entity_id: binary_sensor.antifurto_inserito
+      from: "on"
+      to: "off"
+      id: disinserito
+  action:
+    - action: notify.mobile_app_NOME_TELEFONO
+      data:
+        title: "Antifurto"
+        message: >-
+          {% if trigger.id == 'inserito' %}Impianto INSERITO{% else %}Impianto disinserito{% endif %}
+          ({{ now().strftime('%H:%M') }})
+
+- id: antifurto_riavvia_ponte_se_bloccato
+  alias: "Antifurto: riavvia il ponte se il Marss non risponde"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.antifurto_inserito
+      to: "unavailable"
+      for: { minutes: 3 }
+  action:
+    - action: script.antifurto_riavvia_ponte
