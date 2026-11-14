@@ -1,19 +1,23 @@
 # =============================================================================
-# Antifurto (modulo Marss IP Controller) in Home Assistant
-# tramite l'add-on "Bentel Socat Bridge" (porta 26501, HTTP semplice).
+# Antifurto Bentel KYO 32 + modulo Marss IP Controller in Home Assistant
+# tramite l'add-on "Bentel Socat Bridge" (nome interno 92d7005e-bentel-socat).
 #
-# Da incollare IN FONDO a configuration.yaml con il File Editor, poi:
-# Strumenti per sviluppatori -> YAML -> "Verifica configurazione" -> Riavvia.
+# Collegamenti sul campo (verificati):
+#   - Marss IN1  <- KYO morsetto 23 (O1), programmato "inserimento": in1 = impianto inserito
+#   - Marss IN2  <- contatto di un modulo rele' 12 V la cui bobina sta tra la vite NO
+#                   del rele' di allarme della KYO e un morsetto -: in2 = allarme in corso
+#   - Marss Relay 1 (C + NO) -> i due fili della zona "chiave" della KYO: impulso 2 s
+#                   (temporizzazione impostata nel Marss, Output Configuration)
 #
-# Da adattare:
-#   - 192.168.1.13  = IP di Home Assistant (dove gira l'add-on)
-#   - admin / marss = credenziali del modulo
-#   - 123456        = codice attivazione uscite del modulo (6 cifre)
+# BLOCCO A: da incollare in fondo a configuration.yaml (sostituisce il blocco
+#           precedente "rest:" / "rest_command:").
+# BLOCCO B: da incollare in scripts.yaml.
+# BLOCCO C: da incollare in automations.yaml (sostituire NOME_TELEFONO).
 # =============================================================================
 
-# ---- STATO: ingressi e uscite letti da /protect/status.xml ogni 5 secondi ----
+# ----------------------------- BLOCCO A --------------------------------------
 rest:
-  - resource: http://192.168.1.13:26501/protect/status.xml
+  - resource: http://92d7005e-bentel-socat:26501/protect/status.xml
     method: GET
     authentication: basic
     username: admin
@@ -21,12 +25,13 @@ rest:
     scan_interval: 5
     timeout: 60
     binary_sensor:
-      # ledi = 2 -> ingresso attivo (luce rossa nella pagina del modulo)
-      - name: "Antifurto ingresso 1"
-        unique_id: marss_ipc_in1
+      - name: "Antifurto inserito"
+        unique_id: marss_ipc_inserito
+        icon: mdi:shield-lock
         value_template: "{{ value_json.response.ledi1 | int == 2 }}"
-      - name: "Antifurto ingresso 2"
-        unique_id: marss_ipc_in2
+      - name: "Antifurto allarme in corso"
+        unique_id: marss_ipc_allarme
+        device_class: safety
         value_template: "{{ value_json.response.ledi2 | int == 2 }}"
       - name: "Antifurto ingresso 3"
         unique_id: marss_ipc_in3
@@ -34,20 +39,6 @@ rest:
       - name: "Antifurto ingresso 4"
         unique_id: marss_ipc_in4
         value_template: "{{ value_json.response.ledi4 | int == 2 }}"
-      # ledo = 1 -> uscita attiva
-      - name: "Antifurto uscita 1 stato"
-        unique_id: marss_ipc_out1
-        value_template: "{{ value_json.response.ledo1 | int == 1 }}"
-      - name: "Antifurto uscita 2 stato"
-        unique_id: marss_ipc_out2
-        value_template: "{{ value_json.response.ledo2 | int == 1 }}"
-      - name: "Antifurto uscita 3 stato"
-        unique_id: marss_ipc_out3
-        value_template: "{{ value_json.response.ledo3 | int == 1 }}"
-      - name: "Antifurto uscita 4 stato"
-        unique_id: marss_ipc_out4
-        value_template: "{{ value_json.response.ledo4 | int == 1 }}"
-      # tamper del modulo (ingresso "Tamper esterno" = canale 0)
       - name: "Antifurto modulo tamper"
         unique_id: marss_ipc_tamper
         device_class: tamper
@@ -56,66 +47,121 @@ rest:
       - name: "Antifurto modulo codice richiesto"
         unique_id: marss_ipc_ver_pass
         value_template: "{{ value_json.response.ver_pass }}"
-      - name: "Antifurto modulo errore codice"
-        unique_id: marss_ipc_errcode
-        value_template: "{{ value_json.response.errCode }}"
 
-# ---- COMANDI: stessi indirizzi usati dalla pagina web del modulo ----
 rest_command:
   marss_premi_uscita:
-    url: "http://192.168.1.13:26501/protect/buttons.cgi?button={{ uscita }}"
+    url: "http://92d7005e-bentel-socat:26501/protect/buttons.cgi?button={{ uscita }}"
     method: GET
     username: admin
     password: marss
     timeout: 60
   marss_invia_codice:
-    url: "http://192.168.1.13:26501/protect/index.htm"
+    url: "http://92d7005e-bentel-socat:26501/protect/index.htm"
     method: POST
     username: admin
     password: marss
     content_type: "application/x-www-form-urlencoded"
     payload: "password=123456"
     timeout: 60
-  marss_annulla:
-    url: "http://192.168.1.13:26501/protect/annulla.cgi?butt=0"
-    method: GET
-    username: admin
-    password: marss
-    timeout: 60
 
-# ---- SCRIPT: "premi" un'uscita come dal pulsante della pagina web ----
-# Il modulo, dopo il click, chiede il codice a 6 cifre: lo script lo invia.
-# Se l'uscita e' configurata "senza codice", il secondo passo e' innocuo.
-script:
-  antifurto_premi_uscita_1:
-    alias: "Antifurto: premi uscita 1"
-    icon: mdi:gesture-tap-button
-    sequence:
-      - action: rest_command.marss_premi_uscita
-        data: { uscita: 1 }
-      - delay: { seconds: 2 }
-      - action: rest_command.marss_invia_codice
-  antifurto_premi_uscita_2:
-    alias: "Antifurto: premi uscita 2"
-    icon: mdi:gesture-tap-button
-    sequence:
-      - action: rest_command.marss_premi_uscita
-        data: { uscita: 2 }
-      - delay: { seconds: 2 }
-      - action: rest_command.marss_invia_codice
-  antifurto_premi_uscita_3:
-    alias: "Antifurto: premi uscita 3"
-    icon: mdi:gesture-tap-button
-    sequence:
-      - action: rest_command.marss_premi_uscita
-        data: { uscita: 3 }
-      - delay: { seconds: 2 }
-      - action: rest_command.marss_invia_codice
-  antifurto_premi_uscita_4:
-    alias: "Antifurto: premi uscita 4"
-    icon: mdi:gesture-tap-button
-    sequence:
-      - action: rest_command.marss_premi_uscita
-        data: { uscita: 4 }
-      - delay: { seconds: 2 }
-      - action: rest_command.marss_invia_codice
+# Pannello allarme vero e proprio: stato letto dal Marss, comando tramite
+# il Relay 1 (zona chiave). Nessun codice richiesto nell'app.
+alarm_control_panel:
+  - platform: template
+    panels:
+      antifurto:
+        name: "Antifurto"
+        unique_id: marss_antifurto_pannello
+        code_arm_required: false
+        value_template: >-
+          {% if is_state('binary_sensor.antifurto_allarme_in_corso', 'on') %}triggered
+          {% elif is_state('binary_sensor.antifurto_inserito', 'on') %}armed_away
+          {% else %}disarmed{% endif %}
+        arm_away:
+          - condition: state
+            entity_id: binary_sensor.antifurto_inserito
+            state: "off"
+          - action: script.antifurto_premi_uscita_1
+        disarm:
+          - condition: state
+            entity_id: binary_sensor.antifurto_inserito
+            state: "on"
+          - action: script.antifurto_premi_uscita_1
+
+# ----------------------------- BLOCCO B --------------------------------------
+# (in scripts.yaml, senza la riga "script:")
+#
+# antifurto_premi_uscita_1:
+#   alias: "Antifurto: inserisci / disinserisci (zona chiave)"
+#   icon: mdi:shield-sync
+#   mode: single
+#   sequence:
+#     - action: rest_command.marss_premi_uscita
+#       data: { uscita: 1 }
+#     - delay: { seconds: 2 }
+#     - action: rest_command.marss_invia_codice
+#
+# antifurto_riavvia_ponte:
+#   alias: "Antifurto: riavvia add-on ponte Marss"
+#   icon: mdi:restart
+#   sequence:
+#     - action: hassio.addon_restart
+#       data: { addon: 92d7005e_bentel_socat }
+
+# ----------------------------- BLOCCO C --------------------------------------
+# (in automations.yaml; NOME_TELEFONO = nome del servizio notify dell'app,
+#  es. notify.mobile_app_pixel_di_marco; si trova in Strumenti per sviluppatori
+#  -> Azioni, digitando "mobile_app")
+#
+# - id: antifurto_notifica_allarme
+#   alias: "Antifurto: notifica ALLARME"
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.antifurto_allarme_in_corso
+#       to: "on"
+#   action:
+#     - action: notify.mobile_app_NOME_TELEFONO
+#       data:
+#         title: "ALLARME IN CASA"
+#         message: "L'antifurto sta suonando ({{ now().strftime('%H:%M') }})"
+#         data:
+#           ttl: 0
+#           priority: high
+#           channel: alarm_stream
+#           importance: high
+#           push:
+#             sound:
+#               name: default
+#               critical: 1
+#               volume: 1.0
+#
+# - id: antifurto_notifica_stato
+#   alias: "Antifurto: notifica inserito / disinserito"
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.antifurto_inserito
+#       from: "off"
+#       to: "on"
+#       id: inserito
+#     - platform: state
+#       entity_id: binary_sensor.antifurto_inserito
+#       from: "on"
+#       to: "off"
+#       id: disinserito
+#   action:
+#     - action: notify.mobile_app_NOME_TELEFONO
+#       data:
+#         title: "Antifurto"
+#         message: >-
+#           {% if trigger.id == 'inserito' %}Impianto INSERITO{% else %}Impianto disinserito{% endif %}
+#           ({{ now().strftime('%H:%M') }})
+#
+# - id: antifurto_riavvia_ponte_se_bloccato
+#   alias: "Antifurto: riavvia il ponte se il Marss non risponde"
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.antifurto_inserito
+#       to: "unavailable"
+#       for: { minutes: 3 }
+#   action:
+#     - action: script.antifurto_riavvia_ponte
