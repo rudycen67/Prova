@@ -17,9 +17,14 @@ fine, senza eccezioni: ogni mia domanda e ogni tua risposta, ogni spiegazione
 ogni prezzo, ogni comando, ogni file prodotto, ogni immagine/disegno, ogni
 decisione, ogni strada tentata e scartata (col motivo), ogni correzione fatta in
 corsa, ogni mia preferenza e ogni volta che mi sono lamentato di qualcosa.
-Niente e' "superfluo" o "gia' detto": se e' stato scritto in questa chat, deve
-finire nel trasferimento. In caso di dubbio, INCLUDI. L'altra IA deve poter
-ricostruire l'INTERA chat dai tuoi file, non una sintesi.
+Includi inoltre: tutte le CONCLUSIONI raggiunte; tutto cio' che e' stato FATTO
+concretamente e il suo esito; e, SE ci sono state, tutte le azioni svolte su
+DISPOSITIVI, SISTEMI o SERVIZI ESTERNI (hardware, apparecchi, account, siti,
+strumenti collegati), con cosa e' stato fatto e come e' andata. Spiega OGNI
+argomentazione fino al DETTAGLIO PIU' CAPILLARE, senza dare nulla per scontato.
+Niente e' "superfluo" o "gia' detto": se e' stato scritto o fatto in questa chat,
+deve finire nel trasferimento. In caso di dubbio, INCLUDI. L'altra IA deve poter
+ricostruire l'INTERA chat e tutto il lavoro dai tuoi file, non una sintesi.
 
 ## PRODUCI PIU' FILE (almeno questi)
 1. Un documento di PASSAGGIO DI CONSEGNE (handoff), strutturato e completo.
@@ -52,7 +57,8 @@ di lavoro, includili nel trasferimento.
 ## COSA DEVE CONTENERE IL DOCUMENTO DI DETTAGLI COMPLETI
 Un capitolo per OGNI argomento affrontato, scritto per esteso come e' stato
 spiegato: definizione, il "perche'", gli esempi coi numeri, le eccezioni e i
-limiti onesti. Vietato scrivere "come gia' detto": riscrivi la spiegazione intera.
+limiti onesti, fino al dettaglio piu' capillare. Vietato scrivere "come gia'
+detto": riscrivi ogni spiegazione per intero, con tutti i passaggi e i numeri.
 
 ## PRINCIPI
 - Esaustivita' sopra la brevita': nel dubbio, includi.
@@ -64,8 +70,11 @@ limiti onesti. Vietato scrivere "come gia' detto": riscrivi la spiegazione inter
 
 ## VERIFICA FINALE (obbligatoria prima di consegnare)
 Rileggi l'INTERA conversazione dall'inizio e controlla punto per punto che non
-manchi NIENTE: nessun link, prezzo, comando, numero, decisione, file,
-spiegazione, immagine, preferenza. Se trovi un buco, colmalo prima di consegnare.
+manchi NIENTE: nessun link, prezzo, comando, numero, decisione, conclusione,
+azione su dispositivi/servizi esterni, file di lavoro, spiegazione, immagine,
+preferenza. Se trovi un buco, colmalo. Poi esegui un ULTERIORE CONTROLLO: rileggi
+una SECONDA volta i documenti prodotti confrontandoli con la chat, e assicurati che
+NULLA sia stato escluso e che tutti i FILE DI LAVORO siano inclusi nel pacchetto.
 
 ## ALLA FINE
 Dammi la frase ESATTA che devo scrivere all'altra IA per farle riprendere il
