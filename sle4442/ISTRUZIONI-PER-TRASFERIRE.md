@@ -12,6 +12,17 @@ dettagli: ogni nozione, numero, link, comando, decisione e spiegazione deve
 sopravvivere al passaggio. L'altra IA deve poter continuare come se avesse
 vissuto l'intera conversazione.
 
+## REGOLA ASSOLUTA: TUTTO IL CONTENUTO DELLA CHAT
+Trasferisci TUTTO il contenuto che appartiene a questa chat, dall'inizio alla
+fine, senza eccezioni: ogni mia domanda e ogni tua risposta, ogni spiegazione
+anche ripetuta o rivista, ogni esempio, ogni link, ogni prezzo, ogni numero,
+ogni comando, ogni file, ogni disegno, ogni decisione, ogni vicolo cieco e il
+motivo per cui e' stato scartato, ogni correzione fatta in corsa, ogni
+preferenza che ho espresso e ogni volta che mi sono lamentato di qualcosa.
+Niente viene considerato "superfluo" o "gia' detto": se e' stato scritto in
+chat, deve finire nel passaggio di consegne. In caso di dubbio, includi.
+L'altra IA deve poter ricostruire l'INTERA chat dai documenti, non una sintesi.
+
 ## COSA DEVI PRODURRE (tre cose)
 1. Un documento "passaggio di consegne" (es. TRASFERIMENTO.md) con il quadro
    completo e strutturato.
