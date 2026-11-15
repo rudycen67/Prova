@@ -30,8 +30,8 @@ ricostruire l'INTERA chat dai tuoi file, non una sintesi.
    disegni, ecc.), raccolti.
 5. Un pacchetto ZIP che contiene tutti i file sopra + un breve LEGGIMI che spiega
    come usarli e in che ordine leggerli.
-Inviami ogni file SCARICABILE. Se esiste un repository di lavoro, committa li' i
-documenti e dimmi dove (percorso e branch).
+Inviami ogni file SCARICABILE. Se ci fossero dei file su un eventuale repository
+di lavoro, includili nel trasferimento.
 
 ## COSA DEVE CONTENERE IL DOCUMENTO DI PASSAGGIO DI CONSEGNE
 - Nome/argomento esatto di questa conversazione.
