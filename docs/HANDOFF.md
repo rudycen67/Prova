@@ -36,7 +36,7 @@ Anni fa lo faceva con un Raspberry Pi + una schedina relè e un'app, che ha smes
 | --- | --- |
 | Centrale antifurto | **Bentel KYO 32** (scheda "OK32 2.13 KYO32"), in scatola con etichetta KYO8M. Combinatore telefonico vocale **NC2/VOX** a fianco (l'utente ha deciso di TENERLO). Espansione **M-IN/OUT** (MINOUT 1.0) in scatola separata, zone T1-T4 usate, T5-T6 libere, tamper bloccato con fascetta (lasciare così). |
 | Modulo IP | **Marss IP Controller IPC-3004** (scheda v1.3_102012, MAC 00:04:A3:BF:0E:6C), 4 ingressi + 4 uscite (2 relè + 2 open collector). IP **192.168.1.249**. Web server integrato su porta **443** in **SSLv3 con RC4** (nessun browser moderno lo apre). Porta 26501 = protocollo dell'app Marss (non HTTP). Credenziali web: **admin / marss**. Codice attivazione uscite: **123456**. Alimentato dalla centrale (il suo GND è il negativo della centrale). |
-| Home Assistant | Home Assistant OS 18.3 su **Raspberry Pi 3** (aarch64). Utente HA: **marco**. IP era 192.168.1.13, poi il router gli ha dato 192.168.1.12: va impostato **IP statico 192.168.1.13** (Impostazioni → Sistema → Rete) — DA VERIFICARE se fatto. Accesso web: `http://192.168.1.13:8123` (o `http://homeassistant.local:8123`). |
+| Home Assistant | Home Assistant OS 18.3 su **Raspberry Pi 3** (aarch64). Utente HA: **marco**. IP definitivo **192.168.1.114** (impostato STATICO il 21/11/2026 in Impostazioni → Sistema → Rete, interfaccia enu1u1, gateway/DNS 192.168.1.1). Accesso web: `http://192.168.1.114:8123` (o `http://homeassistant.local:8123`). Nota: in precedenza era .13 e poi .12; i vecchi riferimenti a 192.168.1.13 vanno letti come 192.168.1.114. |
 | Add-on installati | File editor; Terminal & SSH (porta 22 attiva, password scelta dall'utente, utente `root`, usato con PuTTY); **Bentel Socat Bridge 2.1.1** (nostro, vedi §3). |
 | PC dell'utente | Windows 11, IP 192.168.1.3, PuTTY installato, browser Chrome/Firefox. Ha un **tester** (multimetro). |
 | Router | 192.168.1.254 secondo un foglietto dell'installatore (verificare). |
@@ -102,13 +102,13 @@ Due fili liberi (uno bianco, uno rosso) vicino al Marss, portati fuori dall'inst
 ## 6bis. AGGIORNAMENTO 21 NOVEMBRE 2026 (verificato dall'utente)
 - **Comando OK**: la zona chiave e' sul Relay 1 del Marss, temporizzazione 2 s sull'uscita 1. La centrale commuta con **DUE impulsi da 2 s** (sia per inserire sia per disinserire): lo script `antifurto_premi_uscita_1` manda due impulsi a 4 s di distanza.
 - **in1 = inserito OK** (rosso inserito, verde disinserito). **in2 = allarme in corso OK**: il rele' 12 V e' montato (bobina tra NO del rele' di allarme della KYO e 28 BLK; contatto su IN2/GND del Marss) e in2 diventa rosso mentre suona.
-- L'IP del Raspberry e' cambiato ancora (ora 192.168.1.114): **impostare l'IP statico** resta il primo punto.
+- IP del Raspberry fissato a **192.168.1.114** (statico). Tutti gli indirizzi: HA `http://192.168.1.114:8123`, pagina Marss `http://192.168.1.114:26501/protect/index.htm`, PuTTY 192.168.1.114.
 - Richiesta dell'utente: "app" Android e iPhone eleganti, con **sirena sul telefono** quando scatta l'allarme, in qualsiasi stato del telefono. Soluzione: app ufficiale Home Assistant + plancia `docs/homeassistant/plancia-antifurto.yaml` + automazione `antifurto_sirena_allarme` (notifica critica iOS con suono a volume 1.0; Android canale `alarm_stream` + TTS `alarm_stream_max`, ripetuta ogni 30 s finche' suona, pulsanti "Disinserisci" e "Apri"). File completi aggiornati in `docs/homeassistant/`. Segnaposto da sostituire: `NOME_ANDROID`, `NOME_IPHONE`.
 - Per ricevere le notifiche fuori casa NON serve Nabu Casa (passano dai server push di Home Assistant); per aprire la plancia o premere "Disinserisci" da fuori casa serve l'accesso remoto (Nabu Casa o VPN).
 - Sul telefono: iPhone -> app Home Assistant -> Impostazioni -> Notifiche -> attivare "Avvisi critici"; Android -> impostazioni notifiche dell'app -> canale "Alarm Stream" -> suono forte, importanza alta, e permesso "Non disturbare".
 
 ## 6. STATO ATTUALE E COSE DA FARE (in ordine)
-1. **IP statico** 192.168.1.13 per Home Assistant (Impostazioni → Sistema → Rete). Verificare.
+1. ~~IP statico~~ FATTO: 192.168.1.114.
 2. Incollare i **tre file completi** di `docs/homeassistant/` (configuration.yaml, scripts.yaml, automations.yaml) con File editor, sostituire `NOME_TELEFONO`, riavviare Home Assistant, verificare che compaia l'entità **Antifurto** (pannello allarme).
 3. Installare l'**app Home Assistant** sul telefono (in casa, server 192.168.1.13:8123), trovare il nome `notify.mobile_app_...`.
 4. **Comando**: i due fili della zona chiave nelle viti **centrale** e **in basso** del gruppo **Relay 1** del Marss; nel Marss, Output Configuration, uscita 1 **temporizzazione 2 s**; prova dall'app "Inserisci fuori casa"/"Disinserisci" (casa chiusa). Se la centrale fa il contrario, spostare il filo sulla vite in alto del gruppo.
