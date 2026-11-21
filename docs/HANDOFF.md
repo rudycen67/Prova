@@ -1,7 +1,7 @@
 # PASSAGGIO DI CONSEGNE – Integrazione antifurto Bentel KYO 32 in Home Assistant tramite modulo Marss IP Controller
 
 **Nome della conversazione**: "Integrazione Centrale Bentel Kyo in Home Assistant via Socat" (sessione Claude Code: https://claude.ai/code/session_014Vbqn6j6qMpfs1BZ5enW6p)
-**Periodo**: 28 ottobre – 15 novembre 2026
+**Periodo**: 28 ottobre – 21 novembre 2026
 **Repository GitHub con tutto il codice e la guida**: https://github.com/rudycen67/Prova — branch `claude/new-session-33hkm7` (NON ancora unito su `main`)
 **Utente**: Marco (account GitHub `rudycen67`). Lingua: italiano. Scrive spesso in maiuscolo e con errori di battitura: è normale, non correggerlo.
 
@@ -98,6 +98,14 @@ Due fili liberi (uno bianco, uno rosso) vicino al Marss, portati fuori dall'inst
 - Usare la schedina relè dell'installatore (CEN/NA/COM): incoerente e pericolosa, già causato un corto. Il combinatore va lasciato com'è.
 - Programmare O2/O1 della KYO: richiede il **codice installatore**, che l'utente NON ha. Resta l'alternativa se si vuole lo stato "allarme" senza modulo relè (l'installatore programma O2 = "Allarme Area 1" → IN2 sul 24).
 - Usare il bus LAN per leggere l'allarme: impossibile.
+
+## 6bis. AGGIORNAMENTO 21 NOVEMBRE 2026 (verificato dall'utente)
+- **Comando OK**: la zona chiave e' sul Relay 1 del Marss, temporizzazione 2 s sull'uscita 1. La centrale commuta con **DUE impulsi da 2 s** (sia per inserire sia per disinserire): lo script `antifurto_premi_uscita_1` manda due impulsi a 4 s di distanza.
+- **in1 = inserito OK** (rosso inserito, verde disinserito). **in2 = allarme in corso OK**: il rele' 12 V e' montato (bobina tra NO del rele' di allarme della KYO e 28 BLK; contatto su IN2/GND del Marss) e in2 diventa rosso mentre suona.
+- L'IP del Raspberry e' cambiato ancora (ora 192.168.1.114): **impostare l'IP statico** resta il primo punto.
+- Richiesta dell'utente: "app" Android e iPhone eleganti, con **sirena sul telefono** quando scatta l'allarme, in qualsiasi stato del telefono. Soluzione: app ufficiale Home Assistant + plancia `docs/homeassistant/plancia-antifurto.yaml` + automazione `antifurto_sirena_allarme` (notifica critica iOS con suono a volume 1.0; Android canale `alarm_stream` + TTS `alarm_stream_max`, ripetuta ogni 30 s finche' suona, pulsanti "Disinserisci" e "Apri"). File completi aggiornati in `docs/homeassistant/`. Segnaposto da sostituire: `NOME_ANDROID`, `NOME_IPHONE`.
+- Per ricevere le notifiche fuori casa NON serve Nabu Casa (passano dai server push di Home Assistant); per aprire la plancia o premere "Disinserisci" da fuori casa serve l'accesso remoto (Nabu Casa o VPN).
+- Sul telefono: iPhone -> app Home Assistant -> Impostazioni -> Notifiche -> attivare "Avvisi critici"; Android -> impostazioni notifiche dell'app -> canale "Alarm Stream" -> suono forte, importanza alta, e permesso "Non disturbare".
 
 ## 6. STATO ATTUALE E COSE DA FARE (in ordine)
 1. **IP statico** 192.168.1.13 per Home Assistant (Impostazioni → Sistema → Rete). Verificare.

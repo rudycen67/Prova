@@ -1,0 +1,41 @@
+# Plancia "Antifurto": Impostazioni -> Plance -> Aggiungi plancia -> "Nuova plancia da zero",
+# titolo "Antifurto", icona mdi:shield-home, URL "dashboard-antifurto", "Mostra nella barra laterale".
+# Poi aprirla -> matita in alto a destra -> tre puntini -> "Editor codice RAW" -> incollare tutto -> Salva.
+title: Antifurto
+views:
+  - title: Antifurto
+    path: "0"
+    icon: mdi:shield-home
+    cards:
+      - type: alarm-panel
+        entity: alarm_control_panel.antifurto
+        name: Antifurto di casa
+        states:
+          - arm_away
+      - type: horizontal-stack
+        cards:
+          - type: tile
+            entity: binary_sensor.antifurto_inserito
+            name: Impianto inserito
+            icon: mdi:shield-lock
+            color: green
+          - type: tile
+            entity: binary_sensor.antifurto_allarme_in_corso
+            name: Allarme in corso
+            icon: mdi:alarm-light
+            color: red
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.antifurto_allarme_in_corso
+            state: "on"
+        card:
+          type: markdown
+          content: "# 🚨 ALLARME IN CORSO\nL'antifurto sta suonando. Premi **Disinserisci** sul pannello qui sopra."
+      - type: logbook
+        title: Ultimi eventi
+        hours_to_show: 48
+        entities:
+          - alarm_control_panel.antifurto
+          - binary_sensor.antifurto_allarme_in_corso
+          - binary_sensor.antifurto_inserito

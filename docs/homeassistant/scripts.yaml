@@ -1,12 +1,15 @@
 antifurto_premi_uscita_1:
-  alias: "Antifurto: inserisci / disinserisci (zona chiave)"
+  alias: "Antifurto: inserisci / disinserisci (zona chiave, 2 impulsi)"
   icon: mdi:shield-sync
   mode: single
   sequence:
+    # Verificato sul campo: la centrale commuta con DUE impulsi da 2 s.
+    # Il Marss ha la temporizzazione dell'uscita 1 a 2 secondi.
     - action: rest_command.marss_premi_uscita
       data: { uscita: 1 }
-    - delay: { seconds: 2 }
-    - action: rest_command.marss_invia_codice
+    - delay: { seconds: 4 }
+    - action: rest_command.marss_premi_uscita
+      data: { uscita: 1 }
 
 antifurto_riavvia_ponte:
   alias: "Antifurto: riavvia add-on ponte Marss"

@@ -39,15 +39,9 @@ rest_command:
     username: admin
     password: marss
     timeout: 60
-  marss_invia_codice:
-    url: "http://92d7005e-bentel-socat:26501/protect/index.htm"
-    method: POST
-    username: admin
-    password: marss
-    content_type: "application/x-www-form-urlencoded"
-    payload: "password=123456"
-    timeout: 60
 
+# Pannello allarme: stato letto dal Marss (in1 = inserito, in2 = allarme),
+# comando tramite lo script a due impulsi sul Relay 1 (zona chiave).
 alarm_control_panel:
   - platform: template
     panels:
@@ -69,3 +63,13 @@ alarm_control_panel:
             entity_id: binary_sensor.antifurto_inserito
             state: "on"
           - action: script.antifurto_premi_uscita_1
+
+# Gruppo "tutti i telefoni": sostituire NOME_ANDROID e NOME_IPHONE con i nomi
+# che compaiono dopo "notify.mobile_app_" in Strumenti per sviluppatori -> Azioni.
+# Se un telefono non c'e', cancellare la sua riga.
+notify:
+  - platform: group
+    name: telefoni_antifurto
+    services:
+      - action: mobile_app_NOME_ANDROID
+      - action: mobile_app_NOME_IPHONE
